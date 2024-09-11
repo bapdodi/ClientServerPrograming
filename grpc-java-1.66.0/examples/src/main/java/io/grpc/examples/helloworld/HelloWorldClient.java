@@ -16,7 +16,7 @@
 
  package io.grpc.examples.helloworld;
 
- import java.nio.channels.Channel;
+ import io.grpc.Channel;
  import java.util.Scanner;
  import java.util.concurrent.TimeUnit;
  import java.util.logging.Level;
@@ -31,25 +31,28 @@
   * A simple client that requests a greeting from the {@link HelloWorldServer}.
   */
  public class HelloWorldClient {
+   //로거: 로그메세지를 저장하고 추적할 수 있게 해주는 객체
    private static final Logger logger = Logger.getLogger(HelloWorldClient.class.getName());
- 
+   //블로킹 객체: 서버와 통신할 때 사용하는 객체, 동기적 방식으로 호출을 수행할때 사용됨
+   //동기적 방식은 서버 응답을 기다리는동안 lock됨
+   //stub이란 클라이언트가 서버의 메서드를 호출할 때 사용되는 객체
    private final GreeterGrpc.GreeterBlockingStub blockingStub;
  
-   /** Construct client for accessing HelloWorld server using the existing channel. */
-   public HelloWorldClient(io.grpc.Channel channel) {
-     // 'channel' here is a Channel, not a ManagedChannel, so it is not this code's responsibility to
-     // shut it down.
- 
-     // Passing Channels to code makes code easier to test and makes it easier to reuse Channels.
+   
+   public HelloWorldClient(Channel channel) {
+    //채널은 받아오기 때문에 여기서 채널을 종료안시켜도 됨
+    //채널을 받아오면 채널을 재사용시키기 편하다
      blockingStub = GreeterGrpc.newBlockingStub(channel);
    }
  
    /** Say hello to server. */
    public void greet(String name) {
      logger.info("Will try to greet " + name + " ...");
+     //HelloRequest 객체를 만들어서 name을 넣어줌
      HelloRequest request = HelloRequest.newBuilder().setName(name).build();
      HelloReply response;
      try {
+      //서버로 요청을 보내고 응답을 받음
        response = blockingStub.sayHello(request);
      } catch (StatusRuntimeException e) {
        logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
@@ -112,6 +115,12 @@
      //
      // For the example we use plaintext insecure credentials to avoid needing TLS certificates. To
      // use TLS, use TlsChannelCredentials instead.
+
+
+     //서버와의 연결을 관리하는 객체
+     //채널은 스레드 세이프(스레드 안정성이 올라감)하고 재사용 가능함
+     //채널은 애플리케이션 시작시에 만들어지고 애플리케이션이 종료될때까지 재사용됨
+     //예제에서는 TLS 인증서가 필요없기 때문에 평문 인증을 사용함
      ManagedChannel channel = Grpc.newChannelBuilder(target, InsecureChannelCredentials.create())
          .build();
      try {
@@ -119,6 +128,7 @@
        if(args[0].equals("save")){
          Scanner scanner = new Scanner(System.in);
          user = scanner.nextLine();
+         scanner.close();
          client.save(user);
        }
        else if(args[0].equals("load")){
@@ -129,9 +139,9 @@
        }
        
      } finally {
-       // ManagedChannels use resources like threads and TCP connections. To prevent leaking these
-       // resources the channel should be shut down when it will no longer be used. If it may be used
-       // again leave it running.
+       // 채널을 종료시킴
+       // 채널이 완전히 종료될때까지 기다림
+       // 정상적으로 5초간 기다리고 넘으면 바로 종료
        channel.shutdownNow().awaitTermination(5, TimeUnit.SECONDS);
      }
    }
