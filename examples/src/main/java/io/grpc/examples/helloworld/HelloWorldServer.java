@@ -29,13 +29,14 @@ import java.util.logging.Logger;
  */
 public class HelloWorldServer {
   private static final Logger logger = Logger.getLogger(HelloWorldServer.class.getName());
-  private static String name = "default";
+  private static String name = "nodata";
   private Server server;
 
   private void start() throws IOException {
     /* The port on which the server should run */
     int port = 50051;
     server = Grpc.newServerBuilderForPort(port, InsecureServerCredentials.create())
+    //서버에서 처리할 비즈니스 로직이 들어감
         .addService(new GreeterImpl())
         .build()
         .start();
