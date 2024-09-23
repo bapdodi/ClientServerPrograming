@@ -15,7 +15,6 @@
  */
 
  package io.grpc.examples.helloworld;
-
  import io.grpc.Channel;
  import java.util.Scanner;
  import java.util.concurrent.TimeUnit;
@@ -37,7 +36,7 @@
    //동기적 방식은 서버 응답을 기다리는동안 lock됨
    //stub이란 클라이언트가 서버의 메서드를 호출할 때 사용되는 객체
    private final GreeterGrpc.GreeterBlockingStub blockingStub;
- 
+
    
    public HelloWorldClient(Channel channel) {
     //채널은 받아오기 때문에 여기서 채널을 종료안시켜도 됨
