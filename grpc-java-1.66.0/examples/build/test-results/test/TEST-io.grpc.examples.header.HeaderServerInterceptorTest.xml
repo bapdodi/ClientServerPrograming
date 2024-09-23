@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="io.grpc.examples.header.HeaderServerInterceptorTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-09-23T10:40:27" hostname="DESKTOP-3HV33BT" time="0.117">
+<testsuite name="io.grpc.examples.header.HeaderServerInterceptorTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-09-23T11:56:56" hostname="DESKTOP-3HV33BT" time="0.111">
   <properties/>
-  <testcase name="serverHeaderDeliveredToClient" classname="io.grpc.examples.header.HeaderServerInterceptorTest" time="0.117"/>
+  <testcase name="serverHeaderDeliveredToClient" classname="io.grpc.examples.header.HeaderServerInterceptorTest" time="0.111"/>
   <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[9월 23, 2024 7:40:27 오후 io.grpc.examples.header.HeaderServerInterceptor interceptCall
+  <system-err><![CDATA[9월 23, 2024 8:56:56 오후 io.grpc.examples.header.HeaderServerInterceptor interceptCall
 INFO: header received from client:Metadata(grpc-accept-encoding=gzip,user-agent=grpc-java-inprocess/1.66.0)
 ]]></system-err>
 </testsuite>

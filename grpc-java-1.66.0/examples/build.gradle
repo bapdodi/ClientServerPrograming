@@ -8,7 +8,10 @@ plugins {
 
 repositories {
     maven { // The google mirror is less flaky than mavenCentral()
-        url "https://maven-central.storage-download.googleapis.com/maven2/" }
+        url "https://maven-central.storage-download.googleapis.com/maven2/" 
+        url 'https://maven.oracle.com'
+    }
+        
     mavenCentral()
     mavenLocal()
 }
@@ -37,6 +40,8 @@ dependencies {
     implementation "com.google.protobuf:protobuf-java-util:${protobufVersion}"
 
     runtimeOnly "io.grpc:grpc-netty-shaded:${grpcVersion}"
+    // Add ojdbc11 dependency
+    runtimeOnly "com.oracle.database.jdbc:ojdbc11:21.9.0.0"
 
     testImplementation "io.grpc:grpc-testing:${grpcVersion}"
     testImplementation "io.grpc:grpc-inprocess:${grpcVersion}"
@@ -105,6 +110,8 @@ createStartScripts('io.grpc.examples.hedging.HedgingHelloWorldClient')
 createStartScripts('io.grpc.examples.hedging.HedgingHelloWorldServer')
 createStartScripts('io.grpc.examples.helloworld.HelloWorldClient')
 createStartScripts('io.grpc.examples.helloworld.HelloWorldServer')
+createStartScripts('io.grpc.examples.login.LoginClient')
+createStartScripts('io.grpc.examples.login.LoginServer')
 createStartScripts('io.grpc.examples.keepalive.KeepAliveClient')
 createStartScripts('io.grpc.examples.keepalive.KeepAliveServer')
 createStartScripts('io.grpc.examples.loadbalance.LoadBalanceClient')

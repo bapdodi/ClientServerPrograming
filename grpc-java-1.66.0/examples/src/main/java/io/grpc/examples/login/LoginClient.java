@@ -64,9 +64,11 @@ public class LoginClient {
         System.out.println("join 또는 login을 입력해주세요");
         String method = scanner.nextLine();
         if(method.equals("join")){
-            System.out.println("Id, Password, name을 입력해주세요");
+            System.out.println("Id를 입력해주세요");
             String Id = scanner.nextLine();
+            System.out.println("Password를 입력해주세요");
             String Password = scanner.nextLine();
+            System.out.println("name을 입력해주세요");
             String name = scanner.nextLine();
             ManagedChannel channel = ManagedChannelBuilder.forTarget(target)
             .usePlaintext()
@@ -84,8 +86,9 @@ public class LoginClient {
             }
         }
         else if(method.equals("login")){
-            System.out.println("Id, Password을 입력해주세요");
+            System.out.println("Id를 입력해주세요");
             String Id = scanner.nextLine();
+            System.out.println("Password를 입력해주세요");
             String Password = scanner.nextLine();
             ManagedChannel channel = ManagedChannelBuilder.forTarget(target)
             .usePlaintext()
