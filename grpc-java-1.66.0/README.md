@@ -1,282 +1,252 @@
-gRPC-Java - An RPC library and framework
-========================================
+gRPC Examples
+==============================================
 
-<table>
-  <tr>
-    <td><b>Homepage:</b></td>
-    <td><a href="https://grpc.io/">grpc.io</a></td>
-  </tr>
-  <tr>
-    <td><b>Mailing List:</b></td>
-    <td><a href="https://groups.google.com/forum/#!forum/grpc-io">grpc-io@googlegroups.com</a></td>
-  </tr>
-</table>
+The examples require `grpc-java` to already be built. You are strongly encouraged
+to check out a git release tag, since there will already be a build of gRPC
+available. Otherwise you must follow [COMPILING](../COMPILING.md).
 
-[![Join the chat at https://gitter.im/grpc/grpc](https://badges.gitter.im/grpc/grpc.svg)](https://gitter.im/grpc/grpc?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![GitHub Actions Linux Testing](https://github.com/grpc/grpc-java/actions/workflows/testing.yml/badge.svg?branch=master)](https://github.com/grpc/grpc-java/actions/workflows/testing.yml?branch=master)
-[![Line Coverage Status](https://coveralls.io/repos/grpc/grpc-java/badge.svg?branch=master&service=github)](https://coveralls.io/github/grpc/grpc-java?branch=master)
-[![Branch-adjusted Line Coverage Status](https://codecov.io/gh/grpc/grpc-java/branch/master/graph/badge.svg)](https://codecov.io/gh/grpc/grpc-java)
+You may want to read through the
+[Quick Start](https://grpc.io/docs/languages/java/quickstart)
+before trying out the examples.
 
-Supported Platforms
--------------------
+## Basic examples
 
-gRPC-Java supports Java 8 and later. Android minSdkVersion 21 (Lollipop) and
-later are supported with [Java 8 language desugaring][android-java-8].
+- [Hello world](src/main/java/io/grpc/examples/helloworld)
 
-TLS usage on Android typically requires Play Services Dynamic Security Provider.
-Please see the [Security Readme](SECURITY.md).
+- [Route guide](src/main/java/io/grpc/examples/routeguide)
 
-Older Java versions are not directly supported, but a branch remains available
-for fixes and releases. See [gRFC P5 JDK Version Support
-Policy][P5-jdk-version-support].
+- [Metadata](src/main/java/io/grpc/examples/header)
 
-Java version | gRPC Branch
------------- | -----------
-7            | 1.41.x
+- [Error handling](src/main/java/io/grpc/examples/errorhandling)
 
-[android-java-8]: https://developer.android.com/studio/write/java8-support#supported_features
-[P5-jdk-version-support]: https://github.com/grpc/proposal/blob/master/P5-jdk-version-support.md#proposal
+- [Compression](src/main/java/io/grpc/examples/experimental)
 
-Getting Started
----------------
+- [Flow control](src/main/java/io/grpc/examples/manualflowcontrol)
 
-For a guided tour, take a look at the [quick start
-guide](https://grpc.io/docs/languages/java/quickstart) or the more explanatory [gRPC
-basics](https://grpc.io/docs/languages/java/basics).
+- [Wait For Ready](src/main/java/io/grpc/examples/waitforready)
 
-The [examples](https://github.com/grpc/grpc-java/tree/v1.66.0/examples) and the
-[Android example](https://github.com/grpc/grpc-java/tree/v1.66.0/examples/android)
-are standalone projects that showcase the usage of gRPC.
+- [Json serialization](src/main/java/io/grpc/examples/advanced)
 
-Download
---------
+- <details>
+  <summary>Hedging</summary>
 
-Download [the JARs][]. Or for Maven with non-Android, add to your `pom.xml`:
-```xml
-<dependency>
-  <groupId>io.grpc</groupId>
-  <artifactId>grpc-netty-shaded</artifactId>
-  <version>1.66.0</version>
-  <scope>runtime</scope>
-</dependency>
-<dependency>
-  <groupId>io.grpc</groupId>
-  <artifactId>grpc-protobuf</artifactId>
-  <version>1.66.0</version>
-</dependency>
-<dependency>
-  <groupId>io.grpc</groupId>
-  <artifactId>grpc-stub</artifactId>
-  <version>1.66.0</version>
-</dependency>
-<dependency> <!-- necessary for Java 9+ -->
-  <groupId>org.apache.tomcat</groupId>
-  <artifactId>annotations-api</artifactId>
-  <version>6.0.53</version>
-  <scope>provided</scope>
-</dependency>
+  The [hedging example](src/main/java/io/grpc/examples/hedging) demonstrates that enabling hedging
+  can reduce tail latency. (Users should note that enabling hedging may introduce other overhead;
+  and in some scenarios, such as when some server resource gets exhausted for a period of time and
+  almost every RPC during that time has high latency or fails, hedging may make things worse.
+  Setting a throttle in the service config is recommended to protect the server from too many
+  inappropriate retry or hedging requests.)
+
+  The server and the client in the example are basically the same as those in the
+  [hello world](src/main/java/io/grpc/examples/helloworld) example, except that the server mimics a
+  long tail of latency, and the client sends 2000 requests and can turn on and off hedging.
+
+  To mimic the latency, the server randomly delays the RPC handling by 2 seconds at 10% chance, 5
+  seconds at 5% chance, and 10 seconds at 1% chance.
+
+  When running the client enabling the following hedging policy
+
+  ```json
+        "hedgingPolicy": {
+          "maxAttempts": 3,
+          "hedgingDelay": "1s"
+        }
+  ```
+  Then the latency summary in the client log is like the following
+
+  ```text
+  Total RPCs sent: 2,000. Total RPCs failed: 0
+  [Hedging enabled]
+  ========================
+  50% latency: 0ms
+  90% latency: 6ms
+  95% latency: 1,003ms
+  99% latency: 2,002ms
+  99.9% latency: 2,011ms
+  Max latency: 5,272ms
+  ========================
+  ```
+
+  See [the section below](#to-build-the-examples) for how to build and run the example. The
+  executables for the server and the client are `hedging-hello-world-server` and
+  `hedging-hello-world-client`.
+
+  To disable hedging, set environment variable `DISABLE_HEDGING_IN_HEDGING_EXAMPLE=true` before
+  running the client. That produces a latency summary in the client log like the following
+
+  ```text
+  Total RPCs sent: 2,000. Total RPCs failed: 0
+  [Hedging disabled]
+  ========================
+  50% latency: 0ms
+  90% latency: 2,002ms
+  95% latency: 5,002ms
+  99% latency: 10,004ms
+  99.9% latency: 10,007ms
+  Max latency: 10,007ms
+  ========================
+  ```
+
+</details>
+
+- <details>
+  <summary>Retrying</summary>
+
+  The [retrying example](src/main/java/io/grpc/examples/retrying) provides a HelloWorld gRPC client &
+  server which demos the effect of client retry policy configured on the [ManagedChannel](
+  ../api/src/main/java/io/grpc/ManagedChannel.java) via [gRPC ServiceConfig](
+  https://github.com/grpc/grpc/blob/master/doc/service_config.md). Retry policy implementation &
+  configuration details are outlined in the [proposal](https://github.com/grpc/proposal/blob/master/A6-client-retries.md).
+
+  This retrying example is very similar to the [hedging example](src/main/java/io/grpc/examples/hedging) in its setup.
+  The [RetryingHelloWorldServer](src/main/java/io/grpc/examples/retrying/RetryingHelloWorldServer.java) responds with
+  a status UNAVAILABLE error response to a specified percentage of requests to simulate server resource exhaustion and
+  general flakiness. The [RetryingHelloWorldClient](src/main/java/io/grpc/examples/retrying/RetryingHelloWorldClient.java) makes
+  a number of sequential requests to the server, several of which will be retried depending on the configured policy in
+  [retrying_service_config.json](src/main/resources/io/grpc/examples/retrying/retrying_service_config.json). Although
+  the requests are blocking unary calls for simplicity, these could easily be changed to future unary calls in order to
+  test the result of request concurrency with retry policy enabled.
+
+  One can experiment with the [RetryingHelloWorldServer](src/main/java/io/grpc/examples/retrying/RetryingHelloWorldServer.java)
+  failure conditions to simulate server throttling, as well as alter policy values in the [retrying_service_config.json](
+  src/main/resources/io/grpc/examples/retrying/retrying_service_config.json) to see their effects. To disable retrying
+  entirely, set environment variable `DISABLE_RETRYING_IN_RETRYING_EXAMPLE=true` before running the client.
+  Disabling the retry policy should produce many more failed gRPC calls as seen in the output log.
+
+  See [the section below](#to-build-the-examples) for how to build and run the example. The
+  executables for the server and the client are `retrying-hello-world-server` and
+  `retrying-hello-world-client`.
+
+</details>
+
+- <details>
+  <summary>Health Service</summary>
+
+  The [health service example](src/main/java/io/grpc/examples/healthservice)
+  provides a HelloWorld gRPC server that doesn't like short names along with a
+  health service.  It also provides a client application which makes HelloWorld 
+  calls and checks the health status.  
+
+  The client application also shows how the round robin load balancer can
+  utilize the health status to avoid making calls to a service that is
+  not actively serving.
+</details>
+
+
+- [Keep Alive](src/main/java/io/grpc/examples/keepalive)
+
+### <a name="to-build-the-examples"></a> To build the examples
+
+1. **[Install gRPC Java library SNAPSHOT locally, including code generation plugin](../COMPILING.md) (Only need this step for non-released versions, e.g. master HEAD).**
+
+2. From grpc-java/examples directory:
+```
+$ ./gradlew installDist
 ```
 
-Or for Gradle with non-Android, add to your dependencies:
-```gradle
-runtimeOnly 'io.grpc:grpc-netty-shaded:1.66.0'
-implementation 'io.grpc:grpc-protobuf:1.66.0'
-implementation 'io.grpc:grpc-stub:1.66.0'
-compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
-```
+This creates the scripts `hello-world-server`, `hello-world-client`,
+`route-guide-server`, `route-guide-client`, etc. in the
+`build/install/examples/bin/` directory that run the examples. Each
+example requires the server to be running before starting the client.
 
-For Android client, use `grpc-okhttp` instead of `grpc-netty-shaded` and
-`grpc-protobuf-lite` instead of `grpc-protobuf`:
-```gradle
-implementation 'io.grpc:grpc-okhttp:1.66.0'
-implementation 'io.grpc:grpc-protobuf-lite:1.66.0'
-implementation 'io.grpc:grpc-stub:1.66.0'
-compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
-```
-
-For [Bazel](https://bazel.build), you can either
-[use Maven](https://github.com/bazelbuild/rules_jvm_external)
-(with the GAVs from above), or use `@io_grpc_grpc_java//api` et al (see below).
-
-[the JARs]:
-https://search.maven.org/search?q=g:io.grpc%20AND%20v:1.66.0
-
-Development snapshots are available in [Sonatypes's snapshot
-repository](https://oss.sonatype.org/content/repositories/snapshots/).
-
-Generated Code
---------------
-
-For protobuf-based codegen, you can put your proto files in the `src/main/proto`
-and `src/test/proto` directories along with an appropriate plugin.
-
-For protobuf-based codegen integrated with the Maven build system, you can use
-[protobuf-maven-plugin][] (Eclipse and NetBeans users should also look at
-`os-maven-plugin`'s
-[IDE documentation](https://github.com/trustin/os-maven-plugin#issues-with-eclipse-m2e-or-other-ides)):
-```xml
-<build>
-  <extensions>
-    <extension>
-      <groupId>kr.motd.maven</groupId>
-      <artifactId>os-maven-plugin</artifactId>
-      <version>1.7.1</version>
-    </extension>
-  </extensions>
-  <plugins>
-    <plugin>
-      <groupId>org.xolstice.maven.plugins</groupId>
-      <artifactId>protobuf-maven-plugin</artifactId>
-      <version>0.6.1</version>
-      <configuration>
-        <protocArtifact>com.google.protobuf:protoc:3.25.3:exe:${os.detected.classifier}</protocArtifact>
-        <pluginId>grpc-java</pluginId>
-        <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.66.0:exe:${os.detected.classifier}</pluginArtifact>
-      </configuration>
-      <executions>
-        <execution>
-          <goals>
-            <goal>compile</goal>
-            <goal>compile-custom</goal>
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
-  </plugins>
-</build>
-```
-
-[protobuf-maven-plugin]: https://www.xolstice.org/protobuf-maven-plugin/
-
-For non-Android protobuf-based codegen integrated with the Gradle build system,
-you can use [protobuf-gradle-plugin][]:
-```gradle
-plugins {
-    id 'com.google.protobuf' version '0.9.4'
-}
-
-protobuf {
-  protoc {
-    artifact = "com.google.protobuf:protoc:3.25.3"
-  }
-  plugins {
-    grpc {
-      artifact = 'io.grpc:protoc-gen-grpc-java:1.66.0'
-    }
-  }
-  generateProtoTasks {
-    all()*.plugins {
-      grpc {}
-    }
-  }
-}
-```
-
-[protobuf-gradle-plugin]: https://github.com/google/protobuf-gradle-plugin
-
-The prebuilt protoc-gen-grpc-java binary uses glibc on Linux. If you are
-compiling on Alpine Linux, you may want to use the [Alpine grpc-java package][]
-which uses musl instead.
-
-[Alpine grpc-java package]: https://pkgs.alpinelinux.org/package/edge/community/x86_64/grpc-java
-
-For Android protobuf-based codegen integrated with the Gradle build system, also
-use protobuf-gradle-plugin but specify the 'lite' options:
-
-```gradle
-plugins {
-    id 'com.google.protobuf' version '0.9.4'
-}
-
-protobuf {
-  protoc {
-    artifact = "com.google.protobuf:protoc:3.25.3"
-  }
-  plugins {
-    grpc {
-      artifact = 'io.grpc:protoc-gen-grpc-java:1.66.0'
-    }
-  }
-  generateProtoTasks {
-    all().each { task ->
-      task.builtins {
-        java { option 'lite' }
-      }
-      task.plugins {
-        grpc { option 'lite' }
-      }
-    }
-  }
-}
+For example, to try the hello world example first run:
 
 ```
+$ ./build/install/examples/bin/hello-world-server
+```
 
-For [Bazel](https://bazel.build), use the [`proto_library`](https://github.com/bazelbuild/rules_proto)
-and the [`java_proto_library`](https://bazel.build/reference/be/java#java_proto_library) (no `load()` required) 
-and `load("@io_grpc_grpc_java//:java_grpc_library.bzl", "java_grpc_library")` (from this project), as in
-[this example `BUILD.bazel`](https://github.com/grpc/grpc-java/blob/master/examples/BUILD.bazel).
+And in a different terminal window run:
 
-API Stability
--------------
+```
+$ ./build/install/examples/bin/hello-world-client
+```
 
-APIs annotated with `@Internal` are for internal use by the gRPC library and
-should not be used by gRPC users. APIs annotated with `@ExperimentalApi` are
-subject to change in future releases, and library code that other projects
-may depend on should not use these APIs.
+That's it!
 
-We recommend using the
-[grpc-java-api-checker](https://github.com/grpc/grpc-java-api-checker)
-(an [Error Prone](https://github.com/google/error-prone) plugin)
-to check for usages of `@ExperimentalApi` and `@Internal` in any library code
-that depends on gRPC. It may also be used to check for `@Internal` usage or
-unintended `@ExperimentalApi` consumption in non-library code.
+For more information, refer to gRPC Java's [README](../README.md) and
+[tutorial](https://grpc.io/docs/languages/java/basics).
 
-How to Build
-------------
+### Maven
 
-If you are making changes to gRPC-Java, see the [compiling
-instructions](COMPILING.md).
+If you prefer to use Maven:
+1. **[Install gRPC Java library SNAPSHOT locally, including code generation plugin](../COMPILING.md) (Only need this step for non-released versions, e.g. master HEAD).**
 
-High-level Components
----------------------
+2. Run in this directory:
+```
+$ mvn verify
+$ # Run the server
+$ mvn exec:java -Dexec.mainClass=io.grpc.examples.helloworld.HelloWorldServer
+$ # In another terminal run the client
+$ mvn exec:java -Dexec.mainClass=io.grpc.examples.helloworld.HelloWorldClient
+```
 
-At a high level there are three distinct layers to the library: *Stub*,
-*Channel*, and *Transport*.
+### Bazel
 
-### Stub
+If you prefer to use Bazel:
+```
+$ bazel build :hello-world-server :hello-world-client
+$ # Run the server
+$ bazel-bin/hello-world-server
+$ # In another terminal run the client
+$ bazel-bin/hello-world-client
+```
 
-The Stub layer is what is exposed to most developers and provides type-safe
-bindings to whatever datamodel/IDL/interface you are adapting. gRPC comes with
-a [plugin](https://github.com/google/grpc-java/blob/master/compiler) to the
-protocol-buffers compiler that generates Stub interfaces out of `.proto` files,
-but bindings to other datamodel/IDL are easy and encouraged.
+## Other examples
 
-### Channel
+- [Android examples](android)
 
-The Channel layer is an abstraction over Transport handling that is suitable for
-interception/decoration and exposes more behavior to the application than the
-Stub layer. It is intended to be easy for application frameworks to use this
-layer to address cross-cutting concerns such as logging, monitoring, auth, etc.
+- Secure channel examples
 
-### Transport
+  + [TLS examples](example-tls)
 
-The Transport layer does the heavy lifting of putting and taking bytes off the
-wire. The interfaces to it are abstract just enough to allow plugging in of
-different implementations. Note the transport layer API is considered internal
-to gRPC and has weaker API guarantees than the core API under package `io.grpc`.
+  + [ALTS examples](example-alts)
 
-gRPC comes with multiple Transport implementations:
+- [Google Authentication](example-gauth)
 
-1. The Netty-based HTTP/2 transport is the main transport implementation based
-   on [Netty](https://netty.io). It is not officially supported on Android.
-   There is a "grpc-netty-shaded" version of this transport. It is generally
-   preferred over using the Netty-based transport directly as it requires less
-   dependency management and is easier to upgrade within many applications.
-2. The OkHttp-based HTTP/2 transport is a lightweight transport based on
-   [Okio](https://square.github.io/okio/) and forked low-level parts of
-   [OkHttp](https://square.github.io/okhttp/). It is mainly for use on Android.
-3. The in-process transport is for when a server is in the same process as the
-   client. It is used frequently for testing, while also being safe for
-   production use.
-4. The Binder transport is for Android cross-process communication on a single
-   device.
+- [JWT-based Authentication](example-jwt-auth)
+
+- [OAuth2-based Authentication](example-oauth)
+
+- [Pre-serialized messages](src/main/java/io/grpc/examples/preserialized)
+
+## Unit test examples
+
+Examples for unit testing gRPC clients and servers are located in [examples/src/test](src/test).
+
+In general, we DO NOT allow overriding the client stub and we DO NOT support mocking final methods
+in gRPC-Java library. Users should be cautious that using tools like PowerMock or
+[mockito-inline](https://search.maven.org/search?q=g:org.mockito%20a:mockito-inline) can easily
+break this rule of thumb. We encourage users to leverage `InProcessTransport` as demonstrated in the
+examples to write unit tests. `InProcessTransport` is light-weight and runs the server
+and client in the same process without any socket/TCP connection.
+
+Mocking the client stub provides a false sense of security when writing tests. Mocking stubs and responses
+allows for tests that don't map to reality, causing the tests to pass, but the system-under-test to fail.
+The gRPC client library is complicated, and accurately reproducing that complexity with mocks is very hard.
+You will be better off and write less code by using `InProcessTransport` instead.
+
+Example bugs not caught by mocked stub tests include:
+
+* Calling the stub with a `null` message
+* Not calling `close()`
+* Sending invalid headers
+* Ignoring deadlines
+* Ignoring cancellation
+
+For testing a gRPC client, create the client with a real stub
+using an
+[InProcessChannel](../core/src/main/java/io/grpc/inprocess/InProcessChannelBuilder.java),
+and test it against an
+[InProcessServer](../core/src/main/java/io/grpc/inprocess/InProcessServerBuilder.java)
+with a mock/fake service implementation.
+
+For testing a gRPC server, create the server as an InProcessServer,
+and test it against a real client stub with an InProcessChannel.
+
+The gRPC-java library also provides a JUnit rule,
+[GrpcCleanupRule](../testing/src/main/java/io/grpc/testing/GrpcCleanupRule.java), to do the graceful
+shutdown boilerplate for you.
+
+## Even more examples
+
+A wide variety of third-party examples can be found [here](https://github.com/saturnism/grpc-java-by-example).

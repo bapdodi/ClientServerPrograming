@@ -1,11 +1,17 @@
-workspace(name = "io_grpc_grpc_java")
+workspace(name = "examples")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-http_archive(
-    name = "rules_java",
-    url = "https://github.com/bazelbuild/rules_java/releases/download/5.3.5/rules_java-5.3.5.tar.gz",
-    sha256 = "c73336802d0b4882e40770666ad055212df4ea62cfa6edf9cb0f9d29828a0934",
+# For released versions, use release tag:
+# http_archive(
+#     name = "io_grpc_grpc_java",
+#     sha256 = "<SHA>",
+#     strip_prefix = "grpc-java-<TAG>",
+#     url = "https://github.com/grpc/grpc-java/archive/<TAG>.zip",
+# )
+local_repository(
+    name = "io_grpc_grpc_java",
+    path = "..",
 )
 
 http_archive(
@@ -16,12 +22,14 @@ http_archive(
 )
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
-load("//:repositories.bzl", "IO_GRPC_GRPC_JAVA_ARTIFACTS")
-load("//:repositories.bzl", "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS")
-load("//:repositories.bzl", "grpc_java_repositories")
+load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_ARTIFACTS")
+load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS")
+load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 
 grpc_java_repositories()
 
+# Protobuf now requires C++14 or higher, which requires Bazel configuration
+# outside the WORKSPACE. See .bazelrc in this directory.
 load("@com_google_protobuf//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS")
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
@@ -39,10 +47,12 @@ switched_rules_by_language(
 )
 
 maven_install(
-    artifacts = IO_GRPC_GRPC_JAVA_ARTIFACTS + PROTOBUF_MAVEN_ARTIFACTS,
+    artifacts = [
+        "com.google.api.grpc:grpc-google-cloud-pubsub-v1:0.1.24",
+        "com.google.api.grpc:proto-google-cloud-pubsub-v1:0.1.24",
+    ] + IO_GRPC_GRPC_JAVA_ARTIFACTS + PROTOBUF_MAVEN_ARTIFACTS,
     override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
     repositories = [
         "https://repo.maven.apache.org/maven2/",
     ],
-    strict_visibility = True,
 )
