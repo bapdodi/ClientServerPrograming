@@ -2,9 +2,6 @@ package io.grpc.login;
 
 
 import java.io.IOException;
-import java.util.logging.Logger;
-
-import io.grpc.Channel;
 import io.grpc.Grpc;
 import io.grpc.InsecureServerCredentials;
 import io.grpc.Server;
@@ -32,11 +29,10 @@ public class DataBaseServer {
 
 
     static class DataBaseImpl extends DataBaseGrpc.DataBaseImplBase {
-        private final FileDatabase fileDatabase = new FileDatabase();
 
         @Override
         public void saveUser(SaveUserRequest request, StreamObserver<SaveUserResponse> responseObserver) {
-            fileDatabase.join(request.getId(), request.getName(), request.getPassword());
+        
             SaveUserResponse response = SaveUserResponse.newBuilder().setResult("User Saved").build();
             responseObserver.onNext(response);
             responseObserver.onCompleted();
@@ -44,13 +40,11 @@ public class DataBaseServer {
 
         @Override
         public void loginUser(LoginUserRequest request, StreamObserver<LoginUserResponse> responseObserver) {
-            String name = fileDatabase.login(request.getId(), request.getPassword());
+    
             LoginUserResponse response;
-            if (name != null) {
-                response = LoginUserResponse.newBuilder().setResult("Login Success: " + name).build();
-            } else {
-                response = LoginUserResponse.newBuilder().setResult("Login Fail").build();
-            }
+            
+            response = LoginUserResponse.newBuilder().setResult("Login Fail").build();
+            
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         }
