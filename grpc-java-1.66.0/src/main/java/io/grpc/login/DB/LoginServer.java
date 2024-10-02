@@ -1,4 +1,4 @@
-package io.grpc.login;
+package io.grpc.login.DB;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -10,15 +10,21 @@ import java.util.logging.Logger;
 import io.grpc.Grpc;
 import io.grpc.InsecureServerCredentials;
 import io.grpc.Server;
+import io.grpc.login.JoinRequest;
+import io.grpc.login.JoinResponse;
+import io.grpc.login.LoginGrpc;
+import io.grpc.login.LoginRequest;
+import io.grpc.login.LoginResponse;
 import io.grpc.stub.StreamObserver;
 public class LoginServer {
     private static final Logger logger = Logger.getLogger(LoginServer.class.getName());
     private Server server;
+    private static DataBase dataBase;
     private void start() throws IOException{
         int port = 50051;
         //인증이 없는 서버
         server = Grpc.newServerBuilderForPort(port, InsecureServerCredentials.create())
-                .addService(new GreeterImpl())
+                .addService(new LoginImpl())
                 .build()
                 .start();
         
@@ -51,13 +57,15 @@ public class LoginServer {
 
     public static void main(String[] args) throws IOException, InterruptedException, SQLException {
         final LoginServer server = new LoginServer();
+        dataBase = new DataBase();
         server.start();
         server.blockUntilShutdown();
     }
-    static class GreeterImpl extends LoginGrpc.LoginImplBase {
+    static class LoginImpl extends LoginGrpc.LoginImplBase {
 
         @Override
         public void join(JoinRequest request, StreamObserver<JoinResponse> responseObserver) {
+            dataBase.join(request.getId(), request.getName(), request.getPassword());
             JoinResponse response = JoinResponse.newBuilder().setResult("Join Success").build();
             responseObserver.onNext(response);
             responseObserver.onCompleted();
@@ -66,8 +74,14 @@ public class LoginServer {
         @Override
         public void login(LoginRequest request, StreamObserver<LoginResponse> responseObserver) {
             LoginResponse response;
-            response = LoginResponse.newBuilder().setResult("Login Fail").build();
-            
+            String name = dataBase.login(request.getId(), request.getPassword());
+            if(name != null){
+                response = LoginResponse.newBuilder().setResult("Login Success: "+name).build();
+            }
+            else{
+                response = LoginResponse.newBuilder().setResult("Login Fail").build();
+                
+            }
             
             responseObserver.onNext(response);
             responseObserver.onCompleted();

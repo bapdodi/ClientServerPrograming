@@ -1,13 +1,22 @@
-package io.grpc.login;
+package io.grpc.login.DB;
 
+import io.grpc.Channel;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import io.grpc.Grpc;
+import io.grpc.InsecureChannelCredentials;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
+import io.grpc.login.JoinRequest;
+import io.grpc.login.JoinResponse;
+import io.grpc.login.LoginGrpc;
+import io.grpc.login.LoginRequest;
+import io.grpc.login.LoginResponse;
+import io.grpc.login.LoginGrpc.LoginBlockingStub;
 
 
 /**
