@@ -78,7 +78,6 @@ def createStartScripts(String mainClassName) {
         applicationName = taskName.replaceAll('([A-Z])') { '-' + it[0].uncapitalize() }
         
         outputDir = new File(project.buildDir, 'tmp/scripts/' + name)
-        System.out.println("mainClassName: " + outputDir)
         classpath = startScripts.classpath
     }
     application {
@@ -93,3 +92,5 @@ def createStartScripts(String mainClassName) {
 
 createStartScripts('io.grpc.login.LoginClient')
 createStartScripts('io.grpc.login.LoginServer')
+
+

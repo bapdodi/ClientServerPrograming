@@ -1,16 +1,10 @@
 package io.grpc.login;
 
-import io.grpc.Channel;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import io.grpc.Grpc;
-import io.grpc.InsecureChannelCredentials;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import io.grpc.StatusRuntimeException;
 
 
 /**
@@ -24,90 +18,59 @@ public class LoginClient {
     //동기적 방식은 서버 응답을 기다리는동안 lock됨
     //stub이란 클라이언트가 서버의 메서드를 호출할 때 사용되는 객체
     private final LoginGrpc.LoginBlockingStub blockingStub;
-    private static Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner;
+    private final CMethod cMethod;
 
     public LoginClient(io.grpc.Channel channel) {
         //채널은 받아오기 때문에 여기서 채널을 종료안시켜도 됨
         //채널을 받아오면 채널을 재사용시키기 편하다
         blockingStub = LoginGrpc.newBlockingStub(channel);
+        cMethod = new CMethod(blockingStub, logger);
+        scanner = new Scanner(System.in);
     }
 
-    /** Join to server. */
-    public void join(String Id, String Password, String name){
-        //HelloRequest 객체를 만들어서 name을 넣어줌
-        JoinRequest request = JoinRequest.newBuilder().setId(Id).setPassword(Password).setName(name).build();
-        JoinResponse response;
-        try {
-            //서버로 요청을 보내고 응답을 받음
-            response = blockingStub.join(request);
-        } catch (StatusRuntimeException e) {
-            logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-            return;
-        }
-        logger.info("Join: " + response.getResult());
-    }
-    public void login(String Id, String Password){
-        //HelloRequest 객체를 만들어서 name을 넣어줌
-        LoginRequest request = LoginRequest.newBuilder().setId(Id).setPassword(Password).build();
-        LoginResponse response;
-        try {
-            //서버로 요청을 보내고 응답을 받음
-            response = blockingStub.login(request);
-        } catch (StatusRuntimeException e) {
-            logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-            return;
-        }
-        logger.info(response.getResult());
-    }
+   
 
-    public static void selectMethod(String target){
-        System.out.println("join 또는 login을 입력해주세요");
-        String method = scanner.nextLine();
-        if(method.equals("join")){
-            System.out.println("Id를 입력해주세요");
-            String Id = scanner.nextLine();
-            System.out.println("Password를 입력해주세요");
-            String Password = scanner.nextLine();
-            System.out.println("name을 입력해주세요");
-            String name = scanner.nextLine();
-            ManagedChannel channel = ManagedChannelBuilder.forTarget(target)
-            .usePlaintext()
-            .build();
-            try {
-                LoginClient client = new LoginClient(channel);
-                client.join(Id, Password, name);
-            } finally {
-                try {
-                    channel.shutdownNow().awaitTermination(5, TimeUnit.SECONDS);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
+    public void selectMethod(){
+        logger.info("***input number***");
+        logger.info("1. 학생리스트");
+        logger.info("2. 수강과목리스트");
+        logger.info("3. 학생 별 수강과목리스트");
+        logger.info("4. 수강과목 별 학생리스트");
+        logger.info("5. 학생 별 수강을 완료한 과목리스트");
+        logger.info("6. 수강신청");
+        logger.info("7. 죵료");
+        String input = scanner.nextLine();
+        switch(input){
+            case "1":
+                cMethod.showStudentList();
+                break;
+            case "2":
+                cMethod.showSubjectList();
+                break;
+            case "3":
+                cMethod.showStudentSubjectList();
+                break;
+            case "4":
+                cMethod.showSubjectStudentList();
+                break;
+            case "5":
+                cMethod.showCompleteList();
+                    break;
+            case "6":
+                cMethod.showSubjectApply();
+                break;
+            case "7":
+                System.exit(0);
+                break;
+            default:
+                logger.info("잘못된 입력입니다.");
+                logger.info("다시 입력해주세요.");
+                selectMethod();
+                break;
         }
-        else if(method.equals("login")){
-            System.out.println("Id를 입력해주세요");
-            String Id = scanner.nextLine();
-            System.out.println("Password를 입력해주세요");
-            String Password = scanner.nextLine();
-            ManagedChannel channel = ManagedChannelBuilder.forTarget(target)
-            .usePlaintext()
-            .build();
-            try {
-                LoginClient client = new LoginClient(channel);
-                client.login(Id, Password);
-            } finally {
-                try {
-                    channel.shutdownNow().awaitTermination(5, TimeUnit.SECONDS);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }
-        else{
-            selectMethod(target);
-        }
+        
+        
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -126,7 +89,12 @@ public class LoginClient {
         if (args.length > 1) {
         target = args[1];
         }
-        selectMethod(target);
+        //채널
+        ManagedChannel channel = ManagedChannelBuilder.forTarget(target)
+        .usePlaintext()
+        .build();
+        LoginClient client = new LoginClient(channel);
+        client.selectMethod();
         
     }
 
