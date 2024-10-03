@@ -15,6 +15,7 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.Server;
 import io.grpc.StatusRuntimeException;
 import io.grpc.database.DataBaseGrpc;
+import io.grpc.database.*;
 import io.grpc.stub.StreamObserver;
 public class LoginServer {
     private static final Logger logger = Logger.getLogger(LoginServer.class.getName());
@@ -36,7 +37,6 @@ public class LoginServer {
         ManagedChannel dbChannel = ManagedChannelBuilder.forAddress("localhost", dbPort)
         .usePlaintext()
         .build();
-
         blockingStub = DataBaseGrpc.newBlockingStub(dbChannel);
 
         //JVM이 종료될때 서버를 안전하게 종료하기 위해 사용
@@ -78,8 +78,10 @@ public class LoginServer {
     static class LoginImpl extends LoginGrpc.LoginImplBase {
         @Override
         public void showStudentList(ShowStudentListRequest request, StreamObserver<ShowStudentListResponse> responseObserver) {
+            GetStudentListRequest request2 = GetStudentListRequest.newBuilder().build();
+            GetStudentListResponse response2 = blockingStub.getStudentList(request2);
             ShowStudentListResponse response = ShowStudentListResponse.newBuilder()
-                .setResult("Student List Data")
+                .setResult(response2.getResult())
                 .build();
             
             // 클라이언트에 응답 전송

@@ -32,14 +32,18 @@ public class LoginClient {
    
 
     public void selectMethod(){
-        logger.info("***input number***");
-        logger.info("1. 학생리스트");
-        logger.info("2. 수강과목리스트");
-        logger.info("3. 학생 별 수강과목리스트");
-        logger.info("4. 수강과목 별 학생리스트");
-        logger.info("5. 학생 별 수강을 완료한 과목리스트");
-        logger.info("6. 수강신청");
-        logger.info("7. 죵료");
+
+
+
+        System.out.println("*** input number ***");
+        System.out.println("1. 학생리스트");
+        System.out.println("2. 수강과목리스트");
+        System.out.println("3. 학생 별 수강과목리스트");
+        System.out.println("4. 수강과목 별 학생리스트");
+        System.out.println("5. 학생 별 수강을 완료한 과목리스트");
+        System.out.println("6. 수강신청");
+        System.out.println("7. 종료");
+
         String input = scanner.nextLine();
         switch(input){
             case "1":
@@ -64,8 +68,8 @@ public class LoginClient {
                 System.exit(0);
                 break;
             default:
-                logger.info("잘못된 입력입니다.");
-                logger.info("다시 입력해주세요.");
+                System.out.println("잘못된 입력입니다.");
+                System.out.println("다시 입력해주세요.");
                 selectMethod();
                 break;
         }

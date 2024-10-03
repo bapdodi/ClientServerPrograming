@@ -11,8 +11,9 @@ import io.grpc.InsecureServerCredentials;
 import io.grpc.Server;
 import io.grpc.stub.StreamObserver;
 import io.grpc.database.*;
-import io.grpc.login.Part1_제공화일.Student;
-import io.grpc.login.Part1_제공화일.StudentList;
+import io.grpc.login.Part1.Student;
+import io.grpc.login.Part1.StudentList;
+
 import java.util.ArrayList;
 
 
@@ -37,7 +38,7 @@ public class DataBaseServer {
             String result="";
             StudentList studentList;
             try {
-                studentList = new StudentList("src/main/java/io/grpc/login/Part1_제공화일/StudentList.txt");
+                studentList = new StudentList("src/main/java/io/grpc/login/Part1/Students.txt");
                 ArrayList<Student> result1 = studentList.getAllStudentRecords();
                 for(Student s : result1) {
                     result+=s.toString();

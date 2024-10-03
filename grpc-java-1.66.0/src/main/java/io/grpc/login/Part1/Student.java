@@ -1,4 +1,4 @@
-package io.grpc.login.Part1_제공화일;
+package io.grpc.login.Part1;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
