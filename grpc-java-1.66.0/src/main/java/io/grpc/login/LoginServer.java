@@ -56,6 +56,7 @@ public class LoginServer {
         server.start();
         server.blockUntilShutdown();
     }
+<<<<<<< Updated upstream
     static class GreeterImpl extends LoginGrpc.LoginImplBase {
 
         @Override
@@ -81,6 +82,10 @@ public class LoginServer {
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         }
+=======
+    static class LoginImpl extends LoginGrpc.LoginImplBase {
+        
+>>>>>>> Stashed changes
     
     }
 }
