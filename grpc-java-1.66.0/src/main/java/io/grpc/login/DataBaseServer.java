@@ -11,6 +11,8 @@ import io.grpc.InsecureServerCredentials;
 import io.grpc.Server;
 import io.grpc.stub.StreamObserver;
 import io.grpc.database.*;
+import io.grpc.login.Part1.Course;
+import io.grpc.login.Part1.CourseList;
 import io.grpc.login.Part1.Student;
 import io.grpc.login.Part1.StudentList;
 
@@ -40,8 +42,12 @@ public class DataBaseServer {
             try {
                 studentList = new StudentList("src/main/java/io/grpc/login/Part1/Students.txt");
                 ArrayList<Student> result1 = studentList.getAllStudentRecords();
+                int i=1;
                 for(Student s : result1) {
+                    result+=i+": ";
                     result+=s.toString();
+                    result+="\n";
+                    i++;
                 }
                 GetStudentListResponse response = GetStudentListResponse.newBuilder()
                         .setResult(result)
@@ -60,6 +66,24 @@ public class DataBaseServer {
         @Override
         public void getSubjectList(GetSubjectListRequest request, StreamObserver<GetSubjectListResponse> responseObserver) {
             String result="";
+            CourseList courseList;
+            try {
+                courseList = new CourseList("src/main/java/io/grpc/login/Part1/Courses.txt");
+                ArrayList<Course> result1 = courseList.getAllCourseRecords();
+                int i=1;
+                for(Course c : result1) {
+                    result+=i+": ";
+                    result+=c.toString();
+                    result+="\n";
+                    i++;
+                }
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             GetSubjectListResponse response = GetSubjectListResponse.newBuilder()
                     .setResult(result)
                     .build();

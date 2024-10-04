@@ -3,6 +3,8 @@ package io.grpc.login;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
+import org.checkerframework.checker.units.qual.s;
+
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
@@ -70,9 +72,9 @@ public class LoginClient {
             default:
                 System.out.println("잘못된 입력입니다.");
                 System.out.println("다시 입력해주세요.");
-                selectMethod();
                 break;
         }
+        selectMethod();
         
         
     }

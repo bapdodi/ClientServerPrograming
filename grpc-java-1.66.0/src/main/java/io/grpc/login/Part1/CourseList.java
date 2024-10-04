@@ -20,4 +20,8 @@ public class CourseList {
 		}
 		objStudentFile.close();
 	}
+
+    public ArrayList<Course> getAllCourseRecords() {
+        return this.vCourse;
+    }
 }

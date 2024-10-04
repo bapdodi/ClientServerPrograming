@@ -7,13 +7,11 @@ import java.sql.SQLException;
  */
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
-import java.util.logging.Level;
 import io.grpc.Grpc;
 import io.grpc.InsecureServerCredentials;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Server;
-import io.grpc.StatusRuntimeException;
 import io.grpc.database.DataBaseGrpc;
 import io.grpc.database.*;
 import io.grpc.stub.StreamObserver;
@@ -90,8 +88,10 @@ public class LoginServer {
         }
         @Override
         public void showSubjectList(ShowSubjectListRequest request, StreamObserver<ShowSubjectListResponse> responseObserver) {
+            GetSubjectListRequest request2 = GetSubjectListRequest.newBuilder().build();
+            GetSubjectListResponse response2 = blockingStub.getSubjectList(request2);
             ShowSubjectListResponse response = ShowSubjectListResponse.newBuilder()
-                .setResult("Subject List Data")
+                .setResult(response2.getResult())
                 .build();
             
             // 클라이언트에 응답 전송

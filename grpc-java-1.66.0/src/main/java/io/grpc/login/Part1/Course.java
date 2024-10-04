@@ -22,4 +22,10 @@ public class Course {
         }
         
     }
+    public String toString() {
+        if(this.couseLimited == 0){
+            return "Course Number: " + this.couseNum + " Professor: " + this.couseProfessor + " Course Name: " + this.couseName;
+        }
+        return "Course Number: " + this.couseNum + " Professor: " + this.couseProfessor + " Course Name: " + this.couseName + " Limited: " + this.couseLimited;
+    }
 }
