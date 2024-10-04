@@ -2,12 +2,8 @@ package io.grpc.login;
 
 import java.util.Scanner;
 import java.util.logging.Logger;
-
-import org.checkerframework.checker.units.qual.s;
-
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-
 
 /**
   * A simple client that requests a greeting from the {@link LoginServer}.
@@ -30,13 +26,35 @@ public class LoginClient {
         cMethod = new CMethod(blockingStub, logger);
         scanner = new Scanner(System.in);
     }
-
-   
-
     public void selectMethod(){
-
-
-
+        printMenu();
+        String inputMenu = scanner.nextLine();
+        switch(inputMenu){
+            case "1": cMethod.showStudentList();
+                break;
+            case "2": cMethod.showSubjectList();
+                break;
+            case "3": cMethod.showStudentSubjectList();
+                break;
+            case "4": cMethod.showSubjectStudentList();
+                break;
+            case "5": cMethod.showCompleteList();
+                break;
+            case "6": cMethod.showSubjectApply();
+                break;
+            case "7": System.exit(0);
+                break;
+            default:
+                showErrorMenuMessage();
+                break;
+        }
+        selectMethod();
+    }
+    private void showErrorMenuMessage() {
+        System.out.println("잘못된 입력입니다.");
+        System.out.println("다시 입력해주세요.");
+    }
+    private void printMenu() {
         System.out.println("*** input number ***");
         System.out.println("1. 학생리스트");
         System.out.println("2. 수강과목리스트");
@@ -45,38 +63,6 @@ public class LoginClient {
         System.out.println("5. 학생 별 수강을 완료한 과목리스트");
         System.out.println("6. 수강신청");
         System.out.println("7. 종료");
-
-        String input = scanner.nextLine();
-        switch(input){
-            case "1":
-                cMethod.showStudentList();
-                break;
-            case "2":
-                cMethod.showSubjectList();
-                break;
-            case "3":
-                cMethod.showStudentSubjectList();
-                break;
-            case "4":
-                cMethod.showSubjectStudentList();
-                break;
-            case "5":
-                cMethod.showCompleteList();
-                    break;
-            case "6":
-                cMethod.showSubjectApply();
-                break;
-            case "7":
-                System.exit(0);
-                break;
-            default:
-                System.out.println("잘못된 입력입니다.");
-                System.out.println("다시 입력해주세요.");
-                break;
-        }
-        selectMethod();
-        
-        
     }
 
     public static void main(String[] args) throws InterruptedException {
