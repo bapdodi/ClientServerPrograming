@@ -65,9 +65,8 @@ public class LoginClient {
         System.out.println("7. 종료");
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    private static String processArguments(String[] args, String target) {
         String user = "world";
-        String target = "localhost:50051";
         if (args.length > 0) {
             if ("--help".equals(args[0])) {
               System.err.println("Usage: [name [target]]");
@@ -78,17 +77,19 @@ public class LoginClient {
             }
         user = args[0];
         }
-        if (args.length > 1) {
-        target = args[1];
-        }
-        //채널
-        ManagedChannel channel = ManagedChannelBuilder.forTarget(target)
-        .usePlaintext()
-        .build();
+        if (args.length > 1) {target = args[1];}
+        return target;
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        String target = "localhost:50051";
+        target = processArguments(args, target);
+        ManagedChannel channel = ManagedChannelBuilder.forTarget(target).usePlaintext().build();
         LoginClient client = new LoginClient(channel);
         client.selectMethod();
-        
     }
+    
+    
 
 
 }
