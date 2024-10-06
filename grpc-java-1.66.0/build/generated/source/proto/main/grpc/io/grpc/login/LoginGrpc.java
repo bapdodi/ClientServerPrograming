@@ -15,6 +15,68 @@ public final class LoginGrpc {
   public static final java.lang.String SERVICE_NAME = "login.Login";
 
   // Static method descriptors that strictly reflect the proto.
+  private static volatile io.grpc.MethodDescriptor<io.grpc.login.LoginRequest,
+      io.grpc.login.LoginResponse> getLoginMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "login",
+      requestType = io.grpc.login.LoginRequest.class,
+      responseType = io.grpc.login.LoginResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<io.grpc.login.LoginRequest,
+      io.grpc.login.LoginResponse> getLoginMethod() {
+    io.grpc.MethodDescriptor<io.grpc.login.LoginRequest, io.grpc.login.LoginResponse> getLoginMethod;
+    if ((getLoginMethod = LoginGrpc.getLoginMethod) == null) {
+      synchronized (LoginGrpc.class) {
+        if ((getLoginMethod = LoginGrpc.getLoginMethod) == null) {
+          LoginGrpc.getLoginMethod = getLoginMethod =
+              io.grpc.MethodDescriptor.<io.grpc.login.LoginRequest, io.grpc.login.LoginResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "login"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.login.LoginRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.login.LoginResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new LoginMethodDescriptorSupplier("login"))
+              .build();
+        }
+      }
+    }
+    return getLoginMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<io.grpc.login.JoinRequest,
+      io.grpc.login.JoinResponse> getJoinMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "join",
+      requestType = io.grpc.login.JoinRequest.class,
+      responseType = io.grpc.login.JoinResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<io.grpc.login.JoinRequest,
+      io.grpc.login.JoinResponse> getJoinMethod() {
+    io.grpc.MethodDescriptor<io.grpc.login.JoinRequest, io.grpc.login.JoinResponse> getJoinMethod;
+    if ((getJoinMethod = LoginGrpc.getJoinMethod) == null) {
+      synchronized (LoginGrpc.class) {
+        if ((getJoinMethod = LoginGrpc.getJoinMethod) == null) {
+          LoginGrpc.getJoinMethod = getJoinMethod =
+              io.grpc.MethodDescriptor.<io.grpc.login.JoinRequest, io.grpc.login.JoinResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "join"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.login.JoinRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.login.JoinResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new LoginMethodDescriptorSupplier("join"))
+              .build();
+        }
+      }
+    }
+    return getJoinMethod;
+  }
+
   private static volatile io.grpc.MethodDescriptor<io.grpc.login.ShowStudentListRequest,
       io.grpc.login.ShowStudentListResponse> getShowStudentListMethod;
 
@@ -251,6 +313,20 @@ public final class LoginGrpc {
 
     /**
      */
+    default void login(io.grpc.login.LoginRequest request,
+        io.grpc.stub.StreamObserver<io.grpc.login.LoginResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getLoginMethod(), responseObserver);
+    }
+
+    /**
+     */
+    default void join(io.grpc.login.JoinRequest request,
+        io.grpc.stub.StreamObserver<io.grpc.login.JoinResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getJoinMethod(), responseObserver);
+    }
+
+    /**
+     */
     default void showStudentList(io.grpc.login.ShowStudentListRequest request,
         io.grpc.stub.StreamObserver<io.grpc.login.ShowStudentListResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getShowStudentListMethod(), responseObserver);
@@ -321,6 +397,22 @@ public final class LoginGrpc {
 
     /**
      */
+    public void login(io.grpc.login.LoginRequest request,
+        io.grpc.stub.StreamObserver<io.grpc.login.LoginResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getLoginMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void join(io.grpc.login.JoinRequest request,
+        io.grpc.stub.StreamObserver<io.grpc.login.JoinResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getJoinMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
     public void showStudentList(io.grpc.login.ShowStudentListRequest request,
         io.grpc.stub.StreamObserver<io.grpc.login.ShowStudentListResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
@@ -386,6 +478,20 @@ public final class LoginGrpc {
 
     /**
      */
+    public io.grpc.login.LoginResponse login(io.grpc.login.LoginRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getLoginMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public io.grpc.login.JoinResponse join(io.grpc.login.JoinRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getJoinMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
     public io.grpc.login.ShowStudentListResponse showStudentList(io.grpc.login.ShowStudentListRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getShowStudentListMethod(), getCallOptions(), request);
@@ -445,6 +551,22 @@ public final class LoginGrpc {
 
     /**
      */
+    public com.google.common.util.concurrent.ListenableFuture<io.grpc.login.LoginResponse> login(
+        io.grpc.login.LoginRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getLoginMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<io.grpc.login.JoinResponse> join(
+        io.grpc.login.JoinRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getJoinMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
     public com.google.common.util.concurrent.ListenableFuture<io.grpc.login.ShowStudentListResponse> showStudentList(
         io.grpc.login.ShowStudentListRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
@@ -492,12 +614,14 @@ public final class LoginGrpc {
     }
   }
 
-  private static final int METHODID_SHOW_STUDENT_LIST = 0;
-  private static final int METHODID_SHOW_SUBJECT_LIST = 1;
-  private static final int METHODID_SHOW_STUDENT_SUBJECT_LIST = 2;
-  private static final int METHODID_SHOW_SUBJECT_STUDENT_LIST = 3;
-  private static final int METHODID_SHOW_COMPLETE_LIST = 4;
-  private static final int METHODID_SHOW_SUBJECT_APPLY = 5;
+  private static final int METHODID_LOGIN = 0;
+  private static final int METHODID_JOIN = 1;
+  private static final int METHODID_SHOW_STUDENT_LIST = 2;
+  private static final int METHODID_SHOW_SUBJECT_LIST = 3;
+  private static final int METHODID_SHOW_STUDENT_SUBJECT_LIST = 4;
+  private static final int METHODID_SHOW_SUBJECT_STUDENT_LIST = 5;
+  private static final int METHODID_SHOW_COMPLETE_LIST = 6;
+  private static final int METHODID_SHOW_SUBJECT_APPLY = 7;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -516,6 +640,14 @@ public final class LoginGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
+        case METHODID_LOGIN:
+          serviceImpl.login((io.grpc.login.LoginRequest) request,
+              (io.grpc.stub.StreamObserver<io.grpc.login.LoginResponse>) responseObserver);
+          break;
+        case METHODID_JOIN:
+          serviceImpl.join((io.grpc.login.JoinRequest) request,
+              (io.grpc.stub.StreamObserver<io.grpc.login.JoinResponse>) responseObserver);
+          break;
         case METHODID_SHOW_STUDENT_LIST:
           serviceImpl.showStudentList((io.grpc.login.ShowStudentListRequest) request,
               (io.grpc.stub.StreamObserver<io.grpc.login.ShowStudentListResponse>) responseObserver);
@@ -558,6 +690,20 @@ public final class LoginGrpc {
 
   public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
     return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+        .addMethod(
+          getLoginMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              io.grpc.login.LoginRequest,
+              io.grpc.login.LoginResponse>(
+                service, METHODID_LOGIN)))
+        .addMethod(
+          getJoinMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              io.grpc.login.JoinRequest,
+              io.grpc.login.JoinResponse>(
+                service, METHODID_JOIN)))
         .addMethod(
           getShowStudentListMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
@@ -648,6 +794,8 @@ public final class LoginGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new LoginFileDescriptorSupplier())
+              .addMethod(getLoginMethod())
+              .addMethod(getJoinMethod())
               .addMethod(getShowStudentListMethod())
               .addMethod(getShowSubjectListMethod())
               .addMethod(getShowStudentSubjectListMethod())

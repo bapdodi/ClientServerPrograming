@@ -1,11 +1,6 @@
 package io.grpc.login;
-
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import com.google.errorprone.annotations.OverridingMethodsMustInvokeSuper;
-
 import io.grpc.Grpc;
 import io.grpc.InsecureServerCredentials;
 import io.grpc.Server;
@@ -21,20 +16,46 @@ import java.util.ArrayList;
 
 public class DataBaseServer {
     private static final int PORT = 50052; // 데이터베이스 서버 포트
+    private static final DataBaseLinked db=new DataBaseLinked();
 
     public static void main(String[] args) throws IOException, InterruptedException {
+
         Server server = Grpc.newServerBuilderForPort(PORT, InsecureServerCredentials.create())
                 .addService(new DataBaseImpl())
                 .build()
                 .start();
 
         System.out.println("DataBase Server started on port " + PORT);
+        
         server.awaitTermination();
     }
 
 
 
     static class DataBaseImpl extends DataBaseGrpc.DataBaseImplBase {
+        @Override
+        public void getLogin(GetLoginRequest request, StreamObserver<GetLoginResponse> responseObserver) {
+            String id = request.getId();
+            String password = request.getPassword();
+            String name = db.login(id, password);
+            GetLoginResponse response = GetLoginResponse.newBuilder()
+                    .setName(name)
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+        @Override
+        public void getJoin(GetJoinRequest request, StreamObserver<GetJoinResponse> responseObserver) {
+            String id = request.getId();
+            String name = request.getName();
+            String password = request.getPassword();
+            String result = db.join(id, name, password);
+            GetJoinResponse response = GetJoinResponse.newBuilder()
+                    .setResult(result)
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
         @Override
         public void getStudentList(GetStudentListRequest request, StreamObserver<GetStudentListResponse> responseObserver) {
             String result="";

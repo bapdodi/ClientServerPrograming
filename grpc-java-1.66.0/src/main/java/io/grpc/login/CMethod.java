@@ -15,6 +15,40 @@ public class CMethod {
         this.scanner = new Scanner(System.in);
     }
 
+    public void login() {
+        System.out.println("Input id: ");
+        String id = scanner.nextLine();
+        System.out.println("Input password: ");
+        String password = scanner.nextLine();
+        LoginRequest request = LoginRequest.newBuilder().setId(id).setPassword(password).build();
+        LoginResponse response;
+        try {
+            response = blockingStub.login(request);
+        } catch (StatusRuntimeException e) {
+            logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+            return;
+        }
+        logger.info("Login: " + response.getName());
+    }
+
+    public void join() {
+        System.out.println("Input id: ");
+        String id = scanner.nextLine();
+        System.out.println("Input password: ");
+        String password = scanner.nextLine();
+        System.out.println("Input name: ");
+        String name = scanner.nextLine();
+        JoinRequest request = JoinRequest.newBuilder().setId(id).setPassword(password).setName(name).build();
+        JoinResponse response;
+        try {
+            response = blockingStub.join(request);
+        } catch (StatusRuntimeException e) {
+            logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+            return;
+        }
+        logger.info("Join: " + response.getResult());
+    }
+
     public void showStudentList(){
         ShowStudentListRequest request = ShowStudentListRequest.newBuilder().build();
         ShowStudentListResponse response;
@@ -96,5 +130,7 @@ public class CMethod {
         }
         logger.info("ShowSubjectApply: " + response.getResult());
 	}
+
+
     
 }

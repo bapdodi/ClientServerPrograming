@@ -11,12 +11,32 @@ option objc_class_prefix = "HLW";
 package login;
 
 service Login {
+    rpc login (LoginRequest) returns (LoginResponse) {}
+    rpc join (JoinRequest) returns (JoinResponse) {}
     rpc showStudentList (ShowStudentListRequest) returns (ShowStudentListResponse) {}
     rpc showSubjectList (ShowSubjectListRequest) returns (ShowSubjectListResponse) {}
     rpc showStudentSubjectList (ShowStudentSubjectListRequest) returns (ShowStudentSubjectListResponse) {}
     rpc showSubjectStudentList (ShowSubjectStudentListRequest) returns (ShowSubjectStudentListResponse) {}
     rpc showCompleteList (ShowCompleteListRequest) returns (ShowCompleteListResponse) {}
     rpc showSubjectApply (ShowSubjectApplyRequest) returns (ShowSubjectApplyResponse) {}
+}
+
+message LoginRequest {
+    string id = 1;
+    string password = 2;
+}
+message LoginResponse {
+    string result = 1;
+    string name = 2;
+}
+
+message JoinRequest {
+    string id = 1;
+    string password = 2;
+    string name = 3;
+}
+message JoinResponse {
+    string result = 1;
 }
 
 message ShowStudentListRequest {

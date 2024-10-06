@@ -30,19 +30,23 @@ public class LoginClient {
         printMenu();
         String inputMenu = scanner.nextLine();
         switch(inputMenu){
-            case "1": cMethod.showStudentList();
+            case "1": cMethod.login();
                 break;
-            case "2": cMethod.showSubjectList();
+            case "2": cMethod.join();
                 break;
-            case "3": cMethod.showStudentSubjectList();
+            case "3": cMethod.showStudentList();
                 break;
-            case "4": cMethod.showSubjectStudentList();
+            case "4": cMethod.showSubjectList();
                 break;
-            case "5": cMethod.showCompleteList();
+            case "5": cMethod.showStudentSubjectList();
                 break;
-            case "6": cMethod.showSubjectApply();
+            case "6": cMethod.showSubjectStudentList();
                 break;
-            case "7": System.exit(0);
+            case "7": cMethod.showCompleteList();
+                break;
+            case "8": cMethod.showSubjectApply();
+                break;
+            case "9": System.exit(0);
                 break;
             default:
                 showErrorMenuMessage();
@@ -56,13 +60,15 @@ public class LoginClient {
     }
     private void printMenu() {
         System.out.println("*** input number ***");
-        System.out.println("1. 학생리스트");
-        System.out.println("2. 수강과목리스트");
-        System.out.println("3. 학생 별 수강과목리스트");
-        System.out.println("4. 수강과목 별 학생리스트");
-        System.out.println("5. 학생 별 수강을 완료한 과목리스트");
-        System.out.println("6. 수강신청");
-        System.out.println("7. 종료");
+        System.out.println("1. 로그인");
+        System.out.println("2. 회원가입");
+        System.out.println("3. 학생리스트");
+        System.out.println("4. 수강과목리스트");
+        System.out.println("5. 학생 별 수강과목리스트");
+        System.out.println("6. 수강과목 별 학생리스트");
+        System.out.println("7. 학생 별 수강을 완료한 과목리스트");
+        System.out.println("8. 수강신청");
+        System.out.println("9. 종료");
     }
 
     private static String processArguments(String[] args, String target) {

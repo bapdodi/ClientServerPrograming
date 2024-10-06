@@ -14,6 +14,7 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.Server;
 import io.grpc.database.DataBaseGrpc;
 import io.grpc.database.*;
+import io.grpc.login.*;
 import io.grpc.stub.StreamObserver;
 public class LoginServer {
     private static final Logger logger = Logger.getLogger(LoginServer.class.getName());
@@ -74,6 +75,30 @@ public class LoginServer {
         server.blockUntilShutdown(server.dbServer);
     }
     static class LoginImpl extends LoginGrpc.LoginImplBase {
+        @Override
+        public void login(LoginRequest request, StreamObserver<LoginResponse> responseObserver) {
+            GetLoginRequest request2 = GetLoginRequest.newBuilder().setId(request.getId()).setPassword(request.getPassword()).build();
+            GetLoginResponse response2 = blockingStub.getLogin(request2);
+            LoginResponse response = LoginResponse.newBuilder()
+                .setResult(response2.getResult())
+                .setName(response2.getName())
+                .build();
+            // 클라이언트에 응답 전송
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+        @Override
+        public void join(JoinRequest request, StreamObserver<JoinResponse> responseObserver) {
+            GetJoinRequest request2 = GetJoinRequest.newBuilder().setId(request.getId()).setName(request.getName()).setPassword(request.getPassword()).build();
+            GetJoinResponse response2 = blockingStub.getJoin(request2);
+            JoinResponse response = JoinResponse.newBuilder()
+                .setResult(response2.getResult())
+                .build();
+            // 클라이언트에 응답 전송
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+
         @Override
         public void showStudentList(ShowStudentListRequest request, StreamObserver<ShowStudentListResponse> responseObserver) {
             GetStudentListRequest request2 = GetStudentListRequest.newBuilder().build();

@@ -11,12 +11,31 @@ option objc_class_prefix = "HLW";
 package database;
 
 service DataBase {
+    rpc GetLogin (GetLoginRequest) returns (GetLoginResponse) {}
+    rpc GetJoin (GetJoinRequest) returns (GetJoinResponse) {}
     rpc GetStudentList (GetStudentListRequest) returns (GetStudentListResponse) {}
     rpc GetSubjectList (GetSubjectListRequest) returns (GetSubjectListResponse) {}
     rpc GetStudentSubjectList (GetStudentSubjectListRequest) returns (GetStudentSubjectListResponse) {}
     rpc GetSubjectStudentList (GetSubjectStudentListRequest) returns (GetSubjectStudentListResponse) {}
     rpc GetCompleteList (GetCompleteListRequest) returns (GetCompleteListResponse) {}
     rpc GetSubjectApply (GetSubjectApplyRequest) returns (GetSubjectApplyResponse) {}
+}
+
+message GetLoginRequest {
+    string id = 1;
+    string password = 2;
+}
+message GetLoginResponse {
+    string result = 1;
+}
+
+message GetJoinRequest {
+    string id = 1;
+    string password = 2;
+    string name = 3;
+}
+message GetJoinResponse {
+    string result = 1;
 }
 
 message GetStudentListRequest {

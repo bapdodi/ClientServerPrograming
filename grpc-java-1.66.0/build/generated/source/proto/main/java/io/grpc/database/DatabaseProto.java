@@ -16,6 +16,26 @@ public final class DatabaseProto {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_database_GetLoginRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_database_GetLoginRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_database_GetLoginResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_database_GetLoginResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_database_GetJoinRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_database_GetJoinRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_database_GetJoinResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_database_GetJoinResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_database_GetStudentListRequest_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -84,109 +104,141 @@ public final class DatabaseProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\016database.proto\022\010database\"\027\n\025GetStudent" +
-      "ListRequest\"(\n\026GetStudentListResponse\022\016\n" +
-      "\006result\030\001 \001(\t\"\027\n\025GetSubjectListRequest\"(" +
-      "\n\026GetSubjectListResponse\022\016\n\006result\030\001 \001(\t" +
-      "\"1\n\034GetStudentSubjectListRequest\022\021\n\tstud" +
-      "entId\030\001 \001(\t\"/\n\035GetStudentSubjectListResp" +
-      "onse\022\016\n\006result\030\001 \001(\t\"1\n\034GetSubjectStuden" +
-      "tListRequest\022\021\n\tsubjectId\030\001 \001(\t\"/\n\035GetSu" +
-      "bjectStudentListResponse\022\016\n\006result\030\001 \001(\t" +
-      "\"+\n\026GetCompleteListRequest\022\021\n\tstudentId\030" +
-      "\001 \001(\t\")\n\027GetCompleteListResponse\022\016\n\006resu" +
-      "lt\030\001 \001(\t\">\n\026GetSubjectApplyRequest\022\021\n\tst" +
-      "udentId\030\001 \001(\t\022\021\n\tsubjectId\030\002 \001(\t\")\n\027GetS" +
-      "ubjectApplyResponse\022\016\n\006result\030\001 \001(\t2\304\004\n\010" +
-      "DataBase\022U\n\016GetStudentList\022\037.database.Ge" +
-      "tStudentListRequest\032 .database.GetStuden" +
-      "tListResponse\"\000\022U\n\016GetSubjectList\022\037.data" +
-      "base.GetSubjectListRequest\032 .database.Ge" +
-      "tSubjectListResponse\"\000\022j\n\025GetStudentSubj" +
-      "ectList\022&.database.GetStudentSubjectList" +
-      "Request\032\'.database.GetStudentSubjectList" +
-      "Response\"\000\022j\n\025GetSubjectStudentList\022&.da" +
-      "tabase.GetSubjectStudentListRequest\032\'.da" +
-      "tabase.GetSubjectStudentListResponse\"\000\022X" +
-      "\n\017GetCompleteList\022 .database.GetComplete" +
-      "ListRequest\032!.database.GetCompleteListRe" +
-      "sponse\"\000\022X\n\017GetSubjectApply\022 .database.G" +
-      "etSubjectApplyRequest\032!.database.GetSubj" +
-      "ectApplyResponse\"\000B)\n\020io.grpc.databaseB\r" +
-      "DatabaseProtoP\001\242\002\003HLWb\006proto3"
+      "\n\016database.proto\022\010database\"/\n\017GetLoginRe" +
+      "quest\022\n\n\002id\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\"0\n\020G" +
+      "etLoginResponse\022\016\n\006result\030\001 \001(\t\022\014\n\004name\030" +
+      "\002 \001(\t\"<\n\016GetJoinRequest\022\n\n\002id\030\001 \001(\t\022\020\n\010p" +
+      "assword\030\002 \001(\t\022\014\n\004name\030\003 \001(\t\"!\n\017GetJoinRe" +
+      "sponse\022\016\n\006result\030\001 \001(\t\"\027\n\025GetStudentList" +
+      "Request\"(\n\026GetStudentListResponse\022\016\n\006res" +
+      "ult\030\001 \001(\t\"\027\n\025GetSubjectListRequest\"(\n\026Ge" +
+      "tSubjectListResponse\022\016\n\006result\030\001 \001(\t\"1\n\034" +
+      "GetStudentSubjectListRequest\022\021\n\tstudentI" +
+      "d\030\001 \001(\t\"/\n\035GetStudentSubjectListResponse" +
+      "\022\016\n\006result\030\001 \001(\t\"1\n\034GetSubjectStudentLis" +
+      "tRequest\022\021\n\tsubjectId\030\001 \001(\t\"/\n\035GetSubjec" +
+      "tStudentListResponse\022\016\n\006result\030\001 \001(\t\"+\n\026" +
+      "GetCompleteListRequest\022\021\n\tstudentId\030\001 \001(" +
+      "\t\")\n\027GetCompleteListResponse\022\016\n\006result\030\001" +
+      " \001(\t\">\n\026GetSubjectApplyRequest\022\021\n\tstuden" +
+      "tId\030\001 \001(\t\022\021\n\tsubjectId\030\002 \001(\t\")\n\027GetSubje" +
+      "ctApplyResponse\022\016\n\006result\030\001 \001(\t2\313\005\n\010Data" +
+      "Base\022C\n\010GetLogin\022\031.database.GetLoginRequ" +
+      "est\032\032.database.GetLoginResponse\"\000\022@\n\007Get" +
+      "Join\022\030.database.GetJoinRequest\032\031.databas" +
+      "e.GetJoinResponse\"\000\022U\n\016GetStudentList\022\037." +
+      "database.GetStudentListRequest\032 .databas" +
+      "e.GetStudentListResponse\"\000\022U\n\016GetSubject" +
+      "List\022\037.database.GetSubjectListRequest\032 ." +
+      "database.GetSubjectListResponse\"\000\022j\n\025Get" +
+      "StudentSubjectList\022&.database.GetStudent" +
+      "SubjectListRequest\032\'.database.GetStudent" +
+      "SubjectListResponse\"\000\022j\n\025GetSubjectStude" +
+      "ntList\022&.database.GetSubjectStudentListR" +
+      "equest\032\'.database.GetSubjectStudentListR" +
+      "esponse\"\000\022X\n\017GetCompleteList\022 .database." +
+      "GetCompleteListRequest\032!.database.GetCom" +
+      "pleteListResponse\"\000\022X\n\017GetSubjectApply\022 " +
+      ".database.GetSubjectApplyRequest\032!.datab" +
+      "ase.GetSubjectApplyResponse\"\000B)\n\020io.grpc" +
+      ".databaseB\rDatabaseProtoP\001\242\002\003HLWb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         });
-    internal_static_database_GetStudentListRequest_descriptor =
+    internal_static_database_GetLoginRequest_descriptor =
       getDescriptor().getMessageTypes().get(0);
+    internal_static_database_GetLoginRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_database_GetLoginRequest_descriptor,
+        new java.lang.String[] { "Id", "Password", });
+    internal_static_database_GetLoginResponse_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_database_GetLoginResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_database_GetLoginResponse_descriptor,
+        new java.lang.String[] { "Result", "Name", });
+    internal_static_database_GetJoinRequest_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_database_GetJoinRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_database_GetJoinRequest_descriptor,
+        new java.lang.String[] { "Id", "Password", "Name", });
+    internal_static_database_GetJoinResponse_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_database_GetJoinResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_database_GetJoinResponse_descriptor,
+        new java.lang.String[] { "Result", });
+    internal_static_database_GetStudentListRequest_descriptor =
+      getDescriptor().getMessageTypes().get(4);
     internal_static_database_GetStudentListRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_database_GetStudentListRequest_descriptor,
         new java.lang.String[] { });
     internal_static_database_GetStudentListResponse_descriptor =
-      getDescriptor().getMessageTypes().get(1);
+      getDescriptor().getMessageTypes().get(5);
     internal_static_database_GetStudentListResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_database_GetStudentListResponse_descriptor,
         new java.lang.String[] { "Result", });
     internal_static_database_GetSubjectListRequest_descriptor =
-      getDescriptor().getMessageTypes().get(2);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_database_GetSubjectListRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_database_GetSubjectListRequest_descriptor,
         new java.lang.String[] { });
     internal_static_database_GetSubjectListResponse_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(7);
     internal_static_database_GetSubjectListResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_database_GetSubjectListResponse_descriptor,
         new java.lang.String[] { "Result", });
     internal_static_database_GetStudentSubjectListRequest_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(8);
     internal_static_database_GetStudentSubjectListRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_database_GetStudentSubjectListRequest_descriptor,
         new java.lang.String[] { "StudentId", });
     internal_static_database_GetStudentSubjectListResponse_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(9);
     internal_static_database_GetStudentSubjectListResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_database_GetStudentSubjectListResponse_descriptor,
         new java.lang.String[] { "Result", });
     internal_static_database_GetSubjectStudentListRequest_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(10);
     internal_static_database_GetSubjectStudentListRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_database_GetSubjectStudentListRequest_descriptor,
         new java.lang.String[] { "SubjectId", });
     internal_static_database_GetSubjectStudentListResponse_descriptor =
-      getDescriptor().getMessageTypes().get(7);
+      getDescriptor().getMessageTypes().get(11);
     internal_static_database_GetSubjectStudentListResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_database_GetSubjectStudentListResponse_descriptor,
         new java.lang.String[] { "Result", });
     internal_static_database_GetCompleteListRequest_descriptor =
-      getDescriptor().getMessageTypes().get(8);
+      getDescriptor().getMessageTypes().get(12);
     internal_static_database_GetCompleteListRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_database_GetCompleteListRequest_descriptor,
         new java.lang.String[] { "StudentId", });
     internal_static_database_GetCompleteListResponse_descriptor =
-      getDescriptor().getMessageTypes().get(9);
+      getDescriptor().getMessageTypes().get(13);
     internal_static_database_GetCompleteListResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_database_GetCompleteListResponse_descriptor,
         new java.lang.String[] { "Result", });
     internal_static_database_GetSubjectApplyRequest_descriptor =
-      getDescriptor().getMessageTypes().get(10);
+      getDescriptor().getMessageTypes().get(14);
     internal_static_database_GetSubjectApplyRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_database_GetSubjectApplyRequest_descriptor,
         new java.lang.String[] { "StudentId", "SubjectId", });
     internal_static_database_GetSubjectApplyResponse_descriptor =
-      getDescriptor().getMessageTypes().get(11);
+      getDescriptor().getMessageTypes().get(15);
     internal_static_database_GetSubjectApplyResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_database_GetSubjectApplyResponse_descriptor,
