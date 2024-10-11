@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-
+import java.util.Date;
 import io.grpc.Grpc;
 import io.grpc.InsecureServerCredentials;
 import io.grpc.ManagedChannel;
@@ -18,6 +18,10 @@ import io.grpc.Server;
 import io.grpc.database.*;
 import io.grpc.login.*;
 import io.grpc.stub.StreamObserver;
+import java.util.logging.Formatter;
+import java.util.logging.LogRecord;
+import java.text.SimpleDateFormat;
+
 public class LoginServer {
     private static final Logger logger = Logger.getLogger(LoginServer.class.getName());
     private Server clientServer;
@@ -26,7 +30,6 @@ public class LoginServer {
     private void start() throws IOException{
 
         setLogger();
-   
         int clientPort = 50051;
         //인증이 없는 서버
         clientServer = Grpc.newServerBuilderForPort(clientPort, InsecureServerCredentials.create())
@@ -61,12 +64,24 @@ public class LoginServer {
         try {
             // FileHandler 설정
             FileHandler fileHandler = new FileHandler("src/main/Log/server.log", true); // true는 파일에 덧붙이기
-            fileHandler.setFormatter(new SimpleFormatter()); // 기본 포맷 사용
+            fileHandler.setFormatter(new CustomFormatter()); // 기본 포맷 사용
             logger.addHandler(fileHandler);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    static class CustomFormatter extends Formatter {
+        private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        @Override
+        public String format(LogRecord record) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(dateFormat.format(new Date(record.getMillis()))).append(" ");
+            sb.append(record.getLevel()).append(": ");
+            sb.append(record.getMessage()).append("\n");
+            return sb.toString();
+        }
+    }
+
     private void stop(Server server) throws InterruptedException{
         if(server != null){
             server.shutdown().awaitTermination(30, TimeUnit.SECONDS);
