@@ -27,6 +27,7 @@ message GetLoginRequest {
 }
 message GetLoginResponse {
     string result = 1;
+    string name = 2;
 }
 
 message GetJoinRequest {

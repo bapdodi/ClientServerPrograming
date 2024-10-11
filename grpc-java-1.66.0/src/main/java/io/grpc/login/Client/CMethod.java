@@ -1,9 +1,10 @@
-package io.grpc.login;
+package io.grpc.login.Client;
 
 import io.grpc.StatusRuntimeException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Scanner;
+import io.grpc.login.*;
 
 public class CMethod {
     private final LoginGrpc.LoginBlockingStub blockingStub;

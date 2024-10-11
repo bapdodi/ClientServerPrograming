@@ -1,4 +1,4 @@
-package io.grpc.login;
+package io.grpc.login.Server;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -6,13 +6,15 @@ import java.sql.SQLException;
  * Server that manages startup/shutdown of a {@code Greeter} server.
  */
 import java.util.concurrent.TimeUnit;
+import java.util.logging.FileHandler;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
 import io.grpc.Grpc;
 import io.grpc.InsecureServerCredentials;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Server;
-import io.grpc.database.DataBaseGrpc;
 import io.grpc.database.*;
 import io.grpc.login.*;
 import io.grpc.stub.StreamObserver;
@@ -22,6 +24,8 @@ public class LoginServer {
     private Server dbServer;
     private static DataBaseGrpc.DataBaseBlockingStub blockingStub;
     private void start() throws IOException{
+
+        setLogger();
    
         int clientPort = 50051;
         //인증이 없는 서버
@@ -52,6 +56,16 @@ public class LoginServer {
                 System.err.println("*** server shut down");
             }
         });
+    }
+    private void setLogger() {
+        try {
+            // FileHandler 설정
+            FileHandler fileHandler = new FileHandler("src/main/Log/server.log", true); // true는 파일에 덧붙이기
+            fileHandler.setFormatter(new SimpleFormatter()); // 기본 포맷 사용
+            logger.addHandler(fileHandler);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     private void stop(Server server) throws InterruptedException{
         if(server != null){
@@ -84,6 +98,7 @@ public class LoginServer {
                 .setName(response2.getName())
                 .build();
             // 클라이언트에 응답 전송
+            logger.info("Login: " + response.getName());
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         }

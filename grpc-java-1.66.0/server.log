@@ -1,0 +1,8 @@
+10월 11, 2024 5:02:36 오후 io.grpc.login.Server.LoginServer setLogger
+INFO: This is an info log
+10월 11, 2024 5:02:36 오후 io.grpc.login.Server.LoginServer setLogger
+WARNING: This is a warning log
+10월 11, 2024 5:02:36 오후 io.grpc.login.Server.LoginServer setLogger
+SEVERE: This is a severe error log
+10월 11, 2024 5:02:37 오후 io.grpc.login.Server.LoginServer start
+INFO: Server started, listening on 50051

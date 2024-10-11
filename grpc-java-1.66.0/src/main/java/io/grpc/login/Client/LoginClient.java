@@ -1,10 +1,10 @@
-package io.grpc.login;
+package io.grpc.login.Client;
 
 import java.util.Scanner;
 import java.util.logging.Logger;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-
+import io.grpc.login.*;
 /**
   * A simple client that requests a greeting from the {@link LoginServer}.
   */
