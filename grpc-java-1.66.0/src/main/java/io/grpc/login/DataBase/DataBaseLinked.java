@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import io.grpc.database.DataStudent;
+import java.util.ArrayList;
 
 public class DataBaseLinked {
     private Connection connection;
@@ -24,13 +27,12 @@ public class DataBaseLinked {
             System.out.println("Oracle JDBC Driver not found. Please add the JDBC library to your project.");
             e.printStackTrace();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } 
     }
-    public String login(String id, String password) {
+    public DataStudent login(int id, String password) {
     // SQL SELECT 쿼리 작성
-        String selectQuery = "SELECT * FROM users WHERE id = ? AND password = ?";
+        String selectQuery = "SELECT * FROM STUDENT WHERE student_id = ? AND password = ?";
         
         try {
             if (connection == null || connection.isClosed()) {
@@ -39,7 +41,7 @@ public class DataBaseLinked {
             
             preparedStatement = connection.prepareStatement(selectQuery);
             // 쿼리 파라미터 설정
-            preparedStatement.setString(1, id); // id 값
+            preparedStatement.setInt(1, id); // id 값
             preparedStatement.setString(2, password); // password 값
             
             // 쿼리 실행
@@ -47,18 +49,57 @@ public class DataBaseLinked {
             
             // 결과 처리
             if (resultSet.next()) { // 결과가 있는 경우
-                return resultSet.getString("name"); // "name" 컬럼의 값 반환
+                List<Integer> courseIdList = getCourseIdList(id);
+                DataStudent dataStudent = DataStudent.newBuilder()
+                        .setStudentId(id)
+                        .setPassword(password)
+                        .setName(resultSet.getString("name"))
+                        .setMajor(resultSet.getString("major"))
+                        .addAllCourseId(courseIdList)
+                        .build(); 
+                return dataStudent;// "name" 컬럼의 값 반환
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
-            return "login failed";
+            System.out.println("Login Error");
+            return null;
         }
         return null; // 로그인 실패 시 null 반환
     }
-    public String join(String id, String name, String password){
+    private List<Integer> getCourseIdList(int id) {
+        // SQL SELECT 쿼리 작성
+        String selectQuery = "SELECT course_id FROM STUDENT_COURSE WHERE student_id = ?";
+        
+        try {
+            if (connection == null || connection.isClosed()) {
+                throw new SQLException("Connection is not established or is closed");
+            }
+            
+            preparedStatement = connection.prepareStatement(selectQuery);
+            // 쿼리 파라미터 설정
+            preparedStatement.setInt(1, id); // id 값
+            
+            // 쿼리 실행
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            // 결과 처리
+            List<Integer> courseIdList = new ArrayList<>();
+            while (resultSet.next()) { // 결과가 있는 경우
+                courseIdList.add(resultSet.getInt("course_id"));
+            }
+            return courseIdList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            System.out.println("Error");
+            return null;
+        }
+        return null; // 로그인 실패 시 null 반환
+    }
+    public String join(DataStudent dataStudent) {
         // SQL INSERT 쿼리 작성
-        String insertQuery = "INSERT INTO users (id, password, name) VALUES (?, ?, ?)";
+        String insertQuery = "INSERT INTO STUDENT (student_id, password, name, major) VALUES (?, ?, ?, ?)";
         
         // PreparedStatement 생성
         try {
@@ -68,14 +109,15 @@ public class DataBaseLinked {
             
             preparedStatement = connection.prepareStatement(insertQuery);
             // 쿼리 파라미터 설정
-            preparedStatement.setString(1, id); // id 값
-            preparedStatement.setString(2, password); //  password값
-            preparedStatement.setString(3, name); // name 값
+            preparedStatement.setInt(1, dataStudent.getStudentId()); // id 값
+            preparedStatement.setString(2, dataStudent.getPassword()); //  password값
+            preparedStatement.setString(3, dataStudent.getName()); // name 값
+            preparedStatement.setString(4, dataStudent.getMajor()); // course 값
             // 쿼리 실행
             int rowsInserted = preparedStatement.executeUpdate();
 
             if (rowsInserted > 0) {
-                return name +" was joined successfully!";
+                return dataStudent.getName() +" was joined successfully!";
             } else {
                 return "No joined";
             }

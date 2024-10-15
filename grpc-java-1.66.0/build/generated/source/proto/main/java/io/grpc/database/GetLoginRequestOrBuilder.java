@@ -9,16 +9,10 @@ public interface GetLoginRequestOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string id = 1;</code>
-   * @return The id.
+   * <code>int32 student_id = 1;</code>
+   * @return The studentId.
    */
-  java.lang.String getId();
-  /**
-   * <code>string id = 1;</code>
-   * @return The bytes for id.
-   */
-  com.google.protobuf.ByteString
-      getIdBytes();
+  int getStudentId();
 
   /**
    * <code>string password = 2;</code>

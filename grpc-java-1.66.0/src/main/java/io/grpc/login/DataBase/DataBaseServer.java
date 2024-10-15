@@ -9,7 +9,6 @@ import io.grpc.database.*;
 import io.grpc.login.Part1.Course;
 import io.grpc.login.Part1.CourseList;
 import io.grpc.login.Part1.Student;
-import io.grpc.login.Part1.StudentList;
 
 import java.util.ArrayList;
 
@@ -35,21 +34,30 @@ public class DataBaseServer {
     static class DataBaseImpl extends DataBaseGrpc.DataBaseImplBase {
         @Override
         public void getLogin(GetLoginRequest request, StreamObserver<GetLoginResponse> responseObserver) {
-            String id = request.getId();
+            int id = request.getStudentId();
             String password = request.getPassword();
-            String name = db.login(id, password);
-            GetLoginResponse response = GetLoginResponse.newBuilder()
-                    .setName(name)
-                    .build();
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
+            DataStudent student = db.login(id, password);
+            
+            if(student==null) {
+                GetLoginResponse response = GetLoginResponse.newBuilder()
+                        .build();
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();
+                return;
+            }
+            else{
+                GetLoginResponse response = GetLoginResponse.newBuilder()
+                        .setStudent(student)
+                        .build();
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();
+            }
+            
         }
         @Override
         public void getJoin(GetJoinRequest request, StreamObserver<GetJoinResponse> responseObserver) {
-            String id = request.getId();
-            String name = request.getName();
-            String password = request.getPassword();
-            String result = db.join(id, name, password);
+            DataStudent dataStudent = request.getStudent();
+            String result = db.join(dataStudent);
             GetJoinResponse response = GetJoinResponse.newBuilder()
                     .setResult(result)
                     .build();
@@ -59,33 +67,10 @@ public class DataBaseServer {
         @Override
         public void getStudentList(GetStudentListRequest request, StreamObserver<GetStudentListResponse> responseObserver) {
             String result="";
-            StudentList studentList;
-            try {
-                studentList = new StudentList("src/main/java/io/grpc/login/Part1/Students.txt");
-                ArrayList<Student> result1 = studentList.getAllStudentRecords();
-                int i=1;
-                for(Student s : result1) {
-                    result+=i+": ";
-                    result+=s.toString();
-                    result+="\n";
-                    i++;
-                }
-                GetStudentListResponse response = GetStudentListResponse.newBuilder()
-                        .setResult(result)
-                        .build();
-                responseObserver.onNext(response);
-                responseObserver.onCompleted();
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
             
         }
         @Override
-        public void getSubjectList(GetSubjectListRequest request, StreamObserver<GetSubjectListResponse> responseObserver) {
+        public void getCourseList(GetCourseListRequest request, StreamObserver<GetCourseListResponse> responseObserver) {
             String result="";
             CourseList courseList;
             try {
@@ -105,25 +90,25 @@ public class DataBaseServer {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            GetSubjectListResponse response = GetSubjectListResponse.newBuilder()
+            GetCourseListResponse response = GetCourseListResponse.newBuilder()
                     .setResult(result)
                     .build();
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         }
         @Override
-        public void getStudentSubjectList(GetStudentSubjectListRequest request, StreamObserver<GetStudentSubjectListResponse> responseObserver) {
+        public void getStudentCourseList(GetStudentCourseListRequest request, StreamObserver<GetStudentCourseListResponse> responseObserver) {
             String result="";
-            GetStudentSubjectListResponse response = GetStudentSubjectListResponse.newBuilder()
+            GetStudentCourseListResponse response = GetStudentCourseListResponse.newBuilder()
                     .setResult(result)
                     .build();
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         }
         @Override
-        public void getSubjectStudentList(GetSubjectStudentListRequest request, StreamObserver<GetSubjectStudentListResponse> responseObserver) {
+        public void getCourseStudentList(GetCourseStudentListRequest request, StreamObserver<GetCourseStudentListResponse> responseObserver) {
             String result="";
-            GetSubjectStudentListResponse response = GetSubjectStudentListResponse.newBuilder()
+            GetCourseStudentListResponse response = GetCourseStudentListResponse.newBuilder()
                     .setResult(result)
                     .build();
             responseObserver.onNext(response);
@@ -139,9 +124,9 @@ public class DataBaseServer {
             responseObserver.onCompleted();
         }
         @Override
-        public void getSubjectApply(GetSubjectApplyRequest request, StreamObserver<GetSubjectApplyResponse> responseObserver) {
+        public void getCourseApply(GetCourseApplyRequest request, StreamObserver<GetCourseApplyResponse> responseObserver) {
             String result="";
-            GetSubjectApplyResponse response = GetSubjectApplyResponse.newBuilder()
+            GetCourseApplyResponse response = GetCourseApplyResponse.newBuilder()
                     .setResult(result)
                     .build();
             responseObserver.onNext(response);

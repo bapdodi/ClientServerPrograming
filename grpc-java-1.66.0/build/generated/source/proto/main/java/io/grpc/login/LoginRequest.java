@@ -17,7 +17,6 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private LoginRequest() {
-    id_ = "";
     password_ = "";
   }
 
@@ -41,43 +40,15 @@ private static final long serialVersionUID = 0L;
             io.grpc.login.LoginRequest.class, io.grpc.login.LoginRequest.Builder.class);
   }
 
-  public static final int ID_FIELD_NUMBER = 1;
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object id_ = "";
+  public static final int STUDENT_ID_FIELD_NUMBER = 1;
+  private int studentId_ = 0;
   /**
-   * <code>string id = 1;</code>
-   * @return The id.
+   * <code>int32 student_id = 1;</code>
+   * @return The studentId.
    */
   @java.lang.Override
-  public java.lang.String getId() {
-    java.lang.Object ref = id_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      id_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string id = 1;</code>
-   * @return The bytes for id.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getIdBytes() {
-    java.lang.Object ref = id_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      id_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public int getStudentId() {
+    return studentId_;
   }
 
   public static final int PASSWORD_FIELD_NUMBER = 2;
@@ -133,8 +104,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(id_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
+    if (studentId_ != 0) {
+      output.writeInt32(1, studentId_);
     }
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(password_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, password_);
@@ -148,8 +119,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(id_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
+    if (studentId_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(1, studentId_);
     }
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(password_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, password_);
@@ -169,8 +141,8 @@ private static final long serialVersionUID = 0L;
     }
     io.grpc.login.LoginRequest other = (io.grpc.login.LoginRequest) obj;
 
-    if (!getId()
-        .equals(other.getId())) return false;
+    if (getStudentId()
+        != other.getStudentId()) return false;
     if (!getPassword()
         .equals(other.getPassword())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
@@ -184,8 +156,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + ID_FIELD_NUMBER;
-    hash = (53 * hash) + getId().hashCode();
+    hash = (37 * hash) + STUDENT_ID_FIELD_NUMBER;
+    hash = (53 * hash) + getStudentId();
     hash = (37 * hash) + PASSWORD_FIELD_NUMBER;
     hash = (53 * hash) + getPassword().hashCode();
     hash = (29 * hash) + getUnknownFields().hashCode();
@@ -319,7 +291,7 @@ private static final long serialVersionUID = 0L;
     public Builder clear() {
       super.clear();
       bitField0_ = 0;
-      id_ = "";
+      studentId_ = 0;
       password_ = "";
       return this;
     }
@@ -355,7 +327,7 @@ private static final long serialVersionUID = 0L;
     private void buildPartial0(io.grpc.login.LoginRequest result) {
       int from_bitField0_ = bitField0_;
       if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.id_ = id_;
+        result.studentId_ = studentId_;
       }
       if (((from_bitField0_ & 0x00000002) != 0)) {
         result.password_ = password_;
@@ -406,10 +378,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(io.grpc.login.LoginRequest other) {
       if (other == io.grpc.login.LoginRequest.getDefaultInstance()) return this;
-      if (!other.getId().isEmpty()) {
-        id_ = other.id_;
-        bitField0_ |= 0x00000001;
-        onChanged();
+      if (other.getStudentId() != 0) {
+        setStudentId(other.getStudentId());
       }
       if (!other.getPassword().isEmpty()) {
         password_ = other.password_;
@@ -442,11 +412,11 @@ private static final long serialVersionUID = 0L;
             case 0:
               done = true;
               break;
-            case 10: {
-              id_ = input.readStringRequireUtf8();
+            case 8: {
+              studentId_ = input.readInt32();
               bitField0_ |= 0x00000001;
               break;
-            } // case 10
+            } // case 8
             case 18: {
               password_ = input.readStringRequireUtf8();
               bitField0_ |= 0x00000002;
@@ -469,74 +439,34 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.lang.Object id_ = "";
+    private int studentId_ ;
     /**
-     * <code>string id = 1;</code>
-     * @return The id.
+     * <code>int32 student_id = 1;</code>
+     * @return The studentId.
      */
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    @java.lang.Override
+    public int getStudentId() {
+      return studentId_;
     }
     /**
-     * <code>string id = 1;</code>
-     * @return The bytes for id.
-     */
-    public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string id = 1;</code>
-     * @param value The id to set.
+     * <code>int32 student_id = 1;</code>
+     * @param value The studentId to set.
      * @return This builder for chaining.
      */
-    public Builder setId(
-        java.lang.String value) {
-      if (value == null) { throw new NullPointerException(); }
-      id_ = value;
+    public Builder setStudentId(int value) {
+
+      studentId_ = value;
       bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
     /**
-     * <code>string id = 1;</code>
+     * <code>int32 student_id = 1;</code>
      * @return This builder for chaining.
      */
-    public Builder clearId() {
-      id_ = getDefaultInstance().getId();
+    public Builder clearStudentId() {
       bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string id = 1;</code>
-     * @param value The bytes for id to set.
-     * @return This builder for chaining.
-     */
-    public Builder setIdBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) { throw new NullPointerException(); }
-      checkByteStringIsUtf8(value);
-      id_ = value;
-      bitField0_ |= 0x00000001;
+      studentId_ = 0;
       onChanged();
       return this;
     }

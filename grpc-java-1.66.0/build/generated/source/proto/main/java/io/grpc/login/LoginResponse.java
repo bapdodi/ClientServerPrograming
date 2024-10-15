@@ -17,8 +17,6 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private LoginResponse() {
-    result_ = "";
-    name_ = "";
   }
 
   @java.lang.Override
@@ -41,82 +39,31 @@ private static final long serialVersionUID = 0L;
             io.grpc.login.LoginResponse.class, io.grpc.login.LoginResponse.Builder.class);
   }
 
-  public static final int RESULT_FIELD_NUMBER = 1;
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object result_ = "";
+  private int bitField0_;
+  public static final int STUDENT_FIELD_NUMBER = 1;
+  private io.grpc.login.ServerStudent student_;
   /**
-   * <code>string result = 1;</code>
-   * @return The result.
+   * <code>.login.ServerStudent student = 1;</code>
+   * @return Whether the student field is set.
    */
   @java.lang.Override
-  public java.lang.String getResult() {
-    java.lang.Object ref = result_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      result_ = s;
-      return s;
-    }
+  public boolean hasStudent() {
+    return ((bitField0_ & 0x00000001) != 0);
   }
   /**
-   * <code>string result = 1;</code>
-   * @return The bytes for result.
+   * <code>.login.ServerStudent student = 1;</code>
+   * @return The student.
    */
   @java.lang.Override
-  public com.google.protobuf.ByteString
-      getResultBytes() {
-    java.lang.Object ref = result_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      result_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int NAME_FIELD_NUMBER = 2;
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object name_ = "";
-  /**
-   * <code>string name = 2;</code>
-   * @return The name.
-   */
-  @java.lang.Override
-  public java.lang.String getName() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      name_ = s;
-      return s;
-    }
+  public io.grpc.login.ServerStudent getStudent() {
+    return student_ == null ? io.grpc.login.ServerStudent.getDefaultInstance() : student_;
   }
   /**
-   * <code>string name = 2;</code>
-   * @return The bytes for name.
+   * <code>.login.ServerStudent student = 1;</code>
    */
   @java.lang.Override
-  public com.google.protobuf.ByteString
-      getNameBytes() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      name_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public io.grpc.login.ServerStudentOrBuilder getStudentOrBuilder() {
+    return student_ == null ? io.grpc.login.ServerStudent.getDefaultInstance() : student_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -133,11 +80,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(result_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, result_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, name_);
+    if (((bitField0_ & 0x00000001) != 0)) {
+      output.writeMessage(1, getStudent());
     }
     getUnknownFields().writeTo(output);
   }
@@ -148,11 +92,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(result_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, result_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, name_);
+    if (((bitField0_ & 0x00000001) != 0)) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(1, getStudent());
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -169,10 +111,11 @@ private static final long serialVersionUID = 0L;
     }
     io.grpc.login.LoginResponse other = (io.grpc.login.LoginResponse) obj;
 
-    if (!getResult()
-        .equals(other.getResult())) return false;
-    if (!getName()
-        .equals(other.getName())) return false;
+    if (hasStudent() != other.hasStudent()) return false;
+    if (hasStudent()) {
+      if (!getStudent()
+          .equals(other.getStudent())) return false;
+    }
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -184,10 +127,10 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + RESULT_FIELD_NUMBER;
-    hash = (53 * hash) + getResult().hashCode();
-    hash = (37 * hash) + NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getName().hashCode();
+    if (hasStudent()) {
+      hash = (37 * hash) + STUDENT_FIELD_NUMBER;
+      hash = (53 * hash) + getStudent().hashCode();
+    }
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -307,20 +250,29 @@ private static final long serialVersionUID = 0L;
 
     // Construct using io.grpc.login.LoginResponse.newBuilder()
     private Builder() {
-
+      maybeForceBuilderInitialization();
     }
 
     private Builder(
         com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
-
+      maybeForceBuilderInitialization();
+    }
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3
+              .alwaysUseFieldBuilders) {
+        getStudentFieldBuilder();
+      }
     }
     @java.lang.Override
     public Builder clear() {
       super.clear();
       bitField0_ = 0;
-      result_ = "";
-      name_ = "";
+      student_ = null;
+      if (studentBuilder_ != null) {
+        studentBuilder_.dispose();
+        studentBuilder_ = null;
+      }
       return this;
     }
 
@@ -354,12 +306,14 @@ private static final long serialVersionUID = 0L;
 
     private void buildPartial0(io.grpc.login.LoginResponse result) {
       int from_bitField0_ = bitField0_;
+      int to_bitField0_ = 0;
       if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.result_ = result_;
+        result.student_ = studentBuilder_ == null
+            ? student_
+            : studentBuilder_.build();
+        to_bitField0_ |= 0x00000001;
       }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.name_ = name_;
-      }
+      result.bitField0_ |= to_bitField0_;
     }
 
     @java.lang.Override
@@ -406,15 +360,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(io.grpc.login.LoginResponse other) {
       if (other == io.grpc.login.LoginResponse.getDefaultInstance()) return this;
-      if (!other.getResult().isEmpty()) {
-        result_ = other.result_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getName().isEmpty()) {
-        name_ = other.name_;
-        bitField0_ |= 0x00000002;
-        onChanged();
+      if (other.hasStudent()) {
+        mergeStudent(other.getStudent());
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -443,15 +390,12 @@ private static final long serialVersionUID = 0L;
               done = true;
               break;
             case 10: {
-              result_ = input.readStringRequireUtf8();
+              input.readMessage(
+                  getStudentFieldBuilder().getBuilder(),
+                  extensionRegistry);
               bitField0_ |= 0x00000001;
               break;
             } // case 10
-            case 18: {
-              name_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000002;
-              break;
-            } // case 18
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -469,148 +413,125 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.lang.Object result_ = "";
+    private io.grpc.login.ServerStudent student_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.login.ServerStudent, io.grpc.login.ServerStudent.Builder, io.grpc.login.ServerStudentOrBuilder> studentBuilder_;
     /**
-     * <code>string result = 1;</code>
-     * @return The result.
+     * <code>.login.ServerStudent student = 1;</code>
+     * @return Whether the student field is set.
      */
-    public java.lang.String getResult() {
-      java.lang.Object ref = result_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        result_ = s;
-        return s;
+    public boolean hasStudent() {
+      return ((bitField0_ & 0x00000001) != 0);
+    }
+    /**
+     * <code>.login.ServerStudent student = 1;</code>
+     * @return The student.
+     */
+    public io.grpc.login.ServerStudent getStudent() {
+      if (studentBuilder_ == null) {
+        return student_ == null ? io.grpc.login.ServerStudent.getDefaultInstance() : student_;
       } else {
-        return (java.lang.String) ref;
+        return studentBuilder_.getMessage();
       }
     }
     /**
-     * <code>string result = 1;</code>
-     * @return The bytes for result.
+     * <code>.login.ServerStudent student = 1;</code>
      */
-    public com.google.protobuf.ByteString
-        getResultBytes() {
-      java.lang.Object ref = result_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        result_ = b;
-        return b;
+    public Builder setStudent(io.grpc.login.ServerStudent value) {
+      if (studentBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        student_ = value;
       } else {
-        return (com.google.protobuf.ByteString) ref;
+        studentBuilder_.setMessage(value);
       }
-    }
-    /**
-     * <code>string result = 1;</code>
-     * @param value The result to set.
-     * @return This builder for chaining.
-     */
-    public Builder setResult(
-        java.lang.String value) {
-      if (value == null) { throw new NullPointerException(); }
-      result_ = value;
       bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
     /**
-     * <code>string result = 1;</code>
-     * @return This builder for chaining.
+     * <code>.login.ServerStudent student = 1;</code>
      */
-    public Builder clearResult() {
-      result_ = getDefaultInstance().getResult();
+    public Builder setStudent(
+        io.grpc.login.ServerStudent.Builder builderForValue) {
+      if (studentBuilder_ == null) {
+        student_ = builderForValue.build();
+      } else {
+        studentBuilder_.setMessage(builderForValue.build());
+      }
+      bitField0_ |= 0x00000001;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.login.ServerStudent student = 1;</code>
+     */
+    public Builder mergeStudent(io.grpc.login.ServerStudent value) {
+      if (studentBuilder_ == null) {
+        if (((bitField0_ & 0x00000001) != 0) &&
+          student_ != null &&
+          student_ != io.grpc.login.ServerStudent.getDefaultInstance()) {
+          getStudentBuilder().mergeFrom(value);
+        } else {
+          student_ = value;
+        }
+      } else {
+        studentBuilder_.mergeFrom(value);
+      }
+      if (student_ != null) {
+        bitField0_ |= 0x00000001;
+        onChanged();
+      }
+      return this;
+    }
+    /**
+     * <code>.login.ServerStudent student = 1;</code>
+     */
+    public Builder clearStudent() {
       bitField0_ = (bitField0_ & ~0x00000001);
+      student_ = null;
+      if (studentBuilder_ != null) {
+        studentBuilder_.dispose();
+        studentBuilder_ = null;
+      }
       onChanged();
       return this;
     }
     /**
-     * <code>string result = 1;</code>
-     * @param value The bytes for result to set.
-     * @return This builder for chaining.
+     * <code>.login.ServerStudent student = 1;</code>
      */
-    public Builder setResultBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) { throw new NullPointerException(); }
-      checkByteStringIsUtf8(value);
-      result_ = value;
+    public io.grpc.login.ServerStudent.Builder getStudentBuilder() {
       bitField0_ |= 0x00000001;
       onChanged();
-      return this;
+      return getStudentFieldBuilder().getBuilder();
     }
-
-    private java.lang.Object name_ = "";
     /**
-     * <code>string name = 2;</code>
-     * @return The name.
+     * <code>.login.ServerStudent student = 1;</code>
      */
-    public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        name_ = s;
-        return s;
+    public io.grpc.login.ServerStudentOrBuilder getStudentOrBuilder() {
+      if (studentBuilder_ != null) {
+        return studentBuilder_.getMessageOrBuilder();
       } else {
-        return (java.lang.String) ref;
+        return student_ == null ?
+            io.grpc.login.ServerStudent.getDefaultInstance() : student_;
       }
     }
     /**
-     * <code>string name = 2;</code>
-     * @return The bytes for name.
+     * <code>.login.ServerStudent student = 1;</code>
      */
-    public com.google.protobuf.ByteString
-        getNameBytes() {
-      java.lang.Object ref = name_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        name_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.login.ServerStudent, io.grpc.login.ServerStudent.Builder, io.grpc.login.ServerStudentOrBuilder> 
+        getStudentFieldBuilder() {
+      if (studentBuilder_ == null) {
+        studentBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.login.ServerStudent, io.grpc.login.ServerStudent.Builder, io.grpc.login.ServerStudentOrBuilder>(
+                getStudent(),
+                getParentForChildren(),
+                isClean());
+        student_ = null;
       }
-    }
-    /**
-     * <code>string name = 2;</code>
-     * @param value The name to set.
-     * @return This builder for chaining.
-     */
-    public Builder setName(
-        java.lang.String value) {
-      if (value == null) { throw new NullPointerException(); }
-      name_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string name = 2;</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearName() {
-      name_ = getDefaultInstance().getName();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string name = 2;</code>
-     * @param value The bytes for name to set.
-     * @return This builder for chaining.
-     */
-    public Builder setNameBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) { throw new NullPointerException(); }
-      checkByteStringIsUtf8(value);
-      name_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
-      return this;
+      return studentBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

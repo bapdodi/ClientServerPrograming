@@ -1,10 +1,30 @@
 package io.grpc.login.Client;
 
 import io.grpc.StatusRuntimeException;
+import io.grpc.login.JoinRequest;
+import io.grpc.login.JoinResponse;
+import io.grpc.login.LoginGrpc;
+import io.grpc.login.LoginRequest;
+import io.grpc.login.LoginResponse;
+import io.grpc.login.ServerStudent;
+import io.grpc.login.ShowCompleteListRequest;
+import io.grpc.login.ShowCompleteListResponse;
+import io.grpc.login.ShowStudentListRequest;
+import io.grpc.login.ShowStudentListResponse;
+import io.grpc.login.ShowStudentCourseListRequest;
+import io.grpc.login.ShowStudentCourseListResponse;
+import io.grpc.login.ShowCourseApplyRequest;
+import io.grpc.login.ShowCourseApplyResponse;
+import io.grpc.login.ShowCourseListRequest;
+import io.grpc.login.ShowCourseListResponse;
+import io.grpc.login.ShowCourseStudentListRequest;
+import io.grpc.login.ShowCourseStudentListResponse;
+import io.grpc.login.LoginGrpc.LoginBlockingStub;
+import io.grpc.login.Part1.Student;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Scanner;
-import io.grpc.login.*;
 
 public class CMethod {
     private final LoginGrpc.LoginBlockingStub blockingStub;
@@ -16,30 +36,43 @@ public class CMethod {
         this.scanner = new Scanner(System.in);
     }
 
-    public void login() {
+    public Student login() {
+        Student student = null;
         System.out.println("Input id: ");
-        String id = scanner.nextLine();
+        int id = Integer.parseInt(scanner.nextLine());
         System.out.println("Input password: ");
         String password = scanner.nextLine();
-        LoginRequest request = LoginRequest.newBuilder().setId(id).setPassword(password).build();
+        LoginRequest request = LoginRequest.newBuilder().setStudentId(id).setPassword(password).build();
         LoginResponse response;
         try {
             response = blockingStub.login(request);
+            if(response.getStudent().getName().equals("")){
+                logger.info("Login: " + "Login failed");
+                return null;
+            }
+            else{
+                student = new Student(response.getStudent().getStudentId(), response.getStudent().getName(), response.getStudent().getMajor(), response.getStudent().getCourseIdList());
+                logger.info("Login: " + response.getStudent().getName());
+                return student;
+            }
         } catch (StatusRuntimeException e) {
             logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-            return;
+            return null;
         }
-        logger.info("Login: " + response.getName());
+        
     }
 
     public void join() {
         System.out.println("Input id: ");
-        String id = scanner.nextLine();
+        int id = Integer.parseInt(scanner.nextLine());
         System.out.println("Input password: ");
         String password = scanner.nextLine();
         System.out.println("Input name: ");
         String name = scanner.nextLine();
-        JoinRequest request = JoinRequest.newBuilder().setId(id).setPassword(password).setName(name).build();
+        System.out.println("Input major: ");
+        String major = scanner.nextLine();
+        ServerStudent student = ServerStudent.newBuilder().setStudentId(id).setPassword(password).setName(name).setMajor(major).build();
+        JoinRequest request = JoinRequest.newBuilder().setStudent(student).build();
         JoinResponse response;
         try {
             response = blockingStub.join(request);
@@ -62,44 +95,44 @@ public class CMethod {
         logger.info("ShowStudentList: " + response.getResult());
     }
 
-    public void showSubjectList() {
-        ShowSubjectListRequest request = ShowSubjectListRequest.newBuilder().build();
-        ShowSubjectListResponse response;
+    public void showCourseList() {
+        ShowCourseListRequest request = ShowCourseListRequest.newBuilder().build();
+        ShowCourseListResponse response;
         try {
-            response = blockingStub.showSubjectList(request);
+            response = blockingStub.showCourseList(request);
         } catch (StatusRuntimeException e) {
             logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
             return;
         }
-        logger.info("ShowSubjectList: " + response.getResult());
+        logger.info("ShowCourseList: " + response.getResult());
     }
 
-	public void showStudentSubjectList() {
+	public void showStudentCourseList() {
         logger.info("Input studentId: ");
         String studentId = scanner.nextLine();
-		ShowStudentSubjectListRequest request = ShowStudentSubjectListRequest.newBuilder().setStudentId(studentId).build();
-        ShowStudentSubjectListResponse response;
+		ShowStudentCourseListRequest request = ShowStudentCourseListRequest.newBuilder().setStudentId(studentId).build();
+        ShowStudentCourseListResponse response;
         try {
-            response = blockingStub.showStudentSubjectList(request);
+            response = blockingStub.showStudentCourseList(request);
         } catch (StatusRuntimeException e) {
             logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
             return;
         }
-        logger.info("ShowStudentSubjectList: " + response.getResult());
+        logger.info("ShowStudentCourseList: " + response.getResult());
 	}
 
-	public void showSubjectStudentList() {
-        logger.info("Input subjectId: ");
-        String subjectId = scanner.nextLine();
-        ShowSubjectStudentListRequest request = ShowSubjectStudentListRequest.newBuilder().setSubjectId(subjectId).build();
-        ShowSubjectStudentListResponse response;
+	public void showCourseStudentList() {
+        logger.info("Input courseId: ");
+        String courseId = scanner.nextLine();
+        ShowCourseStudentListRequest request = ShowCourseStudentListRequest.newBuilder().setCourseId(courseId).build();
+        ShowCourseStudentListResponse response;
         try {
-            response = blockingStub.showSubjectStudentList(request);
+            response = blockingStub.showCourseStudentList(request);
         } catch (StatusRuntimeException e) {
             logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
             return;
         }
-        logger.info("ShowSubjectStudentList: " + response.getResult());
+        logger.info("ShowCourseStudentList: " + response.getResult());
 	}
 
 	public void showCompleteList() {
@@ -116,20 +149,20 @@ public class CMethod {
         logger.info("ShowCompleteList: " + response.getResult());
 	}
 
-	public void showSubjectApply() {
+	public void showCourseApply() {
         logger.info("Input studentId: ");
         String studentId = scanner.nextLine();
-        logger.info("Input subjectId: ");
-        String subjectId = scanner.nextLine();
-        ShowSubjectApplyRequest request = ShowSubjectApplyRequest.newBuilder().setStudentId(studentId).setSubjectId(subjectId).build();
-        ShowSubjectApplyResponse response;
+        logger.info("Input courseId: ");
+        String courseId = scanner.nextLine();
+        ShowCourseApplyRequest request = ShowCourseApplyRequest.newBuilder().setStudentId(studentId).setCourseId(courseId).build();
+        ShowCourseApplyResponse response;
         try {
-            response = blockingStub.showSubjectApply(request);
+            response = blockingStub.showCourseApply(request);
         } catch (StatusRuntimeException e) {
             logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
             return;
         }
-        logger.info("ShowSubjectApply: " + response.getResult());
+        logger.info("ShowCourseApply: " + response.getResult());
 	}
 
 

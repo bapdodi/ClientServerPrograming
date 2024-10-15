@@ -14,54 +14,58 @@ service Login {
     rpc login (LoginRequest) returns (LoginResponse) {}
     rpc join (JoinRequest) returns (JoinResponse) {}
     rpc showStudentList (ShowStudentListRequest) returns (ShowStudentListResponse) {}
-    rpc showSubjectList (ShowSubjectListRequest) returns (ShowSubjectListResponse) {}
-    rpc showStudentSubjectList (ShowStudentSubjectListRequest) returns (ShowStudentSubjectListResponse) {}
-    rpc showSubjectStudentList (ShowSubjectStudentListRequest) returns (ShowSubjectStudentListResponse) {}
+    rpc showCourseList (ShowCourseListRequest) returns (ShowCourseListResponse) {}
+    rpc showStudentCourseList (ShowStudentCourseListRequest) returns (ShowStudentCourseListResponse) {}
+    rpc showCourseStudentList (ShowCourseStudentListRequest) returns (ShowCourseStudentListResponse) {}
     rpc showCompleteList (ShowCompleteListRequest) returns (ShowCompleteListResponse) {}
-    rpc showSubjectApply (ShowSubjectApplyRequest) returns (ShowSubjectApplyResponse) {}
+    rpc showCourseApply (ShowCourseApplyRequest) returns (ShowCourseApplyResponse) {}
+}
+
+message ServerStudent {
+    int32 student_id = 1;      // 학생 ID
+    string password = 2;        // 비밀번호
+    string name = 3;            // 이름
+    string major = 4;           // 전공
+    repeated int32 course_id = 5;  // 수강 과목 ID
 }
 
 message LoginRequest {
-    string id = 1;
+    int32 student_id = 1;
     string password = 2;
 }
 message LoginResponse {
-    string result = 1;
-    string name = 2;
+    ServerStudent student = 1;
 }
 
 message JoinRequest {
-    string id = 1;
-    string password = 2;
-    string name = 3;
+    ServerStudent student = 1;
 }
 message JoinResponse {
     string result = 1;
 }
-
 message ShowStudentListRequest {
 }
 message ShowStudentListResponse {
     string result = 1;
 }
 
-message ShowSubjectListRequest {
+message ShowCourseListRequest {
 }
-message ShowSubjectListResponse {
+message ShowCourseListResponse {
     string result = 1;
 }
 
-message ShowStudentSubjectListRequest {
+message ShowStudentCourseListRequest {
     string studentId = 1;
 }
-message ShowStudentSubjectListResponse {
+message ShowStudentCourseListResponse {
     string result = 1;
 }
 
-message ShowSubjectStudentListRequest {
-    string subjectId = 1;
+message ShowCourseStudentListRequest {
+    string courseId = 1;
 }
-message ShowSubjectStudentListResponse {
+message ShowCourseStudentListResponse {
     string result = 1;
 }
 
@@ -72,10 +76,10 @@ message ShowCompleteListResponse {
     string result = 1;
 }
 
-message ShowSubjectApplyRequest {
+message ShowCourseApplyRequest {
     string studentId = 1;
-    string subjectId = 2;
+    string courseId = 2;
 }
-message ShowSubjectApplyResponse {
+message ShowCourseApplyResponse {
     string result = 1;
 }

@@ -9,38 +9,17 @@ public interface GetJoinRequestOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string id = 1;</code>
-   * @return The id.
+   * <code>.database.DataStudent student = 1;</code>
+   * @return Whether the student field is set.
    */
-  java.lang.String getId();
+  boolean hasStudent();
   /**
-   * <code>string id = 1;</code>
-   * @return The bytes for id.
+   * <code>.database.DataStudent student = 1;</code>
+   * @return The student.
    */
-  com.google.protobuf.ByteString
-      getIdBytes();
-
+  io.grpc.database.DataStudent getStudent();
   /**
-   * <code>string password = 2;</code>
-   * @return The password.
+   * <code>.database.DataStudent student = 1;</code>
    */
-  java.lang.String getPassword();
-  /**
-   * <code>string password = 2;</code>
-   * @return The bytes for password.
-   */
-  com.google.protobuf.ByteString
-      getPasswordBytes();
-
-  /**
-   * <code>string name = 3;</code>
-   * @return The name.
-   */
-  java.lang.String getName();
-  /**
-   * <code>string name = 3;</code>
-   * @return The bytes for name.
-   */
-  com.google.protobuf.ByteString
-      getNameBytes();
+  io.grpc.database.DataStudentOrBuilder getStudentOrBuilder();
 }

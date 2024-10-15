@@ -1,38 +1,33 @@
 package io.grpc.login.Part1;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
+import java.util.List;
 
 public class Student implements Serializable{
 	private static final long serialVersionUID = 1L;
-	protected String studentId;
+	protected int studentId;
     protected String name;
     protected String department;
-    protected ArrayList<String> completedCoursesList;
+    protected List<Integer> completedCoursesList;
 
-    public Student(String inputString) {
-        StringTokenizer stringTokenizer = new StringTokenizer(inputString);
-    	this.studentId = stringTokenizer.nextToken();
-    	this.name = stringTokenizer.nextToken();
-    	this.department = stringTokenizer.nextToken();
-    	this.completedCoursesList = new ArrayList<String>();
-    	while (stringTokenizer.hasMoreTokens()) {
-    		this.completedCoursesList.add(stringTokenizer.nextToken());
-    	}
+    public Student(int studentId, String name, String department, List<Integer> completedCoursesList) {
+        this.studentId = studentId;
+        this.name = name;
+        this.department = department;
+        this.completedCoursesList = completedCoursesList;
     }
-    public boolean match(String studentId) {
-        return this.studentId.equals(studentId);
+    public boolean match(int studentId) {
+        return this.studentId == studentId;
     }
     public String getName() {
         return this.name;
     }
-    public ArrayList<String> getCompletedCourses() {
+    public List<Integer> getCompletedCourses() {
         return this.completedCoursesList;
     }
     public String toString() {
         String stringReturn = this.studentId + " " + this.name + " " + this.department;
         for (int i = 0; i < this.completedCoursesList.size(); i++) {
-            stringReturn = stringReturn + " " + this.completedCoursesList.get(i).toString();
+            stringReturn = stringReturn + " " + this.completedCoursesList.get(i);
         }
         return stringReturn;
     }

@@ -14,26 +14,31 @@ service DataBase {
     rpc GetLogin (GetLoginRequest) returns (GetLoginResponse) {}
     rpc GetJoin (GetJoinRequest) returns (GetJoinResponse) {}
     rpc GetStudentList (GetStudentListRequest) returns (GetStudentListResponse) {}
-    rpc GetSubjectList (GetSubjectListRequest) returns (GetSubjectListResponse) {}
-    rpc GetStudentSubjectList (GetStudentSubjectListRequest) returns (GetStudentSubjectListResponse) {}
-    rpc GetSubjectStudentList (GetSubjectStudentListRequest) returns (GetSubjectStudentListResponse) {}
+    rpc GetCourseList (GetCourseListRequest) returns (GetCourseListResponse) {}
+    rpc GetStudentCourseList (GetStudentCourseListRequest) returns (GetStudentCourseListResponse) {}
+    rpc GetCourseStudentList (GetCourseStudentListRequest) returns (GetCourseStudentListResponse) {}
     rpc GetCompleteList (GetCompleteListRequest) returns (GetCompleteListResponse) {}
-    rpc GetSubjectApply (GetSubjectApplyRequest) returns (GetSubjectApplyResponse) {}
+    rpc GetCourseApply (GetCourseApplyRequest) returns (GetCourseApplyResponse) {}
+}
+
+message DataStudent {
+    int32 student_id = 1;      // 학생 ID
+    string password = 2;        // 비밀번호
+    string name = 3;            // 이름
+    string major = 4;           // 전공
+    repeated int32 course_id = 5;
 }
 
 message GetLoginRequest {
-    string id = 1;
+    int32 student_id = 1;
     string password = 2;
 }
 message GetLoginResponse {
-    string result = 1;
-    string name = 2;
+    DataStudent student = 1;
 }
 
 message GetJoinRequest {
-    string id = 1;
-    string password = 2;
-    string name = 3;
+    DataStudent student = 1;
 }
 message GetJoinResponse {
     string result = 1;
@@ -45,23 +50,23 @@ message GetStudentListResponse {
     string result = 1;
 }
 
-message GetSubjectListRequest {
+message GetCourseListRequest {
 }
-message GetSubjectListResponse {
+message GetCourseListResponse {
     string result = 1;
 }
 
-message GetStudentSubjectListRequest {
+message GetStudentCourseListRequest {
     string studentId = 1;
 }
-message GetStudentSubjectListResponse {
+message GetStudentCourseListResponse {
     string result = 1;
 }
 
-message GetSubjectStudentListRequest {
-    string subjectId = 1;
+message GetCourseStudentListRequest {
+    string courseId = 1;
 }
-message GetSubjectStudentListResponse {
+message GetCourseStudentListResponse {
     string result = 1;
 }
 
@@ -72,10 +77,10 @@ message GetCompleteListResponse {
     string result = 1;
 }
 
-message GetSubjectApplyRequest {
+message GetCourseApplyRequest {
     string studentId = 1;
-    string subjectId = 2;
+    string courseId = 2;
 }
-message GetSubjectApplyResponse {
+message GetCourseApplyResponse {
     string result = 1;
 }

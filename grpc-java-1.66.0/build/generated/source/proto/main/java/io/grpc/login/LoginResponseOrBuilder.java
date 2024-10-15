@@ -9,26 +9,17 @@ public interface LoginResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string result = 1;</code>
-   * @return The result.
+   * <code>.login.ServerStudent student = 1;</code>
+   * @return Whether the student field is set.
    */
-  java.lang.String getResult();
+  boolean hasStudent();
   /**
-   * <code>string result = 1;</code>
-   * @return The bytes for result.
+   * <code>.login.ServerStudent student = 1;</code>
+   * @return The student.
    */
-  com.google.protobuf.ByteString
-      getResultBytes();
-
+  io.grpc.login.ServerStudent getStudent();
   /**
-   * <code>string name = 2;</code>
-   * @return The name.
+   * <code>.login.ServerStudent student = 1;</code>
    */
-  java.lang.String getName();
-  /**
-   * <code>string name = 2;</code>
-   * @return The bytes for name.
-   */
-  com.google.protobuf.ByteString
-      getNameBytes();
+  io.grpc.login.ServerStudentOrBuilder getStudentOrBuilder();
 }

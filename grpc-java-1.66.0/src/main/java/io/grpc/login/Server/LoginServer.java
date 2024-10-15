@@ -6,10 +6,7 @@ import java.sql.SQLException;
  * Server that manages startup/shutdown of a {@code Greeter} server.
  */
 import java.util.concurrent.TimeUnit;
-import java.util.logging.FileHandler;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-import java.util.Date;
 import io.grpc.Grpc;
 import io.grpc.InsecureServerCredentials;
 import io.grpc.ManagedChannel;
@@ -18,18 +15,14 @@ import io.grpc.Server;
 import io.grpc.database.*;
 import io.grpc.login.*;
 import io.grpc.stub.StreamObserver;
-import java.util.logging.Formatter;
-import java.util.logging.LogRecord;
-import java.text.SimpleDateFormat;
-
 public class LoginServer {
     private static final Logger logger = Logger.getLogger(LoginServer.class.getName());
     private Server clientServer;
     private Server dbServer;
+    private static ServerStudent student;
     private static DataBaseGrpc.DataBaseBlockingStub blockingStub;
     private void start() throws IOException{
-
-        setLogger();
+   
         int clientPort = 50051;
         //인증이 없는 서버
         clientServer = Grpc.newServerBuilderForPort(clientPort, InsecureServerCredentials.create())
@@ -60,28 +53,6 @@ public class LoginServer {
             }
         });
     }
-    private void setLogger() {
-        try {
-            // FileHandler 설정
-            FileHandler fileHandler = new FileHandler("src/main/Log/server.log", true); // true는 파일에 덧붙이기
-            fileHandler.setFormatter(new CustomFormatter()); // 기본 포맷 사용
-            logger.addHandler(fileHandler);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    static class CustomFormatter extends Formatter {
-        private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        @Override
-        public String format(LogRecord record) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(dateFormat.format(new Date(record.getMillis()))).append(" ");
-            sb.append(record.getLevel()).append(": ");
-            sb.append(record.getMessage()).append("\n");
-            return sb.toString();
-        }
-    }
-
     private void stop(Server server) throws InterruptedException{
         if(server != null){
             server.shutdown().awaitTermination(30, TimeUnit.SECONDS);
@@ -93,10 +64,6 @@ public class LoginServer {
             server.awaitTermination();
         }
     }
-
-    
-
-
     public static void main(String[] args) throws IOException, InterruptedException, SQLException {
         final LoginServer server = new LoginServer();
         server.start();
@@ -106,20 +73,31 @@ public class LoginServer {
     static class LoginImpl extends LoginGrpc.LoginImplBase {
         @Override
         public void login(LoginRequest request, StreamObserver<LoginResponse> responseObserver) {
-            GetLoginRequest request2 = GetLoginRequest.newBuilder().setId(request.getId()).setPassword(request.getPassword()).build();
-            GetLoginResponse response2 = blockingStub.getLogin(request2);
+            GetLoginRequest request2 = GetLoginRequest.newBuilder().setStudentId(request.getStudentId()).setPassword(request.getPassword()).build();
+            if(request2.getStudentId() == -1){
+            }
+            else{
+                GetLoginResponse response2 = blockingStub.getLogin(request2);
+                student = ServerStudent.newBuilder().setStudentId(response2.getStudent().getStudentId()).setName(response2.getStudent().getName()).setMajor(response2.getStudent().getMajor()).addAllCourseId(response2.getStudent().getCourseIdList()).build();
+            }
+            
             LoginResponse response = LoginResponse.newBuilder()
-                .setResult(response2.getResult())
-                .setName(response2.getName())
+                .setStudent(student)
                 .build();
             // 클라이언트에 응답 전송
-            logger.info("Login: " + response.getName());
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         }
         @Override
         public void join(JoinRequest request, StreamObserver<JoinResponse> responseObserver) {
-            GetJoinRequest request2 = GetJoinRequest.newBuilder().setId(request.getId()).setName(request.getName()).setPassword(request.getPassword()).build();
+            DataStudent dataStudent = DataStudent.newBuilder()
+            .setStudentId(request.getStudent().getStudentId())
+            .setPassword(request.getStudent().getPassword())
+            .setName(request.getStudent().getName())
+            .setMajor(request.getStudent().getMajor())
+            .build();
+            
+            GetJoinRequest request2 = GetJoinRequest.newBuilder().setStudent(dataStudent).build();
             GetJoinResponse response2 = blockingStub.getJoin(request2);
             JoinResponse response = JoinResponse.newBuilder()
                 .setResult(response2.getResult())
@@ -142,10 +120,10 @@ public class LoginServer {
             responseObserver.onCompleted();
         }
         @Override
-        public void showSubjectList(ShowSubjectListRequest request, StreamObserver<ShowSubjectListResponse> responseObserver) {
-            GetSubjectListRequest request2 = GetSubjectListRequest.newBuilder().build();
-            GetSubjectListResponse response2 = blockingStub.getSubjectList(request2);
-            ShowSubjectListResponse response = ShowSubjectListResponse.newBuilder()
+        public void showCourseList(ShowCourseListRequest request, StreamObserver<ShowCourseListResponse> responseObserver) {
+            GetCourseListRequest request2 = GetCourseListRequest.newBuilder().build();
+            GetCourseListResponse response2 = blockingStub.getCourseList(request2);
+            ShowCourseListResponse response = ShowCourseListResponse.newBuilder()
                 .setResult(response2.getResult())
                 .build();
             
@@ -154,9 +132,9 @@ public class LoginServer {
             responseObserver.onCompleted();
         }
         @Override
-        public void showStudentSubjectList(ShowStudentSubjectListRequest request, StreamObserver<ShowStudentSubjectListResponse> responseObserver) {
-            ShowStudentSubjectListResponse response = ShowStudentSubjectListResponse.newBuilder()
-                .setResult("Student Subject List Data")
+        public void showStudentCourseList(ShowStudentCourseListRequest request, StreamObserver<ShowStudentCourseListResponse> responseObserver) {
+            ShowStudentCourseListResponse response = ShowStudentCourseListResponse.newBuilder()
+                .setResult("Student Course List Data")
                 .build();
             
             // 클라이언트에 응답 전송
@@ -164,9 +142,9 @@ public class LoginServer {
             responseObserver.onCompleted();
         }
         @Override
-        public void showSubjectStudentList(ShowSubjectStudentListRequest request, StreamObserver<ShowSubjectStudentListResponse> responseObserver) {
-            ShowSubjectStudentListResponse response = ShowSubjectStudentListResponse.newBuilder()
-                .setResult("Subject Student List Data")
+        public void showCourseStudentList(ShowCourseStudentListRequest request, StreamObserver<ShowCourseStudentListResponse> responseObserver) {
+            ShowCourseStudentListResponse response = ShowCourseStudentListResponse.newBuilder()
+                .setResult("Course Student List Data")
                 .build();
             
             // 클라이언트에 응답 전송
@@ -184,9 +162,9 @@ public class LoginServer {
             responseObserver.onCompleted();
         }
         @Override
-        public void showSubjectApply(ShowSubjectApplyRequest request, StreamObserver<ShowSubjectApplyResponse> responseObserver) {
-            ShowSubjectApplyResponse response = ShowSubjectApplyResponse.newBuilder()
-                .setResult("Subject Apply Data")
+        public void showCourseApply(ShowCourseApplyRequest request, StreamObserver<ShowCourseApplyResponse> responseObserver) {
+            ShowCourseApplyResponse response = ShowCourseApplyResponse.newBuilder()
+                .setResult("Course Apply Data")
                 .build();
             
             // 클라이언트에 응답 전송
