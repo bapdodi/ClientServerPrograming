@@ -19,6 +19,11 @@ service Login {
     rpc showCourseStudentList (ShowCourseStudentListRequest) returns (ShowCourseStudentListResponse) {}
     rpc showCompleteList (ShowCompleteListRequest) returns (ShowCompleteListResponse) {}
     rpc showCourseApply (ShowCourseApplyRequest) returns (ShowCourseApplyResponse) {}
+    rpc serverDeleteStudent (ServerDeleteStudentRequest) returns (ServerDeleteStudentResponse) {}
+    rpc serverEnrollCourse (ServerEnrollCourseRequest) returns (ServerEnrollCourseResponse) {}
+    rpc serverDropCourse (ServerDropCourseRequest) returns (ServerDropCourseResponse) {}
+    rpc serverAddCourse (ServerAddCourseRequest) returns (ServerAddCourseResponse) {}
+    rpc serverDeleteCourse (ServerDeleteCourseRequest) returns (ServerDeleteCourseResponse) {}
 }
 
 message ServerStudent {
@@ -77,9 +82,44 @@ message ShowCompleteListResponse {
 }
 
 message ShowCourseApplyRequest {
-    string studentId = 1;
+    int32 studentId = 1;
     string courseId = 2;
 }
 message ShowCourseApplyResponse {
+    string result = 1;
+}
+message ServerDeleteStudentRequest {
+    int32 studentId = 1;
+}
+message ServerDeleteStudentResponse {
+    string result = 1;
+}
+message ServerEnrollCourseRequest {
+    int32 studentId = 1;
+    int32 courseId = 2;
+}
+message ServerEnrollCourseResponse {
+    string result = 1;
+}
+message ServerDropCourseRequest {
+    int32 studentId = 1;
+    int32 courseId = 2;
+}
+message ServerDropCourseResponse {
+    string result = 1;
+}
+message ServerAddCourseRequest {
+    int32 courseId = 1;
+    string courseName = 2;
+    string courseProfessor = 3;
+    repeated int32 courseLimited = 4;
+}
+message ServerAddCourseResponse {
+    string result = 1;
+}
+message ServerDeleteCourseRequest {
+    int32 courseId = 1;
+}
+message ServerDeleteCourseResponse {
     string result = 1;
 }

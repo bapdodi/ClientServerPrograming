@@ -8,9 +8,8 @@ import io.grpc.stub.StreamObserver;
 import io.grpc.database.*;
 import io.grpc.login.Part1.Course;
 import io.grpc.login.Part1.CourseList;
-import io.grpc.login.Part1.Student;
-
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class DataBaseServer {
@@ -32,6 +31,40 @@ public class DataBaseServer {
 
 
     static class DataBaseImpl extends DataBaseGrpc.DataBaseImplBase {
+        @Override
+        public void getStudent(GetStudentRequest request, StreamObserver<GetStudentResponse> responseObserver) {
+            int id = request.getStudentId();
+            DataStudent student = db.getStudent(id);
+            if(student==null) {
+                GetStudentResponse response = GetStudentResponse.newBuilder()
+                        .build();
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();
+                return;
+            }
+            GetStudentResponse response = GetStudentResponse.newBuilder()
+                    .setStudent(student)
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+        @Override
+        public void getCourse(GetCourseRequest request, StreamObserver<GetCourseResponse> responseObserver) {
+            int id = request.getCourseId();
+            DataCourse course = db.getCourse(id);
+            if(course==null) {
+                GetCourseResponse response = GetCourseResponse.newBuilder()
+                        .build();
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();
+                return;
+            }
+            GetCourseResponse response = GetCourseResponse.newBuilder()
+                    .setCourse(course)
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
         @Override
         public void getLogin(GetLoginRequest request, StreamObserver<GetLoginResponse> responseObserver) {
             int id = request.getStudentId();
@@ -132,6 +165,66 @@ public class DataBaseServer {
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         }
-
+        @Override
+        public void dataDeleteStudent(DataDeleteStudentRequest request, StreamObserver<DataDeleteStudentResponse> responseObserver) {
+            int id = request.getStudentId();
+            String result="";
+            if(db.deleteStudent(id)) {
+                result="Delete Success";
+            }
+            else {
+                result="Delete Fail";
+            }
+            DataDeleteStudentResponse response = DataDeleteStudentResponse.newBuilder()
+                    .setResult(result)
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+        @Override
+        public void dataAddCourse(DataAddCourseRequest request, StreamObserver<DataAddCourseResponse> responseObserver) {
+            int courseId = request.getCourseId();
+            String courseProfessor = request.getCourseProfessor();
+            String courseName = request.getCourseName();
+            List<Integer> courseLimitedList = request.getCourseLimitedList();
+            String result=db.addCourse(courseId, courseProfessor, courseName, courseLimitedList);
+            DataAddCourseResponse response = DataAddCourseResponse.newBuilder()
+                    .setResult(result)
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+        @Override
+        public void dataDeleteCourse(DataDeleteCourseRequest request, StreamObserver<DataDeleteCourseResponse> responseObserver) {
+            int courseId = request.getCourseId();
+            String result=db.deleteCourse(courseId);
+            DataDeleteCourseResponse response = DataDeleteCourseResponse.newBuilder()
+                    .setResult(result)
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+        @Override
+        public void dataEnrollCourse(DataEnrollCourseRequest request, StreamObserver<DataEnrollCourseResponse> responseObserver) {
+            int studentId = request.getStudentId();
+            int courseId = request.getCourseId();
+            String result=db.enrollCourse(studentId, courseId);
+            DataEnrollCourseResponse response = DataEnrollCourseResponse.newBuilder()
+                    .setResult(result)
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+        @Override
+        public void dataDropCourse(DataDropCourseRequest request, StreamObserver<DataDropCourseResponse> responseObserver) {
+            int studentId = request.getStudentId();
+            int courseId = request.getCourseId();
+            String result=db.dropCourse(studentId, courseId);
+            DataDropCourseResponse response = DataDropCourseResponse.newBuilder()
+                    .setResult(result)
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
     }
 }

@@ -1,15 +1,14 @@
 package io.grpc.login.Client;
-
 import java.util.Scanner;
 import java.util.logging.Logger;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.login.*;
+import io.grpc.login.Part1.Student;
 /**
   * A simple client that requests a greeting from the {@link LoginServer}.
   */
 public class LoginClient {
-
     //로거: 로그메세지를 저장하고 추적할 수 있게 해주는 객체
     private static final Logger logger = Logger.getLogger(LoginClient.class.getName());
     //블로킹 객체: 서버와 통신할 때 사용하는 객체, 동기적 방식으로 호출을 수행할때 사용됨
@@ -26,33 +25,34 @@ public class LoginClient {
         cMethod = new CMethod(blockingStub, logger);
         scanner = new Scanner(System.in);
     }
-    public void selectMethod(){
+    public void startMenu(){
         printMenu();
         String inputMenu = scanner.nextLine();
         switch(inputMenu){
-            case "1": cMethod.login();
+            case "1": showMenu(cMethod.login(), cMethod);
                 break;
             case "2": cMethod.join();
                 break;
-            case "3": cMethod.showStudentList();
-                break;
-            case "4": cMethod.showCourseList();
-                break;
-            case "5": cMethod.showStudentCourseList();
-                break;
-            case "6": cMethod.showCourseStudentList();
-                break;
-            case "7": cMethod.showCompleteList();
-                break;
-            case "8": cMethod.showCourseApply();
-                break;
-            case "9": System.exit(0);
-                break;
+            case "x":
+                return;
             default:
                 showErrorMenuMessage();
-                break;
+                
         }
-        selectMethod();
+        startMenu();
+    }
+    private void showMenu(Student student, CMethod cMethod) {
+        if(student == null){
+            return;
+        }
+        else if(student.getStudentId()==1){
+            AdminClient adminClinet = new AdminClient(cMethod);
+            adminClinet.start();
+        }
+        else{
+            UserClient userClient = new UserClient(student,cMethod);
+            userClient.start();
+        }
     }
     private void showErrorMenuMessage() {
         System.out.println("잘못된 입력입니다.");
@@ -62,15 +62,8 @@ public class LoginClient {
         System.out.println("*** input number ***");
         System.out.println("1. 로그인");
         System.out.println("2. 회원가입");
-        System.out.println("3. 학생리스트");
-        System.out.println("4. 수강과목리스트");
-        System.out.println("5. 학생 별 수강과목리스트");
-        System.out.println("6. 수강과목 별 학생리스트");
-        System.out.println("7. 학생 별 수강을 완료한 과목리스트");
-        System.out.println("8. 수강신청");
-        System.out.println("9. 종료");
+        System.out.println("x. 종료");
     }
-
     private static String processArguments(String[] args, String target) {
         String user = "world";
         if (args.length > 0) {
@@ -86,16 +79,11 @@ public class LoginClient {
         if (args.length > 1) {target = args[1];}
         return target;
     }
-
     public static void main(String[] args) throws InterruptedException {
         String target = "localhost:50051";
         target = processArguments(args, target);
         ManagedChannel channel = ManagedChannelBuilder.forTarget(target).usePlaintext().build();
         LoginClient client = new LoginClient(channel);
-        client.selectMethod();
+        client.startMenu();
     }
-    
-    
-
-
 }

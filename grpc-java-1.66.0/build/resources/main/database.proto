@@ -11,6 +11,8 @@ option objc_class_prefix = "HLW";
 package database;
 
 service DataBase {
+    rpc GetStudent (GetStudentRequest) returns (GetStudentResponse) {}
+    rpc GetCourse (GetCourseRequest) returns (GetCourseResponse) {}
     rpc GetLogin (GetLoginRequest) returns (GetLoginResponse) {}
     rpc GetJoin (GetJoinRequest) returns (GetJoinResponse) {}
     rpc GetStudentList (GetStudentListRequest) returns (GetStudentListResponse) {}
@@ -19,6 +21,11 @@ service DataBase {
     rpc GetCourseStudentList (GetCourseStudentListRequest) returns (GetCourseStudentListResponse) {}
     rpc GetCompleteList (GetCompleteListRequest) returns (GetCompleteListResponse) {}
     rpc GetCourseApply (GetCourseApplyRequest) returns (GetCourseApplyResponse) {}
+    rpc DataDeleteStudent (DataDeleteStudentRequest) returns (DataDeleteStudentResponse) {}
+    rpc DataEnrollCourse (DataEnrollCourseRequest) returns (DataEnrollCourseResponse) {}
+    rpc DataDropCourse (DataDropCourseRequest) returns (DataDropCourseResponse) {}
+    rpc DataAddCourse (DataAddCourseRequest) returns (DataAddCourseResponse) {}
+    rpc DataDeleteCourse (DataDeleteCourseRequest) returns (DataDeleteCourseResponse) {}
 }
 
 message DataStudent {
@@ -27,6 +34,25 @@ message DataStudent {
     string name = 3;            // 이름
     string major = 4;           // 전공
     repeated int32 course_id = 5;
+}
+message DataCourse {
+    int32 course_id = 1;        // 과목 ID
+    string course_name = 2;     // 과목 이름
+    string course_professor = 3;// 교수 이름
+    repeated int32 course_limited = 4;
+}
+
+message GetStudentRequest {
+    int32 student_id = 1;
+}
+message GetStudentResponse {
+    optional DataStudent student = 1;
+}
+message GetCourseRequest {
+    int32 course_id = 1;
+}
+message GetCourseResponse {
+    optional DataCourse course = 1;      
 }
 
 message GetLoginRequest {
@@ -82,5 +108,42 @@ message GetCourseApplyRequest {
     string courseId = 2;
 }
 message GetCourseApplyResponse {
+    string result = 1;
+}
+
+message DataDeleteStudentRequest {
+    int32 studentId = 1;
+}
+message DataDeleteStudentResponse {
+    string result = 1;
+}
+message DataEnrollCourseRequest {
+    int32 studentId = 1;
+    int32 courseId = 2;
+}
+message DataEnrollCourseResponse {
+    string result = 1;
+    int32 courseLimited = 2;
+}
+message DataDropCourseRequest {
+    int32 studentId = 1;
+    int32 courseId = 2;
+}
+message DataDropCourseResponse {
+    string result = 1;
+}
+message DataAddCourseRequest {
+    int32 courseId = 1;
+    string courseName = 2;
+    string courseProfessor = 3;
+    repeated int32 courseLimited = 4;
+}
+message DataAddCourseResponse {
+    string result = 1;
+}
+message DataDeleteCourseRequest {
+    int32 courseId = 1;
+}
+message DataDeleteCourseResponse {
     string result = 1;
 }

@@ -2,6 +2,7 @@ package io.grpc.login.Server;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.LinkedList;
 /**
  * Server that manages startup/shutdown of a {@code Greeter} server.
  */
@@ -15,6 +16,7 @@ import io.grpc.Server;
 import io.grpc.database.*;
 import io.grpc.login.*;
 import io.grpc.stub.StreamObserver;
+import oracle.net.aso.c;
 public class LoginServer {
     private static final Logger logger = Logger.getLogger(LoginServer.class.getName());
     private Server clientServer;
@@ -171,6 +173,103 @@ public class LoginServer {
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         }
-    
+        @Override
+        public void serverDeleteStudent(ServerDeleteStudentRequest request, StreamObserver<ServerDeleteStudentResponse> responseObserver) {
+            DataDeleteStudentRequest request2 = DataDeleteStudentRequest.newBuilder().setStudentId(request.getStudentId()).build();
+            DataDeleteStudentResponse response2 = blockingStub.dataDeleteStudent(request2);
+            ServerDeleteStudentResponse response = ServerDeleteStudentResponse.newBuilder()
+                .setResult(response2.getResult())
+                .build();
+            // 클라이언트에 응답 전송
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+        @Override
+        public void serverEnrollCourse(ServerEnrollCourseRequest request, StreamObserver<ServerEnrollCourseResponse> responseObserver) {
+            GetStudentRequest request3 = GetStudentRequest.newBuilder().setStudentId(request.getStudentId()).build();
+            GetStudentResponse getStudent = blockingStub.getStudent(request3);
+            if(!getStudent.hasStudent()){
+                ServerEnrollCourseResponse response = ServerEnrollCourseResponse.newBuilder()
+                .setResult("Student Not Found")
+                .build();
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();
+                return;
+            }
+            GetCourseRequest request4 = GetCourseRequest.newBuilder().setCourseId(request.getCourseId()).build();
+            GetCourseResponse getCourse = blockingStub.getCourse(request4);
+            if(!getCourse.hasCourse()){
+                ServerEnrollCourseResponse response = ServerEnrollCourseResponse.newBuilder()
+                .setResult("Course Not Found")
+                .build();
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();
+            }
+            LinkedList<Integer> courseLimitedList = new LinkedList<Integer>();
+            courseLimitedList.addAll(getCourse.getCourse().getCourseLimitedList());
+            LinkedList<Integer> studentCompleteCoures = new LinkedList<Integer>();
+            studentCompleteCoures.addAll(getStudent.getStudent().getCourseIdList());
+            if(studentCompleteCoures.contains(request.getCourseId())){
+                ServerEnrollCourseResponse response = ServerEnrollCourseResponse.newBuilder()
+                .setResult("Already Enrolled")
+                .build();
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();
+            }
+            if(studentCompleteCoures.containsAll(courseLimitedList)){
+                DataEnrollCourseRequest request2 = DataEnrollCourseRequest.newBuilder().setCourseId(request.getCourseId()).setStudentId(request.getStudentId()).build();
+                DataEnrollCourseResponse response2 = blockingStub.dataEnrollCourse(request2);
+                ServerEnrollCourseResponse response = ServerEnrollCourseResponse.newBuilder()
+                    .setResult(response2.getResult())
+                    .build();
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();
+            }
+            else{
+                ServerEnrollCourseResponse response = ServerEnrollCourseResponse.newBuilder()
+                .setResult("Course Limited")
+                .build();
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();
+            }
+            
+            
+        }
+        @Override
+        public void serverDropCourse(ServerDropCourseRequest request, StreamObserver<ServerDropCourseResponse> responseObserver) {
+            DataDropCourseRequest request2 = DataDropCourseRequest.newBuilder().setCourseId(request.getCourseId()).setStudentId(request.getStudentId()).build();
+            DataDropCourseResponse response2 = blockingStub.dataDropCourse(request2);
+            ServerDropCourseResponse response = ServerDropCourseResponse.newBuilder()
+                .setResult(response2.getResult())
+                .build();
+            
+            // 클라이언트에 응답 전송
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+        @Override
+        public void serverAddCourse(ServerAddCourseRequest request, StreamObserver<ServerAddCourseResponse> responseObserver) {
+            DataAddCourseRequest request2 = DataAddCourseRequest.newBuilder().setCourseId(request.getCourseId()).setCourseName(request.getCourseName()).setCourseProfessor(request.getCourseProfessor()).addAllCourseLimited(request.getCourseLimitedList()).build();
+            DataAddCourseResponse response2 = blockingStub.dataAddCourse(request2);
+            ServerAddCourseResponse response = ServerAddCourseResponse.newBuilder()
+                .setResult(response2.getResult())
+                .build();
+            
+            // 클라이언트에 응답 전송
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+        @Override
+        public void serverDeleteCourse(ServerDeleteCourseRequest request, StreamObserver<ServerDeleteCourseResponse> responseObserver) {
+            DataDeleteCourseRequest request2 = DataDeleteCourseRequest.newBuilder().setCourseId(request.getCourseId()).build();
+            DataDeleteCourseResponse response2 = blockingStub.dataDeleteCourse(request2);
+            ServerDeleteCourseResponse response = ServerDeleteCourseResponse.newBuilder()
+                .setResult(response2.getResult())
+                .build();
+            
+            // 클라이언트에 응답 전송
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
     }
 }

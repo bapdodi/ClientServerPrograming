@@ -100,6 +100,56 @@ public final class LoginProto {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_login_ShowCourseApplyResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_login_ServerDeleteStudentRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_login_ServerDeleteStudentRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_login_ServerDeleteStudentResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_login_ServerDeleteStudentResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_login_ServerEnrollCourseRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_login_ServerEnrollCourseRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_login_ServerEnrollCourseResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_login_ServerEnrollCourseResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_login_ServerDropCourseRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_login_ServerDropCourseRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_login_ServerDropCourseResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_login_ServerDropCourseResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_login_ServerAddCourseRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_login_ServerAddCourseRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_login_ServerAddCourseResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_login_ServerAddCourseResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_login_ServerDeleteCourseRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_login_ServerDeleteCourseRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_login_ServerDeleteCourseResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_login_ServerDeleteCourseResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -128,26 +178,52 @@ public final class LoginProto {
       "\n\006result\030\001 \001(\t\",\n\027ShowCompleteListReques" +
       "t\022\021\n\tstudentId\030\001 \001(\t\"*\n\030ShowCompleteList" +
       "Response\022\016\n\006result\030\001 \001(\t\"=\n\026ShowCourseAp" +
-      "plyRequest\022\021\n\tstudentId\030\001 \001(\t\022\020\n\010courseI" +
+      "plyRequest\022\021\n\tstudentId\030\001 \001(\005\022\020\n\010courseI" +
       "d\030\002 \001(\t\")\n\027ShowCourseApplyResponse\022\016\n\006re" +
-      "sult\030\001 \001(\t2\214\005\n\005Login\0224\n\005login\022\023.login.Lo" +
-      "ginRequest\032\024.login.LoginResponse\"\000\0221\n\004jo" +
-      "in\022\022.login.JoinRequest\032\023.login.JoinRespo" +
-      "nse\"\000\022R\n\017showStudentList\022\035.login.ShowStu" +
-      "dentListRequest\032\036.login.ShowStudentListR" +
-      "esponse\"\000\022O\n\016showCourseList\022\034.login.Show" +
-      "CourseListRequest\032\035.login.ShowCourseList" +
-      "Response\"\000\022d\n\025showStudentCourseList\022#.lo" +
-      "gin.ShowStudentCourseListRequest\032$.login" +
-      ".ShowStudentCourseListResponse\"\000\022d\n\025show" +
-      "CourseStudentList\022#.login.ShowCourseStud" +
-      "entListRequest\032$.login.ShowCourseStudent" +
-      "ListResponse\"\000\022U\n\020showCompleteList\022\036.log" +
-      "in.ShowCompleteListRequest\032\037.login.ShowC" +
-      "ompleteListResponse\"\000\022R\n\017showCourseApply" +
-      "\022\035.login.ShowCourseApplyRequest\032\036.login." +
-      "ShowCourseApplyResponse\"\000B#\n\rio.grpc.log" +
-      "inB\nLoginProtoP\001\242\002\003HLWb\006proto3"
+      "sult\030\001 \001(\t\"/\n\032ServerDeleteStudentRequest" +
+      "\022\021\n\tstudentId\030\001 \001(\005\"-\n\033ServerDeleteStude" +
+      "ntResponse\022\016\n\006result\030\001 \001(\t\"@\n\031ServerEnro" +
+      "llCourseRequest\022\021\n\tstudentId\030\001 \001(\005\022\020\n\010co" +
+      "urseId\030\002 \001(\005\",\n\032ServerEnrollCourseRespon" +
+      "se\022\016\n\006result\030\001 \001(\t\">\n\027ServerDropCourseRe" +
+      "quest\022\021\n\tstudentId\030\001 \001(\005\022\020\n\010courseId\030\002 \001" +
+      "(\005\"*\n\030ServerDropCourseResponse\022\016\n\006result" +
+      "\030\001 \001(\t\"n\n\026ServerAddCourseRequest\022\020\n\010cour" +
+      "seId\030\001 \001(\005\022\022\n\ncourseName\030\002 \001(\t\022\027\n\017course" +
+      "Professor\030\003 \001(\t\022\025\n\rcourseLimited\030\004 \003(\005\")" +
+      "\n\027ServerAddCourseResponse\022\016\n\006result\030\001 \001(" +
+      "\t\"-\n\031ServerDeleteCourseRequest\022\020\n\010course" +
+      "Id\030\001 \001(\005\",\n\032ServerDeleteCourseResponse\022\016" +
+      "\n\006result\030\001 \001(\t2\321\010\n\005Login\0224\n\005login\022\023.logi" +
+      "n.LoginRequest\032\024.login.LoginResponse\"\000\0221" +
+      "\n\004join\022\022.login.JoinRequest\032\023.login.JoinR" +
+      "esponse\"\000\022R\n\017showStudentList\022\035.login.Sho" +
+      "wStudentListRequest\032\036.login.ShowStudentL" +
+      "istResponse\"\000\022O\n\016showCourseList\022\034.login." +
+      "ShowCourseListRequest\032\035.login.ShowCourse" +
+      "ListResponse\"\000\022d\n\025showStudentCourseList\022" +
+      "#.login.ShowStudentCourseListRequest\032$.l" +
+      "ogin.ShowStudentCourseListResponse\"\000\022d\n\025" +
+      "showCourseStudentList\022#.login.ShowCourse" +
+      "StudentListRequest\032$.login.ShowCourseStu" +
+      "dentListResponse\"\000\022U\n\020showCompleteList\022\036" +
+      ".login.ShowCompleteListRequest\032\037.login.S" +
+      "howCompleteListResponse\"\000\022R\n\017showCourseA" +
+      "pply\022\035.login.ShowCourseApplyRequest\032\036.lo" +
+      "gin.ShowCourseApplyResponse\"\000\022^\n\023serverD" +
+      "eleteStudent\022!.login.ServerDeleteStudent" +
+      "Request\032\".login.ServerDeleteStudentRespo" +
+      "nse\"\000\022[\n\022serverEnrollCourse\022 .login.Serv" +
+      "erEnrollCourseRequest\032!.login.ServerEnro" +
+      "llCourseResponse\"\000\022U\n\020serverDropCourse\022\036" +
+      ".login.ServerDropCourseRequest\032\037.login.S" +
+      "erverDropCourseResponse\"\000\022R\n\017serverAddCo" +
+      "urse\022\035.login.ServerAddCourseRequest\032\036.lo" +
+      "gin.ServerAddCourseResponse\"\000\022[\n\022serverD" +
+      "eleteCourse\022 .login.ServerDeleteCourseRe" +
+      "quest\032!.login.ServerDeleteCourseResponse" +
+      "\"\000B#\n\rio.grpc.loginB\nLoginProtoP\001\242\002\003HLWb" +
+      "\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -254,6 +330,66 @@ public final class LoginProto {
     internal_static_login_ShowCourseApplyResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_login_ShowCourseApplyResponse_descriptor,
+        new java.lang.String[] { "Result", });
+    internal_static_login_ServerDeleteStudentRequest_descriptor =
+      getDescriptor().getMessageTypes().get(17);
+    internal_static_login_ServerDeleteStudentRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_login_ServerDeleteStudentRequest_descriptor,
+        new java.lang.String[] { "StudentId", });
+    internal_static_login_ServerDeleteStudentResponse_descriptor =
+      getDescriptor().getMessageTypes().get(18);
+    internal_static_login_ServerDeleteStudentResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_login_ServerDeleteStudentResponse_descriptor,
+        new java.lang.String[] { "Result", });
+    internal_static_login_ServerEnrollCourseRequest_descriptor =
+      getDescriptor().getMessageTypes().get(19);
+    internal_static_login_ServerEnrollCourseRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_login_ServerEnrollCourseRequest_descriptor,
+        new java.lang.String[] { "StudentId", "CourseId", });
+    internal_static_login_ServerEnrollCourseResponse_descriptor =
+      getDescriptor().getMessageTypes().get(20);
+    internal_static_login_ServerEnrollCourseResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_login_ServerEnrollCourseResponse_descriptor,
+        new java.lang.String[] { "Result", });
+    internal_static_login_ServerDropCourseRequest_descriptor =
+      getDescriptor().getMessageTypes().get(21);
+    internal_static_login_ServerDropCourseRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_login_ServerDropCourseRequest_descriptor,
+        new java.lang.String[] { "StudentId", "CourseId", });
+    internal_static_login_ServerDropCourseResponse_descriptor =
+      getDescriptor().getMessageTypes().get(22);
+    internal_static_login_ServerDropCourseResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_login_ServerDropCourseResponse_descriptor,
+        new java.lang.String[] { "Result", });
+    internal_static_login_ServerAddCourseRequest_descriptor =
+      getDescriptor().getMessageTypes().get(23);
+    internal_static_login_ServerAddCourseRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_login_ServerAddCourseRequest_descriptor,
+        new java.lang.String[] { "CourseId", "CourseName", "CourseProfessor", "CourseLimited", });
+    internal_static_login_ServerAddCourseResponse_descriptor =
+      getDescriptor().getMessageTypes().get(24);
+    internal_static_login_ServerAddCourseResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_login_ServerAddCourseResponse_descriptor,
+        new java.lang.String[] { "Result", });
+    internal_static_login_ServerDeleteCourseRequest_descriptor =
+      getDescriptor().getMessageTypes().get(25);
+    internal_static_login_ServerDeleteCourseRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_login_ServerDeleteCourseRequest_descriptor,
+        new java.lang.String[] { "CourseId", });
+    internal_static_login_ServerDeleteCourseResponse_descriptor =
+      getDescriptor().getMessageTypes().get(26);
+    internal_static_login_ServerDeleteCourseResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_login_ServerDeleteCourseResponse_descriptor,
         new java.lang.String[] { "Result", });
   }
 

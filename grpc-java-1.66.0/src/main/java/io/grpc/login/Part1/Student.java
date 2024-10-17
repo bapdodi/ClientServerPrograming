@@ -18,6 +18,9 @@ public class Student implements Serializable{
     public boolean match(int studentId) {
         return this.studentId == studentId;
     }
+    public int getStudentId() {
+        return this.studentId;
+    }
     public String getName() {
         return this.name;
     }

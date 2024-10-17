@@ -9,16 +9,10 @@ public interface ShowCourseApplyRequestOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string studentId = 1;</code>
+   * <code>int32 studentId = 1;</code>
    * @return The studentId.
    */
-  java.lang.String getStudentId();
-  /**
-   * <code>string studentId = 1;</code>
-   * @return The bytes for studentId.
-   */
-  com.google.protobuf.ByteString
-      getStudentIdBytes();
+  int getStudentId();
 
   /**
    * <code>string courseId = 2;</code>

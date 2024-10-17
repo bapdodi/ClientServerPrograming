@@ -263,6 +263,161 @@ public final class LoginGrpc {
     return getShowCourseApplyMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<io.grpc.login.ServerDeleteStudentRequest,
+      io.grpc.login.ServerDeleteStudentResponse> getServerDeleteStudentMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "serverDeleteStudent",
+      requestType = io.grpc.login.ServerDeleteStudentRequest.class,
+      responseType = io.grpc.login.ServerDeleteStudentResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<io.grpc.login.ServerDeleteStudentRequest,
+      io.grpc.login.ServerDeleteStudentResponse> getServerDeleteStudentMethod() {
+    io.grpc.MethodDescriptor<io.grpc.login.ServerDeleteStudentRequest, io.grpc.login.ServerDeleteStudentResponse> getServerDeleteStudentMethod;
+    if ((getServerDeleteStudentMethod = LoginGrpc.getServerDeleteStudentMethod) == null) {
+      synchronized (LoginGrpc.class) {
+        if ((getServerDeleteStudentMethod = LoginGrpc.getServerDeleteStudentMethod) == null) {
+          LoginGrpc.getServerDeleteStudentMethod = getServerDeleteStudentMethod =
+              io.grpc.MethodDescriptor.<io.grpc.login.ServerDeleteStudentRequest, io.grpc.login.ServerDeleteStudentResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "serverDeleteStudent"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.login.ServerDeleteStudentRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.login.ServerDeleteStudentResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new LoginMethodDescriptorSupplier("serverDeleteStudent"))
+              .build();
+        }
+      }
+    }
+    return getServerDeleteStudentMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<io.grpc.login.ServerEnrollCourseRequest,
+      io.grpc.login.ServerEnrollCourseResponse> getServerEnrollCourseMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "serverEnrollCourse",
+      requestType = io.grpc.login.ServerEnrollCourseRequest.class,
+      responseType = io.grpc.login.ServerEnrollCourseResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<io.grpc.login.ServerEnrollCourseRequest,
+      io.grpc.login.ServerEnrollCourseResponse> getServerEnrollCourseMethod() {
+    io.grpc.MethodDescriptor<io.grpc.login.ServerEnrollCourseRequest, io.grpc.login.ServerEnrollCourseResponse> getServerEnrollCourseMethod;
+    if ((getServerEnrollCourseMethod = LoginGrpc.getServerEnrollCourseMethod) == null) {
+      synchronized (LoginGrpc.class) {
+        if ((getServerEnrollCourseMethod = LoginGrpc.getServerEnrollCourseMethod) == null) {
+          LoginGrpc.getServerEnrollCourseMethod = getServerEnrollCourseMethod =
+              io.grpc.MethodDescriptor.<io.grpc.login.ServerEnrollCourseRequest, io.grpc.login.ServerEnrollCourseResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "serverEnrollCourse"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.login.ServerEnrollCourseRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.login.ServerEnrollCourseResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new LoginMethodDescriptorSupplier("serverEnrollCourse"))
+              .build();
+        }
+      }
+    }
+    return getServerEnrollCourseMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<io.grpc.login.ServerDropCourseRequest,
+      io.grpc.login.ServerDropCourseResponse> getServerDropCourseMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "serverDropCourse",
+      requestType = io.grpc.login.ServerDropCourseRequest.class,
+      responseType = io.grpc.login.ServerDropCourseResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<io.grpc.login.ServerDropCourseRequest,
+      io.grpc.login.ServerDropCourseResponse> getServerDropCourseMethod() {
+    io.grpc.MethodDescriptor<io.grpc.login.ServerDropCourseRequest, io.grpc.login.ServerDropCourseResponse> getServerDropCourseMethod;
+    if ((getServerDropCourseMethod = LoginGrpc.getServerDropCourseMethod) == null) {
+      synchronized (LoginGrpc.class) {
+        if ((getServerDropCourseMethod = LoginGrpc.getServerDropCourseMethod) == null) {
+          LoginGrpc.getServerDropCourseMethod = getServerDropCourseMethod =
+              io.grpc.MethodDescriptor.<io.grpc.login.ServerDropCourseRequest, io.grpc.login.ServerDropCourseResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "serverDropCourse"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.login.ServerDropCourseRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.login.ServerDropCourseResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new LoginMethodDescriptorSupplier("serverDropCourse"))
+              .build();
+        }
+      }
+    }
+    return getServerDropCourseMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<io.grpc.login.ServerAddCourseRequest,
+      io.grpc.login.ServerAddCourseResponse> getServerAddCourseMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "serverAddCourse",
+      requestType = io.grpc.login.ServerAddCourseRequest.class,
+      responseType = io.grpc.login.ServerAddCourseResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<io.grpc.login.ServerAddCourseRequest,
+      io.grpc.login.ServerAddCourseResponse> getServerAddCourseMethod() {
+    io.grpc.MethodDescriptor<io.grpc.login.ServerAddCourseRequest, io.grpc.login.ServerAddCourseResponse> getServerAddCourseMethod;
+    if ((getServerAddCourseMethod = LoginGrpc.getServerAddCourseMethod) == null) {
+      synchronized (LoginGrpc.class) {
+        if ((getServerAddCourseMethod = LoginGrpc.getServerAddCourseMethod) == null) {
+          LoginGrpc.getServerAddCourseMethod = getServerAddCourseMethod =
+              io.grpc.MethodDescriptor.<io.grpc.login.ServerAddCourseRequest, io.grpc.login.ServerAddCourseResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "serverAddCourse"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.login.ServerAddCourseRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.login.ServerAddCourseResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new LoginMethodDescriptorSupplier("serverAddCourse"))
+              .build();
+        }
+      }
+    }
+    return getServerAddCourseMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<io.grpc.login.ServerDeleteCourseRequest,
+      io.grpc.login.ServerDeleteCourseResponse> getServerDeleteCourseMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "serverDeleteCourse",
+      requestType = io.grpc.login.ServerDeleteCourseRequest.class,
+      responseType = io.grpc.login.ServerDeleteCourseResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<io.grpc.login.ServerDeleteCourseRequest,
+      io.grpc.login.ServerDeleteCourseResponse> getServerDeleteCourseMethod() {
+    io.grpc.MethodDescriptor<io.grpc.login.ServerDeleteCourseRequest, io.grpc.login.ServerDeleteCourseResponse> getServerDeleteCourseMethod;
+    if ((getServerDeleteCourseMethod = LoginGrpc.getServerDeleteCourseMethod) == null) {
+      synchronized (LoginGrpc.class) {
+        if ((getServerDeleteCourseMethod = LoginGrpc.getServerDeleteCourseMethod) == null) {
+          LoginGrpc.getServerDeleteCourseMethod = getServerDeleteCourseMethod =
+              io.grpc.MethodDescriptor.<io.grpc.login.ServerDeleteCourseRequest, io.grpc.login.ServerDeleteCourseResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "serverDeleteCourse"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.login.ServerDeleteCourseRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.login.ServerDeleteCourseResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new LoginMethodDescriptorSupplier("serverDeleteCourse"))
+              .build();
+        }
+      }
+    }
+    return getServerDeleteCourseMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -366,6 +521,41 @@ public final class LoginGrpc {
         io.grpc.stub.StreamObserver<io.grpc.login.ShowCourseApplyResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getShowCourseApplyMethod(), responseObserver);
     }
+
+    /**
+     */
+    default void serverDeleteStudent(io.grpc.login.ServerDeleteStudentRequest request,
+        io.grpc.stub.StreamObserver<io.grpc.login.ServerDeleteStudentResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getServerDeleteStudentMethod(), responseObserver);
+    }
+
+    /**
+     */
+    default void serverEnrollCourse(io.grpc.login.ServerEnrollCourseRequest request,
+        io.grpc.stub.StreamObserver<io.grpc.login.ServerEnrollCourseResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getServerEnrollCourseMethod(), responseObserver);
+    }
+
+    /**
+     */
+    default void serverDropCourse(io.grpc.login.ServerDropCourseRequest request,
+        io.grpc.stub.StreamObserver<io.grpc.login.ServerDropCourseResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getServerDropCourseMethod(), responseObserver);
+    }
+
+    /**
+     */
+    default void serverAddCourse(io.grpc.login.ServerAddCourseRequest request,
+        io.grpc.stub.StreamObserver<io.grpc.login.ServerAddCourseResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getServerAddCourseMethod(), responseObserver);
+    }
+
+    /**
+     */
+    default void serverDeleteCourse(io.grpc.login.ServerDeleteCourseRequest request,
+        io.grpc.stub.StreamObserver<io.grpc.login.ServerDeleteCourseResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getServerDeleteCourseMethod(), responseObserver);
+    }
   }
 
   /**
@@ -458,6 +648,46 @@ public final class LoginGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getShowCourseApplyMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void serverDeleteStudent(io.grpc.login.ServerDeleteStudentRequest request,
+        io.grpc.stub.StreamObserver<io.grpc.login.ServerDeleteStudentResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getServerDeleteStudentMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void serverEnrollCourse(io.grpc.login.ServerEnrollCourseRequest request,
+        io.grpc.stub.StreamObserver<io.grpc.login.ServerEnrollCourseResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getServerEnrollCourseMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void serverDropCourse(io.grpc.login.ServerDropCourseRequest request,
+        io.grpc.stub.StreamObserver<io.grpc.login.ServerDropCourseResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getServerDropCourseMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void serverAddCourse(io.grpc.login.ServerAddCourseRequest request,
+        io.grpc.stub.StreamObserver<io.grpc.login.ServerAddCourseResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getServerAddCourseMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void serverDeleteCourse(io.grpc.login.ServerDeleteCourseRequest request,
+        io.grpc.stub.StreamObserver<io.grpc.login.ServerDeleteCourseResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getServerDeleteCourseMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -530,6 +760,41 @@ public final class LoginGrpc {
     public io.grpc.login.ShowCourseApplyResponse showCourseApply(io.grpc.login.ShowCourseApplyRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getShowCourseApplyMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public io.grpc.login.ServerDeleteStudentResponse serverDeleteStudent(io.grpc.login.ServerDeleteStudentRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getServerDeleteStudentMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public io.grpc.login.ServerEnrollCourseResponse serverEnrollCourse(io.grpc.login.ServerEnrollCourseRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getServerEnrollCourseMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public io.grpc.login.ServerDropCourseResponse serverDropCourse(io.grpc.login.ServerDropCourseRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getServerDropCourseMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public io.grpc.login.ServerAddCourseResponse serverAddCourse(io.grpc.login.ServerAddCourseRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getServerAddCourseMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public io.grpc.login.ServerDeleteCourseResponse serverDeleteCourse(io.grpc.login.ServerDeleteCourseRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getServerDeleteCourseMethod(), getCallOptions(), request);
     }
   }
 
@@ -612,6 +877,46 @@ public final class LoginGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getShowCourseApplyMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<io.grpc.login.ServerDeleteStudentResponse> serverDeleteStudent(
+        io.grpc.login.ServerDeleteStudentRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getServerDeleteStudentMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<io.grpc.login.ServerEnrollCourseResponse> serverEnrollCourse(
+        io.grpc.login.ServerEnrollCourseRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getServerEnrollCourseMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<io.grpc.login.ServerDropCourseResponse> serverDropCourse(
+        io.grpc.login.ServerDropCourseRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getServerDropCourseMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<io.grpc.login.ServerAddCourseResponse> serverAddCourse(
+        io.grpc.login.ServerAddCourseRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getServerAddCourseMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<io.grpc.login.ServerDeleteCourseResponse> serverDeleteCourse(
+        io.grpc.login.ServerDeleteCourseRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getServerDeleteCourseMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_LOGIN = 0;
@@ -622,6 +927,11 @@ public final class LoginGrpc {
   private static final int METHODID_SHOW_COURSE_STUDENT_LIST = 5;
   private static final int METHODID_SHOW_COMPLETE_LIST = 6;
   private static final int METHODID_SHOW_COURSE_APPLY = 7;
+  private static final int METHODID_SERVER_DELETE_STUDENT = 8;
+  private static final int METHODID_SERVER_ENROLL_COURSE = 9;
+  private static final int METHODID_SERVER_DROP_COURSE = 10;
+  private static final int METHODID_SERVER_ADD_COURSE = 11;
+  private static final int METHODID_SERVER_DELETE_COURSE = 12;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -671,6 +981,26 @@ public final class LoginGrpc {
         case METHODID_SHOW_COURSE_APPLY:
           serviceImpl.showCourseApply((io.grpc.login.ShowCourseApplyRequest) request,
               (io.grpc.stub.StreamObserver<io.grpc.login.ShowCourseApplyResponse>) responseObserver);
+          break;
+        case METHODID_SERVER_DELETE_STUDENT:
+          serviceImpl.serverDeleteStudent((io.grpc.login.ServerDeleteStudentRequest) request,
+              (io.grpc.stub.StreamObserver<io.grpc.login.ServerDeleteStudentResponse>) responseObserver);
+          break;
+        case METHODID_SERVER_ENROLL_COURSE:
+          serviceImpl.serverEnrollCourse((io.grpc.login.ServerEnrollCourseRequest) request,
+              (io.grpc.stub.StreamObserver<io.grpc.login.ServerEnrollCourseResponse>) responseObserver);
+          break;
+        case METHODID_SERVER_DROP_COURSE:
+          serviceImpl.serverDropCourse((io.grpc.login.ServerDropCourseRequest) request,
+              (io.grpc.stub.StreamObserver<io.grpc.login.ServerDropCourseResponse>) responseObserver);
+          break;
+        case METHODID_SERVER_ADD_COURSE:
+          serviceImpl.serverAddCourse((io.grpc.login.ServerAddCourseRequest) request,
+              (io.grpc.stub.StreamObserver<io.grpc.login.ServerAddCourseResponse>) responseObserver);
+          break;
+        case METHODID_SERVER_DELETE_COURSE:
+          serviceImpl.serverDeleteCourse((io.grpc.login.ServerDeleteCourseRequest) request,
+              (io.grpc.stub.StreamObserver<io.grpc.login.ServerDeleteCourseResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -746,6 +1076,41 @@ public final class LoginGrpc {
               io.grpc.login.ShowCourseApplyRequest,
               io.grpc.login.ShowCourseApplyResponse>(
                 service, METHODID_SHOW_COURSE_APPLY)))
+        .addMethod(
+          getServerDeleteStudentMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              io.grpc.login.ServerDeleteStudentRequest,
+              io.grpc.login.ServerDeleteStudentResponse>(
+                service, METHODID_SERVER_DELETE_STUDENT)))
+        .addMethod(
+          getServerEnrollCourseMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              io.grpc.login.ServerEnrollCourseRequest,
+              io.grpc.login.ServerEnrollCourseResponse>(
+                service, METHODID_SERVER_ENROLL_COURSE)))
+        .addMethod(
+          getServerDropCourseMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              io.grpc.login.ServerDropCourseRequest,
+              io.grpc.login.ServerDropCourseResponse>(
+                service, METHODID_SERVER_DROP_COURSE)))
+        .addMethod(
+          getServerAddCourseMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              io.grpc.login.ServerAddCourseRequest,
+              io.grpc.login.ServerAddCourseResponse>(
+                service, METHODID_SERVER_ADD_COURSE)))
+        .addMethod(
+          getServerDeleteCourseMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              io.grpc.login.ServerDeleteCourseRequest,
+              io.grpc.login.ServerDeleteCourseResponse>(
+                service, METHODID_SERVER_DELETE_COURSE)))
         .build();
   }
 
@@ -802,6 +1167,11 @@ public final class LoginGrpc {
               .addMethod(getShowCourseStudentListMethod())
               .addMethod(getShowCompleteListMethod())
               .addMethod(getShowCourseApplyMethod())
+              .addMethod(getServerDeleteStudentMethod())
+              .addMethod(getServerEnrollCourseMethod())
+              .addMethod(getServerDropCourseMethod())
+              .addMethod(getServerAddCourseMethod())
+              .addMethod(getServerDeleteCourseMethod())
               .build();
         }
       }
