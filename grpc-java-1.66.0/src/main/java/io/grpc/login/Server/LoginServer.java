@@ -16,7 +16,15 @@ import io.grpc.Server;
 import io.grpc.database.*;
 import io.grpc.login.*;
 import io.grpc.stub.StreamObserver;
-import oracle.net.aso.c;
+import oracle.net.aso.l;
+
+import java.util.logging.FileHandler;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.Formatter;
+import java.util.logging.LogRecord;
+import java.text.SimpleDateFormat;
+import com.google.protobuf.Timestamp;
+import java.util.Date;
 public class LoginServer {
     private static final Logger logger = Logger.getLogger(LoginServer.class.getName());
     private Server clientServer;
@@ -26,6 +34,7 @@ public class LoginServer {
     private void start() throws IOException{
    
         int clientPort = 50051;
+        setLogger();
         //인증이 없는 서버
         clientServer = Grpc.newServerBuilderForPort(clientPort, InsecureServerCredentials.create())
                 .addService(new LoginImpl())
@@ -54,6 +63,27 @@ public class LoginServer {
                 System.err.println("*** server shut down");
             }
         });
+    }
+    private void setLogger() {
+        try {
+            // FileHandler 설정
+            FileHandler fileHandler = new FileHandler("src/main/Log/server.log", true); // true는 파일에 덧붙이기
+            fileHandler.setFormatter(new CustomFormatter()); // 기본 포맷 사용
+            logger.addHandler(fileHandler);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    static class CustomFormatter extends Formatter {
+        private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        @Override
+        public String format(LogRecord record) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(dateFormat.format(new Date(record.getMillis()))).append(" ");
+            sb.append(record.getLevel()).append(": ");
+            sb.append(record.getMessage()).append("\n");
+            return sb.toString();
+        }
     }
     private void stop(Server server) throws InterruptedException{
         if(server != null){
@@ -89,6 +119,7 @@ public class LoginServer {
             // 클라이언트에 응답 전송
             responseObserver.onNext(response);
             responseObserver.onCompleted();
+            logger.info(request.getStudentId() + " login");
         }
         @Override
         public void join(JoinRequest request, StreamObserver<JoinResponse> responseObserver) {
@@ -107,6 +138,7 @@ public class LoginServer {
             // 클라이언트에 응답 전송
             responseObserver.onNext(response);
             responseObserver.onCompleted();
+            logger.info(request.getStudent().getStudentId() + " join");
         }
 
         @Override
@@ -183,6 +215,7 @@ public class LoginServer {
             // 클라이언트에 응답 전송
             responseObserver.onNext(response);
             responseObserver.onCompleted();
+            logger.info(request.getStudentId() + " delete");
         }
         @Override
         public void serverEnrollCourse(ServerEnrollCourseRequest request, StreamObserver<ServerEnrollCourseResponse> responseObserver) {
@@ -232,6 +265,7 @@ public class LoginServer {
                 responseObserver.onNext(response);
                 responseObserver.onCompleted();
             }
+            logger.info(request.getStudentId() + " enroll " + request.getCourseId());
             
             
         }
@@ -246,6 +280,7 @@ public class LoginServer {
             // 클라이언트에 응답 전송
             responseObserver.onNext(response);
             responseObserver.onCompleted();
+            logger.info(request.getStudentId() + " drop " + request.getCourseId());
         }
         @Override
         public void serverAddCourse(ServerAddCourseRequest request, StreamObserver<ServerAddCourseResponse> responseObserver) {
@@ -258,6 +293,7 @@ public class LoginServer {
             // 클라이언트에 응답 전송
             responseObserver.onNext(response);
             responseObserver.onCompleted();
+            logger.info(request.getCourseId() + " add");
         }
         @Override
         public void serverDeleteCourse(ServerDeleteCourseRequest request, StreamObserver<ServerDeleteCourseResponse> responseObserver) {
@@ -270,6 +306,7 @@ public class LoginServer {
             // 클라이언트에 응답 전송
             responseObserver.onNext(response);
             responseObserver.onCompleted();
+            logger.info(request.getCourseId() + " delete");
         }
     }
 }
