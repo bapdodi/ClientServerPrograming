@@ -94,15 +94,8 @@ public class DataBaseServer {
         @Override
         public void dataDeleteStudent(DataDeleteStudentRequest request, StreamObserver<DataDeleteStudentResponse> responseObserver) {
             int id = request.getStudentId();
-            String result="";
-            if(db.deleteStudent(id)) {
-                result="Delete Success";
-            }
-            else {
-                result="Delete Fail";
-            }
             DataDeleteStudentResponse response = DataDeleteStudentResponse.newBuilder()
-                    .setResult(result)
+                    .setCheck(db.deleteStudent(id))
                     .build();
             finishedresponse(responseObserver, response);
         }
@@ -112,18 +105,16 @@ public class DataBaseServer {
             String courseProfessor = request.getCourseProfessor();
             String courseName = request.getCourseName();
             List<Integer> courseLimitedList = request.getCourseLimitedList();
-            String result=db.addCourse(courseId, courseProfessor, courseName, courseLimitedList);
             DataAddCourseResponse response = DataAddCourseResponse.newBuilder()
-                    .setResult(result)
+                    .setCheck(db.addCourse(courseId, courseProfessor, courseName, courseLimitedList))
                     .build();
             finishedresponse(responseObserver, response);
         }
         @Override
         public void dataDeleteCourse(DataDeleteCourseRequest request, StreamObserver<DataDeleteCourseResponse> responseObserver) {
             int courseId = request.getCourseId();
-            String result=db.deleteCourse(courseId);
             DataDeleteCourseResponse response = DataDeleteCourseResponse.newBuilder()
-                    .setResult(result)
+                    .setCheck(db.deleteCourse(courseId))
                     .build();
             finishedresponse(responseObserver, response);
         }
@@ -131,9 +122,8 @@ public class DataBaseServer {
         public void dataEnrollCourse(DataEnrollCourseRequest request, StreamObserver<DataEnrollCourseResponse> responseObserver) {
             int studentId = request.getStudentId();
             int courseId = request.getCourseId();
-            String result=db.enrollCourse(studentId, courseId);
             DataEnrollCourseResponse response = DataEnrollCourseResponse.newBuilder()
-                    .setResult(result)
+                    .setCheck(db.enrollCourse(studentId, courseId))
                     .build();
             finishedresponse(responseObserver, response);
         }
@@ -141,10 +131,7 @@ public class DataBaseServer {
         public void dataDropCourse(DataDropCourseRequest request, StreamObserver<DataDropCourseResponse> responseObserver) {
             int studentId = request.getStudentId();
             int courseId = request.getCourseId();
-            String result=db.dropCourse(studentId, courseId);
-            DataDropCourseResponse response = DataDropCourseResponse.newBuilder()
-                    .setResult(result)
-                    .build();
+            DataDropCourseResponse response = DataDropCourseResponse.newBuilder().setCheck(db.dropCourse(studentId, courseId)).build();
             finishedresponse(responseObserver, response);
         }
         private <T> void finishedresponse(StreamObserver<T> responseObserver, T response){

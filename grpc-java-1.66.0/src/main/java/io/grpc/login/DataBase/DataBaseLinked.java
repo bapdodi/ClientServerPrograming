@@ -1,5 +1,4 @@
 package io.grpc.login.DataBase;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -51,8 +50,7 @@ public class DataBaseLinked {
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
-            System.out.println("Error");
-            return null;
+            e.printStackTrace();
         }
         return null; 
     }
@@ -67,74 +65,37 @@ public class DataBaseLinked {
             preparedStatement.setString(2, dataStudent.getPassword()); //  password값
             preparedStatement.setString(3, dataStudent.getName()); // name 값
             preparedStatement.setString(4, dataStudent.getMajor()); // course 값
-            int rowsInserted = preparedStatement.executeUpdate();
-            if (rowsInserted > 0) {
-                logger.info(dataStudent.getName() +" was joined successfully!");
-                return true;
-            } else {
-                logger.warning("No joined");
-                return false;
-            }
+            preparedStatement.executeUpdate();
+            logger.info("Join Success "+ dataStudent.getStudentId());
+            return true;
         } catch (SQLException e) {
             logger.warning("Join SQLException Error");
-            return false;
         } catch (NullPointerException e) {
             logger.warning("Join NullPointerException Error");
-            return false;
         }
+        return false;
+        
     }
-    public boolean checkStudentId(int id) {
-        String selectQuery = "SELECT * FROM STUDENT WHERE student_id = ?";
-        try {
-            if (connection == null || connection.isClosed()) {
-                throw new SQLException("Connection is not established or is closed");
-            }
-            preparedStatement = connection.prepareStatement(selectQuery);
-            preparedStatement.setInt(1, id); 
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false; 
-    }
-    public boolean deleteStudent(int id) {
+    
+    public boolean deleteStudent(int studentId) {
         String deleteQuery = "DELETE FROM STUDENT WHERE student_id = ?";
         try {
             if (connection == null || connection.isClosed()) {
                 throw new SQLException("Connection is not established or is closed");
             }
             preparedStatement = connection.prepareStatement(deleteQuery);
-            preparedStatement.setInt(1, id); 
-            int rowsDeleted = preparedStatement.executeUpdate();
-            if (rowsDeleted > 0) {
-                return true;
-            }
+            preparedStatement.setInt(1, studentId); 
+            preparedStatement.executeUpdate();
+            logger.info("Delete Success "+studentId);
+            return true;
         } catch (SQLException e) {
+            logger.warning("Error: SQLException occurred while deleting student with ID " + studentId);
             e.printStackTrace();
         }
         return false;
+        
     }
-    public boolean checkCourseId(int id) {
-        String selectQuery = "SELECT * FROM COURSE WHERE course_id = ?";
-        try {
-            if (connection == null || connection.isClosed()) {
-                throw new SQLException("Connection is not established or is closed");
-            }
-            preparedStatement = connection.prepareStatement(selectQuery);
-            preparedStatement.setInt(1, id); 
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) { 
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false; 
-    }
-    public String addCourse(int courseId, String courseProfessor, String courseName, List<Integer> courseLimitedList) {
+    public boolean addCourse(int courseId, String courseProfessor, String courseName, List<Integer> courseLimitedList) {
         String insertQuery = "INSERT INTO COURSE (course_id, course_professor, course_name) VALUES (?, ?, ?)";
         String insertQuery2 = "INSERT INTO REQUIRED_COURSE (course_id, REQUIRED_COURSE_ID) VALUES (?,?)";
         try {
@@ -145,30 +106,29 @@ public class DataBaseLinked {
             preparedStatement.setInt(1, courseId); // id 값
             preparedStatement.setString(2, courseProfessor); // professor 값
             preparedStatement.setString(3, courseName); // name 값
-            int rowsInserted = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
             preparedStatement = connection.prepareStatement(insertQuery2);
             for(int courseLimited_id : courseLimitedList){
                 preparedStatement.setInt(1, courseId);
                 preparedStatement.setInt(2, courseLimited_id);
                 preparedStatement.executeUpdate();
             }
-            if (rowsInserted > 0) {
-                return "Success insert course" + courseId;
-            } else {
-                return "Fail insert course" + courseId;
-            }
+            logger.info("Success: Added course with ID " + courseId);
+            return true;
         } catch (SQLIntegrityConstraintViolationException e) {
-            return "Error: Duplicate entry for courseId " + courseId;
+            logger.warning("Error: Duplicate entry for courseId " + courseId);
+            e.printStackTrace();
         } catch (SQLException e) {
+            logger.warning("Error: SQLException occurred while adding course with ID " + courseId);
             e.printStackTrace();
-            return "Error: SQLException";
         } catch (NullPointerException e) {
-            // NullPointerException 처리
+            logger.warning("Error: NullPointerException occurred while adding course with ID " + courseId);
             e.printStackTrace();
-            return "Error: NullPointerException";
         }
+        return false;
+
     }
-    public String deleteCourse(int courseId) {
+    public boolean deleteCourse(int courseId) {
         String deleteQuery = "DELETE FROM COURSE WHERE course_id = ?";
         try {
             if (connection == null || connection.isClosed()) {
@@ -176,18 +136,16 @@ public class DataBaseLinked {
             }
             preparedStatement = connection.prepareStatement(deleteQuery);
             preparedStatement.setInt(1, courseId);
-            int rowsDeleted = preparedStatement.executeUpdate();
-            if (rowsDeleted > 0) {
-                return "Success: Deleted course with ID " + courseId;
-            } else {
-                return "No course found with ID " + courseId;
-            }
+            preparedStatement.executeUpdate();
+            logger.info("Success: Deleted course with ID " + courseId);
+            return true;
         } catch (SQLException e) {
+            logger.warning("Error: SQLException occurred while deleting course with ID " + courseId);
             e.printStackTrace();
-            return "Error: SQLException occurred while deleting course with ID " + courseId;
         }
+        return false;
     }
-    public String enrollCourse(int studentId, int courseId) {
+    public boolean enrollCourse(int studentId, int courseId) {
         String insertQuery = "INSERT INTO STUDENT_COURSE (student_id, course_id) VALUES (?, ?)";
         try {
             if (connection == null || connection.isClosed()) {
@@ -196,18 +154,16 @@ public class DataBaseLinked {
             preparedStatement = connection.prepareStatement(insertQuery);
             preparedStatement.setInt(1, studentId);
             preparedStatement.setInt(2, courseId);
-            int rowsInserted = preparedStatement.executeUpdate();
-            if (rowsInserted > 0) {
-                return "Success: Enrolled in course with ID " + courseId;
-            } else {
-                return "Error: Failed to enroll in course with ID " + courseId;
-            }
+            preparedStatement.executeUpdate();
+            logger.info("Success: Enrolled in course with ID " + courseId);
+            return true;
         } catch (SQLException e) {
+            logger.warning("Error: SQLException occurred while enrolling in course with ID " + courseId);
             e.printStackTrace();
-            return "Error: SQLException occurred while enrolling in course with ID " + courseId;
         }
+        return false;
     }
-    public String dropCourse(int studentId, int courseId) {
+    public boolean dropCourse(int studentId, int courseId) {
         String deleteQuery = "DELETE FROM STUDENT_COURSE WHERE student_id = ? AND course_id = ?";
         try {
             if (connection == null || connection.isClosed()) {
@@ -216,16 +172,14 @@ public class DataBaseLinked {
             preparedStatement = connection.prepareStatement(deleteQuery);
             preparedStatement.setInt(1, studentId);
             preparedStatement.setInt(2, courseId);
-            int rowsDeleted = preparedStatement.executeUpdate();
-            if (rowsDeleted > 0) {
-                return "Success: Dropped course with ID " + courseId;
-            } else {
-                return "No course found with ID " + courseId;
-            }
+            preparedStatement.executeUpdate();
+            logger.info("Success: Dropped course with ID " + courseId);
+            return true;
         } catch (SQLException e) {
+            logger.warning("Error: SQLException occurred while dropping course with ID " + courseId);
             e.printStackTrace();
-            return "Error: SQLException occurred while dropping course with ID " + courseId;
         }
+        return false;
     }
     public DataStudent getStudent(int id) {
         String selectQuery = "SELECT * FROM STUDENT WHERE student_id = ?";
@@ -238,16 +192,11 @@ public class DataBaseLinked {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) { // 결과가 있는 경우
                 List<Integer> courseIdList = getStudentCourseIdList(id);
-                DataStudent dataStudent = DataStudent.newBuilder()
-                        .setStudentId(id)
-                        .setPassword(resultSet.getString("password"))
-                        .setName(resultSet.getString("name"))
-                        .setMajor(resultSet.getString("major"))
-                        .addAllCourseId(courseIdList)
-                        .build(); 
+                DataStudent dataStudent = DataStudent.newBuilder().setStudentId(id).setPassword(resultSet.getString("password")).setName(resultSet.getString("name")).setMajor(resultSet.getString("major")).addAllCourseId(courseIdList).build(); 
                 return dataStudent;
             }
         } catch (SQLException e) {
+            logger.warning("Error: SQLException occurred while getting student with ID " + id);
             e.printStackTrace();
         }
         return null;
@@ -270,15 +219,11 @@ public class DataBaseLinked {
                 requiredCourseList.add(requiredCourse.getInt("required_course_id"));
             }
             if (resultSet.next()) { // 결과가 있는 경우
-                DataCourse dataCourse = DataCourse.newBuilder()
-                        .setCourseId(id)
-                        .setCourseProfessor(resultSet.getString("course_professor"))
-                        .setCourseName(resultSet.getString("course_name"))
-                        .addAllCourseLimited(requiredCourseList)
-                        .build();
+                DataCourse dataCourse = DataCourse.newBuilder().setCourseId(id).setCourseProfessor(resultSet.getString("course_professor")).setCourseName(resultSet.getString("course_name")).addAllCourseLimited(requiredCourseList).build();
                 return dataCourse;
             }
         } catch (SQLException e) {
+            logger.warning("Error: SQLException occurred while getting course with ID " + id);
             e.printStackTrace();
         }
         return null;

@@ -9,20 +9,8 @@ public interface DataEnrollCourseResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string result = 1;</code>
-   * @return The result.
+   * <code>bool check = 1;</code>
+   * @return The check.
    */
-  java.lang.String getResult();
-  /**
-   * <code>string result = 1;</code>
-   * @return The bytes for result.
-   */
-  com.google.protobuf.ByteString
-      getResultBytes();
-
-  /**
-   * <code>int32 courseLimited = 2;</code>
-   * @return The courseLimited.
-   */
-  int getCourseLimited();
+  boolean getCheck();
 }

@@ -69,22 +69,21 @@ message DataDeleteStudentRequest {
     int32 studentId = 1;
 }
 message DataDeleteStudentResponse {
-    string result = 1;
+    bool check = 1;
 }
 message DataEnrollCourseRequest {
     int32 studentId = 1;
     int32 courseId = 2;
 }
 message DataEnrollCourseResponse {
-    string result = 1;
-    int32 courseLimited = 2;
+    bool check = 1;
 }
 message DataDropCourseRequest {
     int32 studentId = 1;
     int32 courseId = 2;
 }
 message DataDropCourseResponse {
-    string result = 1;
+    bool check = 1;
 }
 message DataAddCourseRequest {
     int32 courseId = 1;
@@ -93,11 +92,11 @@ message DataAddCourseRequest {
     repeated int32 courseLimited = 4;
 }
 message DataAddCourseResponse {
-    string result = 1;
+    bool check = 1;
 }
 message DataDeleteCourseRequest {
     int32 courseId = 1;
 }
 message DataDeleteCourseResponse {
-    string result = 1;
+    bool check = 1;
 }

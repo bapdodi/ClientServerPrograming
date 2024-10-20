@@ -153,43 +153,42 @@ public final class DatabaseProto {
       "aStudent\"\026\n\024GetCourseListRequest\"=\n\025GetC" +
       "ourseListResponse\022$\n\006course\030\001 \003(\0132\024.data" +
       "base.DataCourse\"-\n\030DataDeleteStudentRequ" +
-      "est\022\021\n\tstudentId\030\001 \001(\005\"+\n\031DataDeleteStud" +
-      "entResponse\022\016\n\006result\030\001 \001(\t\">\n\027DataEnrol" +
-      "lCourseRequest\022\021\n\tstudentId\030\001 \001(\005\022\020\n\010cou" +
-      "rseId\030\002 \001(\005\"A\n\030DataEnrollCourseResponse\022" +
-      "\016\n\006result\030\001 \001(\t\022\025\n\rcourseLimited\030\002 \001(\005\"<" +
-      "\n\025DataDropCourseRequest\022\021\n\tstudentId\030\001 \001" +
-      "(\005\022\020\n\010courseId\030\002 \001(\005\"(\n\026DataDropCourseRe" +
-      "sponse\022\016\n\006result\030\001 \001(\t\"l\n\024DataAddCourseR" +
-      "equest\022\020\n\010courseId\030\001 \001(\005\022\022\n\ncourseName\030\002" +
-      " \001(\t\022\027\n\017courseProfessor\030\003 \001(\t\022\025\n\rcourseL" +
-      "imited\030\004 \003(\005\"\'\n\025DataAddCourseResponse\022\016\n" +
-      "\006result\030\001 \001(\t\"+\n\027DataDeleteCourseRequest" +
-      "\022\020\n\010courseId\030\001 \001(\005\"*\n\030DataDeleteCourseRe" +
-      "sponse\022\016\n\006result\030\001 \001(\t2\317\006\n\010DataBase\022I\n\nG" +
-      "etStudent\022\033.database.GetStudentRequest\032\034" +
-      ".database.GetStudentResponse\"\000\022F\n\tGetCou" +
-      "rse\022\032.database.GetCourseRequest\032\033.databa" +
-      "se.GetCourseResponse\"\000\022@\n\007GetJoin\022\030.data" +
-      "base.GetJoinRequest\032\031.database.GetJoinRe" +
-      "sponse\"\000\022U\n\016GetStudentList\022\037.database.Ge" +
-      "tStudentListRequest\032 .database.GetStuden" +
-      "tListResponse\"\000\022R\n\rGetCourseList\022\036.datab" +
-      "ase.GetCourseListRequest\032\037.database.GetC" +
-      "ourseListResponse\"\000\022^\n\021DataDeleteStudent" +
-      "\022\".database.DataDeleteStudentRequest\032#.d" +
-      "atabase.DataDeleteStudentResponse\"\000\022[\n\020D" +
-      "ataEnrollCourse\022!.database.DataEnrollCou" +
-      "rseRequest\032\".database.DataEnrollCourseRe" +
-      "sponse\"\000\022U\n\016DataDropCourse\022\037.database.Da" +
-      "taDropCourseRequest\032 .database.DataDropC" +
-      "ourseResponse\"\000\022R\n\rDataAddCourse\022\036.datab" +
-      "ase.DataAddCourseRequest\032\037.database.Data" +
-      "AddCourseResponse\"\000\022[\n\020DataDeleteCourse\022" +
-      "!.database.DataDeleteCourseRequest\032\".dat" +
-      "abase.DataDeleteCourseResponse\"\000B)\n\020io.g" +
-      "rpc.databaseB\rDatabaseProtoP\001\242\002\003HLWb\006pro" +
-      "to3"
+      "est\022\021\n\tstudentId\030\001 \001(\005\"*\n\031DataDeleteStud" +
+      "entResponse\022\r\n\005check\030\001 \001(\010\">\n\027DataEnroll" +
+      "CourseRequest\022\021\n\tstudentId\030\001 \001(\005\022\020\n\010cour" +
+      "seId\030\002 \001(\005\")\n\030DataEnrollCourseResponse\022\r" +
+      "\n\005check\030\001 \001(\010\"<\n\025DataDropCourseRequest\022\021" +
+      "\n\tstudentId\030\001 \001(\005\022\020\n\010courseId\030\002 \001(\005\"\'\n\026D" +
+      "ataDropCourseResponse\022\r\n\005check\030\001 \001(\010\"l\n\024" +
+      "DataAddCourseRequest\022\020\n\010courseId\030\001 \001(\005\022\022" +
+      "\n\ncourseName\030\002 \001(\t\022\027\n\017courseProfessor\030\003 " +
+      "\001(\t\022\025\n\rcourseLimited\030\004 \003(\005\"&\n\025DataAddCou" +
+      "rseResponse\022\r\n\005check\030\001 \001(\010\"+\n\027DataDelete" +
+      "CourseRequest\022\020\n\010courseId\030\001 \001(\005\")\n\030DataD" +
+      "eleteCourseResponse\022\r\n\005check\030\001 \001(\0102\317\006\n\010D" +
+      "ataBase\022I\n\nGetStudent\022\033.database.GetStud" +
+      "entRequest\032\034.database.GetStudentResponse" +
+      "\"\000\022F\n\tGetCourse\022\032.database.GetCourseRequ" +
+      "est\032\033.database.GetCourseResponse\"\000\022@\n\007Ge" +
+      "tJoin\022\030.database.GetJoinRequest\032\031.databa" +
+      "se.GetJoinResponse\"\000\022U\n\016GetStudentList\022\037" +
+      ".database.GetStudentListRequest\032 .databa" +
+      "se.GetStudentListResponse\"\000\022R\n\rGetCourse" +
+      "List\022\036.database.GetCourseListRequest\032\037.d" +
+      "atabase.GetCourseListResponse\"\000\022^\n\021DataD" +
+      "eleteStudent\022\".database.DataDeleteStuden" +
+      "tRequest\032#.database.DataDeleteStudentRes" +
+      "ponse\"\000\022[\n\020DataEnrollCourse\022!.database.D" +
+      "ataEnrollCourseRequest\032\".database.DataEn" +
+      "rollCourseResponse\"\000\022U\n\016DataDropCourse\022\037" +
+      ".database.DataDropCourseRequest\032 .databa" +
+      "se.DataDropCourseResponse\"\000\022R\n\rDataAddCo" +
+      "urse\022\036.database.DataAddCourseRequest\032\037.d" +
+      "atabase.DataAddCourseResponse\"\000\022[\n\020DataD" +
+      "eleteCourse\022!.database.DataDeleteCourseR" +
+      "equest\032\".database.DataDeleteCourseRespon" +
+      "se\"\000B)\n\020io.grpc.databaseB\rDatabaseProtoP" +
+      "\001\242\002\003HLWb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -278,7 +277,7 @@ public final class DatabaseProto {
     internal_static_database_DataDeleteStudentResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_database_DataDeleteStudentResponse_descriptor,
-        new java.lang.String[] { "Result", });
+        new java.lang.String[] { "Check", });
     internal_static_database_DataEnrollCourseRequest_descriptor =
       getDescriptor().getMessageTypes().get(14);
     internal_static_database_DataEnrollCourseRequest_fieldAccessorTable = new
@@ -290,7 +289,7 @@ public final class DatabaseProto {
     internal_static_database_DataEnrollCourseResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_database_DataEnrollCourseResponse_descriptor,
-        new java.lang.String[] { "Result", "CourseLimited", });
+        new java.lang.String[] { "Check", });
     internal_static_database_DataDropCourseRequest_descriptor =
       getDescriptor().getMessageTypes().get(16);
     internal_static_database_DataDropCourseRequest_fieldAccessorTable = new
@@ -302,7 +301,7 @@ public final class DatabaseProto {
     internal_static_database_DataDropCourseResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_database_DataDropCourseResponse_descriptor,
-        new java.lang.String[] { "Result", });
+        new java.lang.String[] { "Check", });
     internal_static_database_DataAddCourseRequest_descriptor =
       getDescriptor().getMessageTypes().get(18);
     internal_static_database_DataAddCourseRequest_fieldAccessorTable = new
@@ -314,7 +313,7 @@ public final class DatabaseProto {
     internal_static_database_DataAddCourseResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_database_DataAddCourseResponse_descriptor,
-        new java.lang.String[] { "Result", });
+        new java.lang.String[] { "Check", });
     internal_static_database_DataDeleteCourseRequest_descriptor =
       getDescriptor().getMessageTypes().get(20);
     internal_static_database_DataDeleteCourseRequest_fieldAccessorTable = new
@@ -326,7 +325,7 @@ public final class DatabaseProto {
     internal_static_database_DataDeleteCourseResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_database_DataDeleteCourseResponse_descriptor,
-        new java.lang.String[] { "Result", });
+        new java.lang.String[] { "Check", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
