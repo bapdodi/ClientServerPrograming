@@ -155,7 +155,10 @@ public class LoginServer {
             DataDeleteStudentRequest request2 = DataDeleteStudentRequest.newBuilder().setStudentId(request.getStudentId()).build();
             DataDeleteStudentResponse response2 = blockingStub.dataDeleteStudent(request2);
             String result = "";
-            if(response2.getCheck()){
+            if(getStudent(request.getStudentId())==null){
+                result = "Student Not Found";
+            }
+            else if(response2.getCheck()){
                 result = "Delete Success";
                 logger.info(request.getStudentId() + " deleteStudent");
             }
@@ -212,7 +215,13 @@ public class LoginServer {
             DataDropCourseRequest request2 = DataDropCourseRequest.newBuilder().setCourseId(request.getCourseId()).setStudentId(request.getStudentId()).build();
             DataDropCourseResponse response2 = blockingStub.dataDropCourse(request2);
             String result = "";
-            if (response2.getCheck()) {
+            if(getStudent(request.getStudentId())==null){
+                result = "Student Not Found";
+            }
+            else if(getCourse(request.getCourseId())==null){
+                result = "Course Not Found";
+            }
+            else if (response2.getCheck()) {
                 result = "Success DropCourse";
                 logger.info(request.getStudentId() + " drop " + request.getCourseId());
             }
@@ -221,14 +230,16 @@ public class LoginServer {
             }
             ServerDropCourseResponse response = ServerDropCourseResponse.newBuilder().setResult(result).build();
             finishedresponse(responseObserver, response);
-            
         }
         @Override
         public void serverAddCourse(ServerAddCourseRequest request, StreamObserver<ServerAddCourseResponse> responseObserver) {
             DataAddCourseRequest request2 = DataAddCourseRequest.newBuilder().setCourseId(request.getCourseId()).setCourseName(request.getCourseName()).setCourseProfessor(request.getCourseProfessor()).addAllCourseLimited(request.getCourseLimitedList()).build();
             DataAddCourseResponse response2 = blockingStub.dataAddCourse(request2);
             String result="";
-            if(response2.getCheck()){
+            if (getCourse(request.getCourseId())==null){
+                result = "Already Course";
+            }
+            else if(response2.getCheck()){
                 result = "Success AddCourse";
                 logger.info(request.getCourseId() + " addCourse");
             }
@@ -243,7 +254,10 @@ public class LoginServer {
             DataDeleteCourseRequest request2 = DataDeleteCourseRequest.newBuilder().setCourseId(request.getCourseId()).build();
             DataDeleteCourseResponse response2 = blockingStub.dataDeleteCourse(request2);
             String result = "";
-            if(response2.getCheck()){
+            if(getCourse(request.getCourseId())!=null){
+                result = "Course Not Found";
+            }
+            else if(response2.getCheck()){
                 result = "Success DeleteCourse";
                 logger.info(request.getCourseId() + " deleteCourse");
             }
@@ -258,13 +272,13 @@ public class LoginServer {
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         }
-        private <T> DataStudent getStudent(int studentId){
+        private DataStudent getStudent(int studentId){
             GetStudentRequest request = GetStudentRequest.newBuilder().setStudentId(studentId).build();
             GetStudentResponse getStudent = blockingStub.getStudent(request);
             if(!getStudent.hasStudent()) return null;
             return getStudent.getStudent();
         }
-        private <T> DataCourse getCourse(int courseId){
+        private DataCourse getCourse(int courseId){
             GetCourseRequest request = GetCourseRequest.newBuilder().setCourseId(courseId).build();
             GetCourseResponse getCourse = blockingStub.getCourse(request);
             if(!getCourse.hasCourse()) return null;
