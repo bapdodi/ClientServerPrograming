@@ -37,7 +37,6 @@ public class LoginClient {
                 return;
             default:
                 showErrorMenuMessage();
-                
         }
         startMenu();
     }

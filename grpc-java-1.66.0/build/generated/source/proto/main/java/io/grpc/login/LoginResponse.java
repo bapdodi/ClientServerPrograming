@@ -43,7 +43,7 @@ private static final long serialVersionUID = 0L;
   public static final int STUDENT_FIELD_NUMBER = 1;
   private io.grpc.login.ServerStudent student_;
   /**
-   * <code>.login.ServerStudent student = 1;</code>
+   * <code>optional .login.ServerStudent student = 1;</code>
    * @return Whether the student field is set.
    */
   @java.lang.Override
@@ -51,7 +51,7 @@ private static final long serialVersionUID = 0L;
     return ((bitField0_ & 0x00000001) != 0);
   }
   /**
-   * <code>.login.ServerStudent student = 1;</code>
+   * <code>optional .login.ServerStudent student = 1;</code>
    * @return The student.
    */
   @java.lang.Override
@@ -59,7 +59,7 @@ private static final long serialVersionUID = 0L;
     return student_ == null ? io.grpc.login.ServerStudent.getDefaultInstance() : student_;
   }
   /**
-   * <code>.login.ServerStudent student = 1;</code>
+   * <code>optional .login.ServerStudent student = 1;</code>
    */
   @java.lang.Override
   public io.grpc.login.ServerStudentOrBuilder getStudentOrBuilder() {
@@ -417,14 +417,14 @@ private static final long serialVersionUID = 0L;
     private com.google.protobuf.SingleFieldBuilderV3<
         io.grpc.login.ServerStudent, io.grpc.login.ServerStudent.Builder, io.grpc.login.ServerStudentOrBuilder> studentBuilder_;
     /**
-     * <code>.login.ServerStudent student = 1;</code>
+     * <code>optional .login.ServerStudent student = 1;</code>
      * @return Whether the student field is set.
      */
     public boolean hasStudent() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
-     * <code>.login.ServerStudent student = 1;</code>
+     * <code>optional .login.ServerStudent student = 1;</code>
      * @return The student.
      */
     public io.grpc.login.ServerStudent getStudent() {
@@ -435,7 +435,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>.login.ServerStudent student = 1;</code>
+     * <code>optional .login.ServerStudent student = 1;</code>
      */
     public Builder setStudent(io.grpc.login.ServerStudent value) {
       if (studentBuilder_ == null) {
@@ -451,7 +451,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.login.ServerStudent student = 1;</code>
+     * <code>optional .login.ServerStudent student = 1;</code>
      */
     public Builder setStudent(
         io.grpc.login.ServerStudent.Builder builderForValue) {
@@ -465,7 +465,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.login.ServerStudent student = 1;</code>
+     * <code>optional .login.ServerStudent student = 1;</code>
      */
     public Builder mergeStudent(io.grpc.login.ServerStudent value) {
       if (studentBuilder_ == null) {
@@ -486,7 +486,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.login.ServerStudent student = 1;</code>
+     * <code>optional .login.ServerStudent student = 1;</code>
      */
     public Builder clearStudent() {
       bitField0_ = (bitField0_ & ~0x00000001);
@@ -499,7 +499,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.login.ServerStudent student = 1;</code>
+     * <code>optional .login.ServerStudent student = 1;</code>
      */
     public io.grpc.login.ServerStudent.Builder getStudentBuilder() {
       bitField0_ |= 0x00000001;
@@ -507,7 +507,7 @@ private static final long serialVersionUID = 0L;
       return getStudentFieldBuilder().getBuilder();
     }
     /**
-     * <code>.login.ServerStudent student = 1;</code>
+     * <code>optional .login.ServerStudent student = 1;</code>
      */
     public io.grpc.login.ServerStudentOrBuilder getStudentOrBuilder() {
       if (studentBuilder_ != null) {
@@ -518,7 +518,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>.login.ServerStudent student = 1;</code>
+     * <code>optional .login.ServerStudent student = 1;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         io.grpc.login.ServerStudent, io.grpc.login.ServerStudent.Builder, io.grpc.login.ServerStudentOrBuilder> 

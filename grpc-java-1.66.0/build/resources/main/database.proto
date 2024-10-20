@@ -13,14 +13,9 @@ package database;
 service DataBase {
     rpc GetStudent (GetStudentRequest) returns (GetStudentResponse) {}
     rpc GetCourse (GetCourseRequest) returns (GetCourseResponse) {}
-    rpc GetLogin (GetLoginRequest) returns (GetLoginResponse) {}
     rpc GetJoin (GetJoinRequest) returns (GetJoinResponse) {}
     rpc GetStudentList (GetStudentListRequest) returns (GetStudentListResponse) {}
     rpc GetCourseList (GetCourseListRequest) returns (GetCourseListResponse) {}
-    rpc GetStudentCourseList (GetStudentCourseListRequest) returns (GetStudentCourseListResponse) {}
-    rpc GetCourseStudentList (GetCourseStudentListRequest) returns (GetCourseStudentListResponse) {}
-    rpc GetCompleteList (GetCompleteListRequest) returns (GetCompleteListResponse) {}
-    rpc GetCourseApply (GetCourseApplyRequest) returns (GetCourseApplyResponse) {}
     rpc DataDeleteStudent (DataDeleteStudentRequest) returns (DataDeleteStudentResponse) {}
     rpc DataEnrollCourse (DataEnrollCourseRequest) returns (DataEnrollCourseResponse) {}
     rpc DataDropCourse (DataDropCourseRequest) returns (DataDropCourseResponse) {}
@@ -54,63 +49,22 @@ message GetCourseRequest {
 message GetCourseResponse {
     optional DataCourse course = 1;      
 }
-
-message GetLoginRequest {
-    int32 student_id = 1;
-    string password = 2;
-}
-message GetLoginResponse {
-    DataStudent student = 1;
-}
-
 message GetJoinRequest {
     DataStudent student = 1;
 }
 message GetJoinResponse {
-    string result = 1;
+    bool check = 1;
 }
-
 message GetStudentListRequest {
 }
 message GetStudentListResponse {
-    string result = 1;
+    repeated DataStudent student = 1;
 }
-
 message GetCourseListRequest {
 }
 message GetCourseListResponse {
-    string result = 1;
+    repeated DataCourse course = 1;
 }
-
-message GetStudentCourseListRequest {
-    string studentId = 1;
-}
-message GetStudentCourseListResponse {
-    string result = 1;
-}
-
-message GetCourseStudentListRequest {
-    string courseId = 1;
-}
-message GetCourseStudentListResponse {
-    string result = 1;
-}
-
-message GetCompleteListRequest {
-    string studentId = 1;
-}
-message GetCompleteListResponse {
-    string result = 1;
-}
-
-message GetCourseApplyRequest {
-    string studentId = 1;
-    string courseId = 2;
-}
-message GetCourseApplyResponse {
-    string result = 1;
-}
-
 message DataDeleteStudentRequest {
     int32 studentId = 1;
 }

@@ -9,17 +9,17 @@ public interface LoginResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>.login.ServerStudent student = 1;</code>
+   * <code>optional .login.ServerStudent student = 1;</code>
    * @return Whether the student field is set.
    */
   boolean hasStudent();
   /**
-   * <code>.login.ServerStudent student = 1;</code>
+   * <code>optional .login.ServerStudent student = 1;</code>
    * @return The student.
    */
   io.grpc.login.ServerStudent getStudent();
   /**
-   * <code>.login.ServerStudent student = 1;</code>
+   * <code>optional .login.ServerStudent student = 1;</code>
    */
   io.grpc.login.ServerStudentOrBuilder getStudentOrBuilder();
 }

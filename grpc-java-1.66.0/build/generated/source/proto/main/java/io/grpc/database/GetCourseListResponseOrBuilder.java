@@ -9,14 +9,26 @@ public interface GetCourseListResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string result = 1;</code>
-   * @return The result.
+   * <code>repeated .database.DataCourse course = 1;</code>
    */
-  java.lang.String getResult();
+  java.util.List<io.grpc.database.DataCourse> 
+      getCourseList();
   /**
-   * <code>string result = 1;</code>
-   * @return The bytes for result.
+   * <code>repeated .database.DataCourse course = 1;</code>
    */
-  com.google.protobuf.ByteString
-      getResultBytes();
+  io.grpc.database.DataCourse getCourse(int index);
+  /**
+   * <code>repeated .database.DataCourse course = 1;</code>
+   */
+  int getCourseCount();
+  /**
+   * <code>repeated .database.DataCourse course = 1;</code>
+   */
+  java.util.List<? extends io.grpc.database.DataCourseOrBuilder> 
+      getCourseOrBuilderList();
+  /**
+   * <code>repeated .database.DataCourse course = 1;</code>
+   */
+  io.grpc.database.DataCourseOrBuilder getCourseOrBuilder(
+      int index);
 }

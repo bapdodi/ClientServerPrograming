@@ -17,7 +17,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private GetCourseListResponse() {
-    result_ = "";
+    course_ = java.util.Collections.emptyList();
   }
 
   @java.lang.Override
@@ -40,43 +40,45 @@ private static final long serialVersionUID = 0L;
             io.grpc.database.GetCourseListResponse.class, io.grpc.database.GetCourseListResponse.Builder.class);
   }
 
-  public static final int RESULT_FIELD_NUMBER = 1;
+  public static final int COURSE_FIELD_NUMBER = 1;
   @SuppressWarnings("serial")
-  private volatile java.lang.Object result_ = "";
+  private java.util.List<io.grpc.database.DataCourse> course_;
   /**
-   * <code>string result = 1;</code>
-   * @return The result.
+   * <code>repeated .database.DataCourse course = 1;</code>
    */
   @java.lang.Override
-  public java.lang.String getResult() {
-    java.lang.Object ref = result_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      result_ = s;
-      return s;
-    }
+  public java.util.List<io.grpc.database.DataCourse> getCourseList() {
+    return course_;
   }
   /**
-   * <code>string result = 1;</code>
-   * @return The bytes for result.
+   * <code>repeated .database.DataCourse course = 1;</code>
    */
   @java.lang.Override
-  public com.google.protobuf.ByteString
-      getResultBytes() {
-    java.lang.Object ref = result_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      result_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public java.util.List<? extends io.grpc.database.DataCourseOrBuilder> 
+      getCourseOrBuilderList() {
+    return course_;
+  }
+  /**
+   * <code>repeated .database.DataCourse course = 1;</code>
+   */
+  @java.lang.Override
+  public int getCourseCount() {
+    return course_.size();
+  }
+  /**
+   * <code>repeated .database.DataCourse course = 1;</code>
+   */
+  @java.lang.Override
+  public io.grpc.database.DataCourse getCourse(int index) {
+    return course_.get(index);
+  }
+  /**
+   * <code>repeated .database.DataCourse course = 1;</code>
+   */
+  @java.lang.Override
+  public io.grpc.database.DataCourseOrBuilder getCourseOrBuilder(
+      int index) {
+    return course_.get(index);
   }
 
   private byte memoizedIsInitialized = -1;
@@ -93,8 +95,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(result_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, result_);
+    for (int i = 0; i < course_.size(); i++) {
+      output.writeMessage(1, course_.get(i));
     }
     getUnknownFields().writeTo(output);
   }
@@ -105,8 +107,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(result_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, result_);
+    for (int i = 0; i < course_.size(); i++) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(1, course_.get(i));
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -123,8 +126,8 @@ private static final long serialVersionUID = 0L;
     }
     io.grpc.database.GetCourseListResponse other = (io.grpc.database.GetCourseListResponse) obj;
 
-    if (!getResult()
-        .equals(other.getResult())) return false;
+    if (!getCourseList()
+        .equals(other.getCourseList())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -136,8 +139,10 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + RESULT_FIELD_NUMBER;
-    hash = (53 * hash) + getResult().hashCode();
+    if (getCourseCount() > 0) {
+      hash = (37 * hash) + COURSE_FIELD_NUMBER;
+      hash = (53 * hash) + getCourseList().hashCode();
+    }
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -269,7 +274,13 @@ private static final long serialVersionUID = 0L;
     public Builder clear() {
       super.clear();
       bitField0_ = 0;
-      result_ = "";
+      if (courseBuilder_ == null) {
+        course_ = java.util.Collections.emptyList();
+      } else {
+        course_ = null;
+        courseBuilder_.clear();
+      }
+      bitField0_ = (bitField0_ & ~0x00000001);
       return this;
     }
 
@@ -296,16 +307,26 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public io.grpc.database.GetCourseListResponse buildPartial() {
       io.grpc.database.GetCourseListResponse result = new io.grpc.database.GetCourseListResponse(this);
+      buildPartialRepeatedFields(result);
       if (bitField0_ != 0) { buildPartial0(result); }
       onBuilt();
       return result;
     }
 
+    private void buildPartialRepeatedFields(io.grpc.database.GetCourseListResponse result) {
+      if (courseBuilder_ == null) {
+        if (((bitField0_ & 0x00000001) != 0)) {
+          course_ = java.util.Collections.unmodifiableList(course_);
+          bitField0_ = (bitField0_ & ~0x00000001);
+        }
+        result.course_ = course_;
+      } else {
+        result.course_ = courseBuilder_.build();
+      }
+    }
+
     private void buildPartial0(io.grpc.database.GetCourseListResponse result) {
       int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.result_ = result_;
-      }
     }
 
     @java.lang.Override
@@ -352,10 +373,31 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(io.grpc.database.GetCourseListResponse other) {
       if (other == io.grpc.database.GetCourseListResponse.getDefaultInstance()) return this;
-      if (!other.getResult().isEmpty()) {
-        result_ = other.result_;
-        bitField0_ |= 0x00000001;
-        onChanged();
+      if (courseBuilder_ == null) {
+        if (!other.course_.isEmpty()) {
+          if (course_.isEmpty()) {
+            course_ = other.course_;
+            bitField0_ = (bitField0_ & ~0x00000001);
+          } else {
+            ensureCourseIsMutable();
+            course_.addAll(other.course_);
+          }
+          onChanged();
+        }
+      } else {
+        if (!other.course_.isEmpty()) {
+          if (courseBuilder_.isEmpty()) {
+            courseBuilder_.dispose();
+            courseBuilder_ = null;
+            course_ = other.course_;
+            bitField0_ = (bitField0_ & ~0x00000001);
+            courseBuilder_ = 
+              com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                 getCourseFieldBuilder() : null;
+          } else {
+            courseBuilder_.addAllMessages(other.course_);
+          }
+        }
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -384,8 +426,16 @@ private static final long serialVersionUID = 0L;
               done = true;
               break;
             case 10: {
-              result_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000001;
+              io.grpc.database.DataCourse m =
+                  input.readMessage(
+                      io.grpc.database.DataCourse.parser(),
+                      extensionRegistry);
+              if (courseBuilder_ == null) {
+                ensureCourseIsMutable();
+                course_.add(m);
+              } else {
+                courseBuilder_.addMessage(m);
+              }
               break;
             } // case 10
             default: {
@@ -405,76 +455,244 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.lang.Object result_ = "";
+    private java.util.List<io.grpc.database.DataCourse> course_ =
+      java.util.Collections.emptyList();
+    private void ensureCourseIsMutable() {
+      if (!((bitField0_ & 0x00000001) != 0)) {
+        course_ = new java.util.ArrayList<io.grpc.database.DataCourse>(course_);
+        bitField0_ |= 0x00000001;
+       }
+    }
+
+    private com.google.protobuf.RepeatedFieldBuilderV3<
+        io.grpc.database.DataCourse, io.grpc.database.DataCourse.Builder, io.grpc.database.DataCourseOrBuilder> courseBuilder_;
+
     /**
-     * <code>string result = 1;</code>
-     * @return The result.
+     * <code>repeated .database.DataCourse course = 1;</code>
      */
-    public java.lang.String getResult() {
-      java.lang.Object ref = result_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        result_ = s;
-        return s;
+    public java.util.List<io.grpc.database.DataCourse> getCourseList() {
+      if (courseBuilder_ == null) {
+        return java.util.Collections.unmodifiableList(course_);
       } else {
-        return (java.lang.String) ref;
+        return courseBuilder_.getMessageList();
       }
     }
     /**
-     * <code>string result = 1;</code>
-     * @return The bytes for result.
+     * <code>repeated .database.DataCourse course = 1;</code>
      */
-    public com.google.protobuf.ByteString
-        getResultBytes() {
-      java.lang.Object ref = result_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        result_ = b;
-        return b;
+    public int getCourseCount() {
+      if (courseBuilder_ == null) {
+        return course_.size();
       } else {
-        return (com.google.protobuf.ByteString) ref;
+        return courseBuilder_.getCount();
       }
     }
     /**
-     * <code>string result = 1;</code>
-     * @param value The result to set.
-     * @return This builder for chaining.
+     * <code>repeated .database.DataCourse course = 1;</code>
      */
-    public Builder setResult(
-        java.lang.String value) {
-      if (value == null) { throw new NullPointerException(); }
-      result_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+    public io.grpc.database.DataCourse getCourse(int index) {
+      if (courseBuilder_ == null) {
+        return course_.get(index);
+      } else {
+        return courseBuilder_.getMessage(index);
+      }
+    }
+    /**
+     * <code>repeated .database.DataCourse course = 1;</code>
+     */
+    public Builder setCourse(
+        int index, io.grpc.database.DataCourse value) {
+      if (courseBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureCourseIsMutable();
+        course_.set(index, value);
+        onChanged();
+      } else {
+        courseBuilder_.setMessage(index, value);
+      }
       return this;
     }
     /**
-     * <code>string result = 1;</code>
-     * @return This builder for chaining.
+     * <code>repeated .database.DataCourse course = 1;</code>
      */
-    public Builder clearResult() {
-      result_ = getDefaultInstance().getResult();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+    public Builder setCourse(
+        int index, io.grpc.database.DataCourse.Builder builderForValue) {
+      if (courseBuilder_ == null) {
+        ensureCourseIsMutable();
+        course_.set(index, builderForValue.build());
+        onChanged();
+      } else {
+        courseBuilder_.setMessage(index, builderForValue.build());
+      }
       return this;
     }
     /**
-     * <code>string result = 1;</code>
-     * @param value The bytes for result to set.
-     * @return This builder for chaining.
+     * <code>repeated .database.DataCourse course = 1;</code>
      */
-    public Builder setResultBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) { throw new NullPointerException(); }
-      checkByteStringIsUtf8(value);
-      result_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+    public Builder addCourse(io.grpc.database.DataCourse value) {
+      if (courseBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureCourseIsMutable();
+        course_.add(value);
+        onChanged();
+      } else {
+        courseBuilder_.addMessage(value);
+      }
       return this;
+    }
+    /**
+     * <code>repeated .database.DataCourse course = 1;</code>
+     */
+    public Builder addCourse(
+        int index, io.grpc.database.DataCourse value) {
+      if (courseBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureCourseIsMutable();
+        course_.add(index, value);
+        onChanged();
+      } else {
+        courseBuilder_.addMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .database.DataCourse course = 1;</code>
+     */
+    public Builder addCourse(
+        io.grpc.database.DataCourse.Builder builderForValue) {
+      if (courseBuilder_ == null) {
+        ensureCourseIsMutable();
+        course_.add(builderForValue.build());
+        onChanged();
+      } else {
+        courseBuilder_.addMessage(builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .database.DataCourse course = 1;</code>
+     */
+    public Builder addCourse(
+        int index, io.grpc.database.DataCourse.Builder builderForValue) {
+      if (courseBuilder_ == null) {
+        ensureCourseIsMutable();
+        course_.add(index, builderForValue.build());
+        onChanged();
+      } else {
+        courseBuilder_.addMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .database.DataCourse course = 1;</code>
+     */
+    public Builder addAllCourse(
+        java.lang.Iterable<? extends io.grpc.database.DataCourse> values) {
+      if (courseBuilder_ == null) {
+        ensureCourseIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, course_);
+        onChanged();
+      } else {
+        courseBuilder_.addAllMessages(values);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .database.DataCourse course = 1;</code>
+     */
+    public Builder clearCourse() {
+      if (courseBuilder_ == null) {
+        course_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        onChanged();
+      } else {
+        courseBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .database.DataCourse course = 1;</code>
+     */
+    public Builder removeCourse(int index) {
+      if (courseBuilder_ == null) {
+        ensureCourseIsMutable();
+        course_.remove(index);
+        onChanged();
+      } else {
+        courseBuilder_.remove(index);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .database.DataCourse course = 1;</code>
+     */
+    public io.grpc.database.DataCourse.Builder getCourseBuilder(
+        int index) {
+      return getCourseFieldBuilder().getBuilder(index);
+    }
+    /**
+     * <code>repeated .database.DataCourse course = 1;</code>
+     */
+    public io.grpc.database.DataCourseOrBuilder getCourseOrBuilder(
+        int index) {
+      if (courseBuilder_ == null) {
+        return course_.get(index);  } else {
+        return courseBuilder_.getMessageOrBuilder(index);
+      }
+    }
+    /**
+     * <code>repeated .database.DataCourse course = 1;</code>
+     */
+    public java.util.List<? extends io.grpc.database.DataCourseOrBuilder> 
+         getCourseOrBuilderList() {
+      if (courseBuilder_ != null) {
+        return courseBuilder_.getMessageOrBuilderList();
+      } else {
+        return java.util.Collections.unmodifiableList(course_);
+      }
+    }
+    /**
+     * <code>repeated .database.DataCourse course = 1;</code>
+     */
+    public io.grpc.database.DataCourse.Builder addCourseBuilder() {
+      return getCourseFieldBuilder().addBuilder(
+          io.grpc.database.DataCourse.getDefaultInstance());
+    }
+    /**
+     * <code>repeated .database.DataCourse course = 1;</code>
+     */
+    public io.grpc.database.DataCourse.Builder addCourseBuilder(
+        int index) {
+      return getCourseFieldBuilder().addBuilder(
+          index, io.grpc.database.DataCourse.getDefaultInstance());
+    }
+    /**
+     * <code>repeated .database.DataCourse course = 1;</code>
+     */
+    public java.util.List<io.grpc.database.DataCourse.Builder> 
+         getCourseBuilderList() {
+      return getCourseFieldBuilder().getBuilderList();
+    }
+    private com.google.protobuf.RepeatedFieldBuilderV3<
+        io.grpc.database.DataCourse, io.grpc.database.DataCourse.Builder, io.grpc.database.DataCourseOrBuilder> 
+        getCourseFieldBuilder() {
+      if (courseBuilder_ == null) {
+        courseBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+            io.grpc.database.DataCourse, io.grpc.database.DataCourse.Builder, io.grpc.database.DataCourseOrBuilder>(
+                course_,
+                ((bitField0_ & 0x00000001) != 0),
+                getParentForChildren(),
+                isClean());
+        course_ = null;
+      }
+      return courseBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

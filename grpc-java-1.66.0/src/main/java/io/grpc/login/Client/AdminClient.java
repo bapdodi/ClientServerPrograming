@@ -29,12 +29,6 @@ public class AdminClient {
                 break;
             case "8":cMethod.deleteCourse();
                 break;
-            case "9":cMethod.showStudentCourseList();
-                break;
-            case "10":cMethod.showCourseStudentList();
-                break;
-            case "11"://cMethod.showStudentCourseCompleteList();
-                break;
             case "x":
                 return;
             default:
@@ -52,9 +46,6 @@ public class AdminClient {
         System.out.println("6. 학생 삭제");
         System.out.println("7. 수강과목 추가");
         System.out.println("8. 수강과목 삭제");
-        System.out.println("9. 학생 별 수강과목리스트");
-        System.out.println("10. 수강과목 별 학생리스트");
-        System.out.println("11. 학생 별 수강을 완료한 과목리스트");
         System.out.println("x. 메인 화면으로 가기");
     }
     private void showErrorMenuMessage() {

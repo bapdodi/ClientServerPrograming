@@ -9,14 +9,26 @@ public interface GetStudentListResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string result = 1;</code>
-   * @return The result.
+   * <code>repeated .database.DataStudent student = 1;</code>
    */
-  java.lang.String getResult();
+  java.util.List<io.grpc.database.DataStudent> 
+      getStudentList();
   /**
-   * <code>string result = 1;</code>
-   * @return The bytes for result.
+   * <code>repeated .database.DataStudent student = 1;</code>
    */
-  com.google.protobuf.ByteString
-      getResultBytes();
+  io.grpc.database.DataStudent getStudent(int index);
+  /**
+   * <code>repeated .database.DataStudent student = 1;</code>
+   */
+  int getStudentCount();
+  /**
+   * <code>repeated .database.DataStudent student = 1;</code>
+   */
+  java.util.List<? extends io.grpc.database.DataStudentOrBuilder> 
+      getStudentOrBuilderList();
+  /**
+   * <code>repeated .database.DataStudent student = 1;</code>
+   */
+  io.grpc.database.DataStudentOrBuilder getStudentOrBuilder(
+      int index);
 }

@@ -15,10 +15,6 @@ service Login {
     rpc join (JoinRequest) returns (JoinResponse) {}
     rpc showStudentList (ShowStudentListRequest) returns (ShowStudentListResponse) {}
     rpc showCourseList (ShowCourseListRequest) returns (ShowCourseListResponse) {}
-    rpc showStudentCourseList (ShowStudentCourseListRequest) returns (ShowStudentCourseListResponse) {}
-    rpc showCourseStudentList (ShowCourseStudentListRequest) returns (ShowCourseStudentListResponse) {}
-    rpc showCompleteList (ShowCompleteListRequest) returns (ShowCompleteListResponse) {}
-    rpc showCourseApply (ShowCourseApplyRequest) returns (ShowCourseApplyResponse) {}
     rpc serverDeleteStudent (ServerDeleteStudentRequest) returns (ServerDeleteStudentResponse) {}
     rpc serverEnrollCourse (ServerEnrollCourseRequest) returns (ServerEnrollCourseResponse) {}
     rpc serverDropCourse (ServerDropCourseRequest) returns (ServerDropCourseResponse) {}
@@ -39,9 +35,8 @@ message LoginRequest {
     string password = 2;
 }
 message LoginResponse {
-    ServerStudent student = 1;
+    optional ServerStudent student = 1;
 }
-
 message JoinRequest {
     ServerStudent student = 1;
 }
@@ -57,35 +52,6 @@ message ShowStudentListResponse {
 message ShowCourseListRequest {
 }
 message ShowCourseListResponse {
-    string result = 1;
-}
-
-message ShowStudentCourseListRequest {
-    string studentId = 1;
-}
-message ShowStudentCourseListResponse {
-    string result = 1;
-}
-
-message ShowCourseStudentListRequest {
-    string courseId = 1;
-}
-message ShowCourseStudentListResponse {
-    string result = 1;
-}
-
-message ShowCompleteListRequest {
-    string studentId = 1;
-}
-message ShowCompleteListResponse {
-    string result = 1;
-}
-
-message ShowCourseApplyRequest {
-    int32 studentId = 1;
-    string courseId = 2;
-}
-message ShowCourseApplyResponse {
     string result = 1;
 }
 message ServerDeleteStudentRequest {

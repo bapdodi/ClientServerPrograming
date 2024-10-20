@@ -1,169 +1,95 @@
 package io.grpc.login.DataBase;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import io.grpc.Grpc;
 import io.grpc.InsecureServerCredentials;
 import io.grpc.Server;
 import io.grpc.stub.StreamObserver;
 import io.grpc.database.*;
-import io.grpc.login.Part1.Course;
-import io.grpc.login.Part1.CourseList;
-import java.util.ArrayList;
+import io.grpc.login.Server.LoginServer;
+import java.util.Date;
 import java.util.List;
-
+import java.util.logging.FileHandler;
+import java.util.logging.Formatter;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 public class DataBaseServer {
+    private static final Logger logger = Logger.getLogger(LoginServer.class.getName());
     private static final int PORT = 50052; // 데이터베이스 서버 포트
-    private static final DataBaseLinked db=new DataBaseLinked();
-
+    private static final DataBaseLinked db=new DataBaseLinked(logger);
     public static void main(String[] args) throws IOException, InterruptedException {
-
-        Server server = Grpc.newServerBuilderForPort(PORT, InsecureServerCredentials.create())
-                .addService(new DataBaseImpl())
-                .build()
-                .start();
-
-        System.out.println("DataBase Server started on port " + PORT);
-        
+        Server server = Grpc.newServerBuilderForPort(PORT, InsecureServerCredentials.create()).addService(new DataBaseImpl()).build().start();
+        setLogger();
+        logger.info("DataBase Server started on port " + PORT);
         server.awaitTermination();
     }
-
-
-
+    private static void setLogger() {
+        try {
+            // FileHandler 설정
+            FileHandler fileHandler = new FileHandler("src/main/Log/dataserver.log", true);
+            fileHandler.setFormatter(new CustomFormatter());
+            logger.addHandler(fileHandler);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    static class CustomFormatter extends Formatter {
+        private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        @Override
+        public String format(LogRecord record) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(dateFormat.format(new Date(record.getMillis()))).append(" ");
+            sb.append(record.getLevel()).append(": ");
+            sb.append(record.getMessage()).append("\n");
+            return sb.toString();
+        }
+    }
     static class DataBaseImpl extends DataBaseGrpc.DataBaseImplBase {
         @Override
         public void getStudent(GetStudentRequest request, StreamObserver<GetStudentResponse> responseObserver) {
             int id = request.getStudentId();
             DataStudent student = db.getStudent(id);
+            GetStudentResponse response;
             if(student==null) {
-                GetStudentResponse response = GetStudentResponse.newBuilder()
-                        .build();
-                responseObserver.onNext(response);
-                responseObserver.onCompleted();
-                return;
+                response = GetStudentResponse.newBuilder().build();
             }
-            GetStudentResponse response = GetStudentResponse.newBuilder()
-                    .setStudent(student)
-                    .build();
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
+            else{
+                response = GetStudentResponse.newBuilder().setStudent(student).build();
+            }
+            finishedresponse(responseObserver, response);
         }
         @Override
         public void getCourse(GetCourseRequest request, StreamObserver<GetCourseResponse> responseObserver) {
             int id = request.getCourseId();
             DataCourse course = db.getCourse(id);
+            GetCourseResponse response;
             if(course==null) {
-                GetCourseResponse response = GetCourseResponse.newBuilder()
-                        .build();
-                responseObserver.onNext(response);
-                responseObserver.onCompleted();
-                return;
-            }
-            GetCourseResponse response = GetCourseResponse.newBuilder()
-                    .setCourse(course)
-                    .build();
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
-        }
-        @Override
-        public void getLogin(GetLoginRequest request, StreamObserver<GetLoginResponse> responseObserver) {
-            int id = request.getStudentId();
-            String password = request.getPassword();
-            DataStudent student = db.login(id, password);
-            
-            if(student==null) {
-                GetLoginResponse response = GetLoginResponse.newBuilder()
-                        .build();
-                responseObserver.onNext(response);
-                responseObserver.onCompleted();
-                return;
+                response = GetCourseResponse.newBuilder().build();;
             }
             else{
-                GetLoginResponse response = GetLoginResponse.newBuilder()
-                        .setStudent(student)
-                        .build();
-                responseObserver.onNext(response);
-                responseObserver.onCompleted();
+                response = GetCourseResponse.newBuilder().setCourse(course).build();
             }
-            
+            finishedresponse(responseObserver, response);
         }
         @Override
         public void getJoin(GetJoinRequest request, StreamObserver<GetJoinResponse> responseObserver) {
             DataStudent dataStudent = request.getStudent();
-            String result = db.join(dataStudent);
-            GetJoinResponse response = GetJoinResponse.newBuilder()
-                    .setResult(result)
-                    .build();
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
+            boolean check = db.join(dataStudent);
+            GetJoinResponse response = GetJoinResponse.newBuilder().setCheck(check).build();
+            finishedresponse(responseObserver, response);
         }
         @Override
         public void getStudentList(GetStudentListRequest request, StreamObserver<GetStudentListResponse> responseObserver) {
-            String result="";
-            
+            List<DataStudent> studentList = db.getStudentList();
+            GetStudentListResponse response = GetStudentListResponse.newBuilder().addAllStudent(studentList).build();
+            finishedresponse(responseObserver, response);
         }
         @Override
         public void getCourseList(GetCourseListRequest request, StreamObserver<GetCourseListResponse> responseObserver) {
-            String result="";
-            CourseList courseList;
-            try {
-                courseList = new CourseList("src/main/java/io/grpc/login/Part1/Courses.txt");
-                ArrayList<Course> result1 = courseList.getAllCourseRecords();
-                int i=1;
-                for(Course c : result1) {
-                    result+=i+": ";
-                    result+=c.toString();
-                    result+="\n";
-                    i++;
-                }
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            GetCourseListResponse response = GetCourseListResponse.newBuilder()
-                    .setResult(result)
-                    .build();
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
-        }
-        @Override
-        public void getStudentCourseList(GetStudentCourseListRequest request, StreamObserver<GetStudentCourseListResponse> responseObserver) {
-            String result="";
-            GetStudentCourseListResponse response = GetStudentCourseListResponse.newBuilder()
-                    .setResult(result)
-                    .build();
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
-        }
-        @Override
-        public void getCourseStudentList(GetCourseStudentListRequest request, StreamObserver<GetCourseStudentListResponse> responseObserver) {
-            String result="";
-            GetCourseStudentListResponse response = GetCourseStudentListResponse.newBuilder()
-                    .setResult(result)
-                    .build();
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
-        }
-        @Override
-        public void getCompleteList(GetCompleteListRequest request, StreamObserver<GetCompleteListResponse> responseObserver) {
-            String result="";
-            GetCompleteListResponse response = GetCompleteListResponse.newBuilder()
-                    .setResult(result)
-                    .build();
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
-        }
-        @Override
-        public void getCourseApply(GetCourseApplyRequest request, StreamObserver<GetCourseApplyResponse> responseObserver) {
-            String result="";
-            GetCourseApplyResponse response = GetCourseApplyResponse.newBuilder()
-                    .setResult(result)
-                    .build();
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
+            List<DataCourse> courseList = db.getCourseList();
+            GetCourseListResponse response = GetCourseListResponse.newBuilder().addAllCourse(courseList).build();
+            finishedresponse(responseObserver, response);
         }
         @Override
         public void dataDeleteStudent(DataDeleteStudentRequest request, StreamObserver<DataDeleteStudentResponse> responseObserver) {
@@ -178,8 +104,7 @@ public class DataBaseServer {
             DataDeleteStudentResponse response = DataDeleteStudentResponse.newBuilder()
                     .setResult(result)
                     .build();
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
+            finishedresponse(responseObserver, response);
         }
         @Override
         public void dataAddCourse(DataAddCourseRequest request, StreamObserver<DataAddCourseResponse> responseObserver) {
@@ -191,8 +116,7 @@ public class DataBaseServer {
             DataAddCourseResponse response = DataAddCourseResponse.newBuilder()
                     .setResult(result)
                     .build();
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
+            finishedresponse(responseObserver, response);
         }
         @Override
         public void dataDeleteCourse(DataDeleteCourseRequest request, StreamObserver<DataDeleteCourseResponse> responseObserver) {
@@ -201,8 +125,7 @@ public class DataBaseServer {
             DataDeleteCourseResponse response = DataDeleteCourseResponse.newBuilder()
                     .setResult(result)
                     .build();
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
+            finishedresponse(responseObserver, response);
         }
         @Override
         public void dataEnrollCourse(DataEnrollCourseRequest request, StreamObserver<DataEnrollCourseResponse> responseObserver) {
@@ -212,8 +135,7 @@ public class DataBaseServer {
             DataEnrollCourseResponse response = DataEnrollCourseResponse.newBuilder()
                     .setResult(result)
                     .build();
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
+            finishedresponse(responseObserver, response);
         }
         @Override
         public void dataDropCourse(DataDropCourseRequest request, StreamObserver<DataDropCourseResponse> responseObserver) {
@@ -223,8 +145,10 @@ public class DataBaseServer {
             DataDropCourseResponse response = DataDropCourseResponse.newBuilder()
                     .setResult(result)
                     .build();
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
+            finishedresponse(responseObserver, response);
+        }
+        private <T> void finishedresponse(StreamObserver<T> responseObserver, T response){
+            finishedresponse(responseObserver, response);
         }
     }
 }

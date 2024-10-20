@@ -77,37 +77,6 @@ public final class DataBaseGrpc {
     return getGetCourseMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<io.grpc.database.GetLoginRequest,
-      io.grpc.database.GetLoginResponse> getGetLoginMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "GetLogin",
-      requestType = io.grpc.database.GetLoginRequest.class,
-      responseType = io.grpc.database.GetLoginResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<io.grpc.database.GetLoginRequest,
-      io.grpc.database.GetLoginResponse> getGetLoginMethod() {
-    io.grpc.MethodDescriptor<io.grpc.database.GetLoginRequest, io.grpc.database.GetLoginResponse> getGetLoginMethod;
-    if ((getGetLoginMethod = DataBaseGrpc.getGetLoginMethod) == null) {
-      synchronized (DataBaseGrpc.class) {
-        if ((getGetLoginMethod = DataBaseGrpc.getGetLoginMethod) == null) {
-          DataBaseGrpc.getGetLoginMethod = getGetLoginMethod =
-              io.grpc.MethodDescriptor.<io.grpc.database.GetLoginRequest, io.grpc.database.GetLoginResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetLogin"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  io.grpc.database.GetLoginRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  io.grpc.database.GetLoginResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new DataBaseMethodDescriptorSupplier("GetLogin"))
-              .build();
-        }
-      }
-    }
-    return getGetLoginMethod;
-  }
-
   private static volatile io.grpc.MethodDescriptor<io.grpc.database.GetJoinRequest,
       io.grpc.database.GetJoinResponse> getGetJoinMethod;
 
@@ -199,130 +168,6 @@ public final class DataBaseGrpc {
       }
     }
     return getGetCourseListMethod;
-  }
-
-  private static volatile io.grpc.MethodDescriptor<io.grpc.database.GetStudentCourseListRequest,
-      io.grpc.database.GetStudentCourseListResponse> getGetStudentCourseListMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "GetStudentCourseList",
-      requestType = io.grpc.database.GetStudentCourseListRequest.class,
-      responseType = io.grpc.database.GetStudentCourseListResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<io.grpc.database.GetStudentCourseListRequest,
-      io.grpc.database.GetStudentCourseListResponse> getGetStudentCourseListMethod() {
-    io.grpc.MethodDescriptor<io.grpc.database.GetStudentCourseListRequest, io.grpc.database.GetStudentCourseListResponse> getGetStudentCourseListMethod;
-    if ((getGetStudentCourseListMethod = DataBaseGrpc.getGetStudentCourseListMethod) == null) {
-      synchronized (DataBaseGrpc.class) {
-        if ((getGetStudentCourseListMethod = DataBaseGrpc.getGetStudentCourseListMethod) == null) {
-          DataBaseGrpc.getGetStudentCourseListMethod = getGetStudentCourseListMethod =
-              io.grpc.MethodDescriptor.<io.grpc.database.GetStudentCourseListRequest, io.grpc.database.GetStudentCourseListResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetStudentCourseList"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  io.grpc.database.GetStudentCourseListRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  io.grpc.database.GetStudentCourseListResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new DataBaseMethodDescriptorSupplier("GetStudentCourseList"))
-              .build();
-        }
-      }
-    }
-    return getGetStudentCourseListMethod;
-  }
-
-  private static volatile io.grpc.MethodDescriptor<io.grpc.database.GetCourseStudentListRequest,
-      io.grpc.database.GetCourseStudentListResponse> getGetCourseStudentListMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "GetCourseStudentList",
-      requestType = io.grpc.database.GetCourseStudentListRequest.class,
-      responseType = io.grpc.database.GetCourseStudentListResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<io.grpc.database.GetCourseStudentListRequest,
-      io.grpc.database.GetCourseStudentListResponse> getGetCourseStudentListMethod() {
-    io.grpc.MethodDescriptor<io.grpc.database.GetCourseStudentListRequest, io.grpc.database.GetCourseStudentListResponse> getGetCourseStudentListMethod;
-    if ((getGetCourseStudentListMethod = DataBaseGrpc.getGetCourseStudentListMethod) == null) {
-      synchronized (DataBaseGrpc.class) {
-        if ((getGetCourseStudentListMethod = DataBaseGrpc.getGetCourseStudentListMethod) == null) {
-          DataBaseGrpc.getGetCourseStudentListMethod = getGetCourseStudentListMethod =
-              io.grpc.MethodDescriptor.<io.grpc.database.GetCourseStudentListRequest, io.grpc.database.GetCourseStudentListResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetCourseStudentList"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  io.grpc.database.GetCourseStudentListRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  io.grpc.database.GetCourseStudentListResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new DataBaseMethodDescriptorSupplier("GetCourseStudentList"))
-              .build();
-        }
-      }
-    }
-    return getGetCourseStudentListMethod;
-  }
-
-  private static volatile io.grpc.MethodDescriptor<io.grpc.database.GetCompleteListRequest,
-      io.grpc.database.GetCompleteListResponse> getGetCompleteListMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "GetCompleteList",
-      requestType = io.grpc.database.GetCompleteListRequest.class,
-      responseType = io.grpc.database.GetCompleteListResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<io.grpc.database.GetCompleteListRequest,
-      io.grpc.database.GetCompleteListResponse> getGetCompleteListMethod() {
-    io.grpc.MethodDescriptor<io.grpc.database.GetCompleteListRequest, io.grpc.database.GetCompleteListResponse> getGetCompleteListMethod;
-    if ((getGetCompleteListMethod = DataBaseGrpc.getGetCompleteListMethod) == null) {
-      synchronized (DataBaseGrpc.class) {
-        if ((getGetCompleteListMethod = DataBaseGrpc.getGetCompleteListMethod) == null) {
-          DataBaseGrpc.getGetCompleteListMethod = getGetCompleteListMethod =
-              io.grpc.MethodDescriptor.<io.grpc.database.GetCompleteListRequest, io.grpc.database.GetCompleteListResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetCompleteList"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  io.grpc.database.GetCompleteListRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  io.grpc.database.GetCompleteListResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new DataBaseMethodDescriptorSupplier("GetCompleteList"))
-              .build();
-        }
-      }
-    }
-    return getGetCompleteListMethod;
-  }
-
-  private static volatile io.grpc.MethodDescriptor<io.grpc.database.GetCourseApplyRequest,
-      io.grpc.database.GetCourseApplyResponse> getGetCourseApplyMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "GetCourseApply",
-      requestType = io.grpc.database.GetCourseApplyRequest.class,
-      responseType = io.grpc.database.GetCourseApplyResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<io.grpc.database.GetCourseApplyRequest,
-      io.grpc.database.GetCourseApplyResponse> getGetCourseApplyMethod() {
-    io.grpc.MethodDescriptor<io.grpc.database.GetCourseApplyRequest, io.grpc.database.GetCourseApplyResponse> getGetCourseApplyMethod;
-    if ((getGetCourseApplyMethod = DataBaseGrpc.getGetCourseApplyMethod) == null) {
-      synchronized (DataBaseGrpc.class) {
-        if ((getGetCourseApplyMethod = DataBaseGrpc.getGetCourseApplyMethod) == null) {
-          DataBaseGrpc.getGetCourseApplyMethod = getGetCourseApplyMethod =
-              io.grpc.MethodDescriptor.<io.grpc.database.GetCourseApplyRequest, io.grpc.database.GetCourseApplyResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetCourseApply"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  io.grpc.database.GetCourseApplyRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  io.grpc.database.GetCourseApplyResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new DataBaseMethodDescriptorSupplier("GetCourseApply"))
-              .build();
-        }
-      }
-    }
-    return getGetCourseApplyMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<io.grpc.database.DataDeleteStudentRequest,
@@ -544,13 +389,6 @@ public final class DataBaseGrpc {
 
     /**
      */
-    default void getLogin(io.grpc.database.GetLoginRequest request,
-        io.grpc.stub.StreamObserver<io.grpc.database.GetLoginResponse> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetLoginMethod(), responseObserver);
-    }
-
-    /**
-     */
     default void getJoin(io.grpc.database.GetJoinRequest request,
         io.grpc.stub.StreamObserver<io.grpc.database.GetJoinResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetJoinMethod(), responseObserver);
@@ -568,34 +406,6 @@ public final class DataBaseGrpc {
     default void getCourseList(io.grpc.database.GetCourseListRequest request,
         io.grpc.stub.StreamObserver<io.grpc.database.GetCourseListResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetCourseListMethod(), responseObserver);
-    }
-
-    /**
-     */
-    default void getStudentCourseList(io.grpc.database.GetStudentCourseListRequest request,
-        io.grpc.stub.StreamObserver<io.grpc.database.GetStudentCourseListResponse> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetStudentCourseListMethod(), responseObserver);
-    }
-
-    /**
-     */
-    default void getCourseStudentList(io.grpc.database.GetCourseStudentListRequest request,
-        io.grpc.stub.StreamObserver<io.grpc.database.GetCourseStudentListResponse> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetCourseStudentListMethod(), responseObserver);
-    }
-
-    /**
-     */
-    default void getCompleteList(io.grpc.database.GetCompleteListRequest request,
-        io.grpc.stub.StreamObserver<io.grpc.database.GetCompleteListResponse> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetCompleteListMethod(), responseObserver);
-    }
-
-    /**
-     */
-    default void getCourseApply(io.grpc.database.GetCourseApplyRequest request,
-        io.grpc.stub.StreamObserver<io.grpc.database.GetCourseApplyResponse> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetCourseApplyMethod(), responseObserver);
     }
 
     /**
@@ -679,14 +489,6 @@ public final class DataBaseGrpc {
 
     /**
      */
-    public void getLogin(io.grpc.database.GetLoginRequest request,
-        io.grpc.stub.StreamObserver<io.grpc.database.GetLoginResponse> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getGetLoginMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     */
     public void getJoin(io.grpc.database.GetJoinRequest request,
         io.grpc.stub.StreamObserver<io.grpc.database.GetJoinResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
@@ -707,38 +509,6 @@ public final class DataBaseGrpc {
         io.grpc.stub.StreamObserver<io.grpc.database.GetCourseListResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getGetCourseListMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     */
-    public void getStudentCourseList(io.grpc.database.GetStudentCourseListRequest request,
-        io.grpc.stub.StreamObserver<io.grpc.database.GetStudentCourseListResponse> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getGetStudentCourseListMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     */
-    public void getCourseStudentList(io.grpc.database.GetCourseStudentListRequest request,
-        io.grpc.stub.StreamObserver<io.grpc.database.GetCourseStudentListResponse> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getGetCourseStudentListMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     */
-    public void getCompleteList(io.grpc.database.GetCompleteListRequest request,
-        io.grpc.stub.StreamObserver<io.grpc.database.GetCompleteListResponse> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getGetCompleteListMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     */
-    public void getCourseApply(io.grpc.database.GetCourseApplyRequest request,
-        io.grpc.stub.StreamObserver<io.grpc.database.GetCourseApplyResponse> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getGetCourseApplyMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -814,13 +584,6 @@ public final class DataBaseGrpc {
 
     /**
      */
-    public io.grpc.database.GetLoginResponse getLogin(io.grpc.database.GetLoginRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getGetLoginMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
     public io.grpc.database.GetJoinResponse getJoin(io.grpc.database.GetJoinRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetJoinMethod(), getCallOptions(), request);
@@ -838,34 +601,6 @@ public final class DataBaseGrpc {
     public io.grpc.database.GetCourseListResponse getCourseList(io.grpc.database.GetCourseListRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetCourseListMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
-    public io.grpc.database.GetStudentCourseListResponse getStudentCourseList(io.grpc.database.GetStudentCourseListRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getGetStudentCourseListMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
-    public io.grpc.database.GetCourseStudentListResponse getCourseStudentList(io.grpc.database.GetCourseStudentListRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getGetCourseStudentListMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
-    public io.grpc.database.GetCompleteListResponse getCompleteList(io.grpc.database.GetCompleteListRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getGetCompleteListMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
-    public io.grpc.database.GetCourseApplyResponse getCourseApply(io.grpc.database.GetCourseApplyRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getGetCourseApplyMethod(), getCallOptions(), request);
     }
 
     /**
@@ -938,14 +673,6 @@ public final class DataBaseGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<io.grpc.database.GetLoginResponse> getLogin(
-        io.grpc.database.GetLoginRequest request) {
-      return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getGetLoginMethod(), getCallOptions()), request);
-    }
-
-    /**
-     */
     public com.google.common.util.concurrent.ListenableFuture<io.grpc.database.GetJoinResponse> getJoin(
         io.grpc.database.GetJoinRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
@@ -966,38 +693,6 @@ public final class DataBaseGrpc {
         io.grpc.database.GetCourseListRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGetCourseListMethod(), getCallOptions()), request);
-    }
-
-    /**
-     */
-    public com.google.common.util.concurrent.ListenableFuture<io.grpc.database.GetStudentCourseListResponse> getStudentCourseList(
-        io.grpc.database.GetStudentCourseListRequest request) {
-      return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getGetStudentCourseListMethod(), getCallOptions()), request);
-    }
-
-    /**
-     */
-    public com.google.common.util.concurrent.ListenableFuture<io.grpc.database.GetCourseStudentListResponse> getCourseStudentList(
-        io.grpc.database.GetCourseStudentListRequest request) {
-      return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getGetCourseStudentListMethod(), getCallOptions()), request);
-    }
-
-    /**
-     */
-    public com.google.common.util.concurrent.ListenableFuture<io.grpc.database.GetCompleteListResponse> getCompleteList(
-        io.grpc.database.GetCompleteListRequest request) {
-      return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getGetCompleteListMethod(), getCallOptions()), request);
-    }
-
-    /**
-     */
-    public com.google.common.util.concurrent.ListenableFuture<io.grpc.database.GetCourseApplyResponse> getCourseApply(
-        io.grpc.database.GetCourseApplyRequest request) {
-      return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getGetCourseApplyMethod(), getCallOptions()), request);
     }
 
     /**
@@ -1043,19 +738,14 @@ public final class DataBaseGrpc {
 
   private static final int METHODID_GET_STUDENT = 0;
   private static final int METHODID_GET_COURSE = 1;
-  private static final int METHODID_GET_LOGIN = 2;
-  private static final int METHODID_GET_JOIN = 3;
-  private static final int METHODID_GET_STUDENT_LIST = 4;
-  private static final int METHODID_GET_COURSE_LIST = 5;
-  private static final int METHODID_GET_STUDENT_COURSE_LIST = 6;
-  private static final int METHODID_GET_COURSE_STUDENT_LIST = 7;
-  private static final int METHODID_GET_COMPLETE_LIST = 8;
-  private static final int METHODID_GET_COURSE_APPLY = 9;
-  private static final int METHODID_DATA_DELETE_STUDENT = 10;
-  private static final int METHODID_DATA_ENROLL_COURSE = 11;
-  private static final int METHODID_DATA_DROP_COURSE = 12;
-  private static final int METHODID_DATA_ADD_COURSE = 13;
-  private static final int METHODID_DATA_DELETE_COURSE = 14;
+  private static final int METHODID_GET_JOIN = 2;
+  private static final int METHODID_GET_STUDENT_LIST = 3;
+  private static final int METHODID_GET_COURSE_LIST = 4;
+  private static final int METHODID_DATA_DELETE_STUDENT = 5;
+  private static final int METHODID_DATA_ENROLL_COURSE = 6;
+  private static final int METHODID_DATA_DROP_COURSE = 7;
+  private static final int METHODID_DATA_ADD_COURSE = 8;
+  private static final int METHODID_DATA_DELETE_COURSE = 9;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -1082,10 +772,6 @@ public final class DataBaseGrpc {
           serviceImpl.getCourse((io.grpc.database.GetCourseRequest) request,
               (io.grpc.stub.StreamObserver<io.grpc.database.GetCourseResponse>) responseObserver);
           break;
-        case METHODID_GET_LOGIN:
-          serviceImpl.getLogin((io.grpc.database.GetLoginRequest) request,
-              (io.grpc.stub.StreamObserver<io.grpc.database.GetLoginResponse>) responseObserver);
-          break;
         case METHODID_GET_JOIN:
           serviceImpl.getJoin((io.grpc.database.GetJoinRequest) request,
               (io.grpc.stub.StreamObserver<io.grpc.database.GetJoinResponse>) responseObserver);
@@ -1097,22 +783,6 @@ public final class DataBaseGrpc {
         case METHODID_GET_COURSE_LIST:
           serviceImpl.getCourseList((io.grpc.database.GetCourseListRequest) request,
               (io.grpc.stub.StreamObserver<io.grpc.database.GetCourseListResponse>) responseObserver);
-          break;
-        case METHODID_GET_STUDENT_COURSE_LIST:
-          serviceImpl.getStudentCourseList((io.grpc.database.GetStudentCourseListRequest) request,
-              (io.grpc.stub.StreamObserver<io.grpc.database.GetStudentCourseListResponse>) responseObserver);
-          break;
-        case METHODID_GET_COURSE_STUDENT_LIST:
-          serviceImpl.getCourseStudentList((io.grpc.database.GetCourseStudentListRequest) request,
-              (io.grpc.stub.StreamObserver<io.grpc.database.GetCourseStudentListResponse>) responseObserver);
-          break;
-        case METHODID_GET_COMPLETE_LIST:
-          serviceImpl.getCompleteList((io.grpc.database.GetCompleteListRequest) request,
-              (io.grpc.stub.StreamObserver<io.grpc.database.GetCompleteListResponse>) responseObserver);
-          break;
-        case METHODID_GET_COURSE_APPLY:
-          serviceImpl.getCourseApply((io.grpc.database.GetCourseApplyRequest) request,
-              (io.grpc.stub.StreamObserver<io.grpc.database.GetCourseApplyResponse>) responseObserver);
           break;
         case METHODID_DATA_DELETE_STUDENT:
           serviceImpl.dataDeleteStudent((io.grpc.database.DataDeleteStudentRequest) request,
@@ -1167,13 +837,6 @@ public final class DataBaseGrpc {
               io.grpc.database.GetCourseResponse>(
                 service, METHODID_GET_COURSE)))
         .addMethod(
-          getGetLoginMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              io.grpc.database.GetLoginRequest,
-              io.grpc.database.GetLoginResponse>(
-                service, METHODID_GET_LOGIN)))
-        .addMethod(
           getGetJoinMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
@@ -1194,34 +857,6 @@ public final class DataBaseGrpc {
               io.grpc.database.GetCourseListRequest,
               io.grpc.database.GetCourseListResponse>(
                 service, METHODID_GET_COURSE_LIST)))
-        .addMethod(
-          getGetStudentCourseListMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              io.grpc.database.GetStudentCourseListRequest,
-              io.grpc.database.GetStudentCourseListResponse>(
-                service, METHODID_GET_STUDENT_COURSE_LIST)))
-        .addMethod(
-          getGetCourseStudentListMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              io.grpc.database.GetCourseStudentListRequest,
-              io.grpc.database.GetCourseStudentListResponse>(
-                service, METHODID_GET_COURSE_STUDENT_LIST)))
-        .addMethod(
-          getGetCompleteListMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              io.grpc.database.GetCompleteListRequest,
-              io.grpc.database.GetCompleteListResponse>(
-                service, METHODID_GET_COMPLETE_LIST)))
-        .addMethod(
-          getGetCourseApplyMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              io.grpc.database.GetCourseApplyRequest,
-              io.grpc.database.GetCourseApplyResponse>(
-                service, METHODID_GET_COURSE_APPLY)))
         .addMethod(
           getDataDeleteStudentMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
@@ -1307,14 +942,9 @@ public final class DataBaseGrpc {
               .setSchemaDescriptor(new DataBaseFileDescriptorSupplier())
               .addMethod(getGetStudentMethod())
               .addMethod(getGetCourseMethod())
-              .addMethod(getGetLoginMethod())
               .addMethod(getGetJoinMethod())
               .addMethod(getGetStudentListMethod())
               .addMethod(getGetCourseListMethod())
-              .addMethod(getGetStudentCourseListMethod())
-              .addMethod(getGetCourseStudentListMethod())
-              .addMethod(getGetCompleteListMethod())
-              .addMethod(getGetCourseApplyMethod())
               .addMethod(getDataDeleteStudentMethod())
               .addMethod(getDataEnrollCourseMethod())
               .addMethod(getDataDropCourseMethod())

@@ -3,11 +3,12 @@ package io.grpc.login.Server;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.LinkedList;
-/**
- * Server that manages startup/shutdown of a {@code Greeter} server.
- */
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
+
+import javax.xml.crypto.Data;
+
 import io.grpc.Grpc;
 import io.grpc.InsecureServerCredentials;
 import io.grpc.ManagedChannel;
@@ -16,40 +17,25 @@ import io.grpc.Server;
 import io.grpc.database.*;
 import io.grpc.login.*;
 import io.grpc.stub.StreamObserver;
-import oracle.net.aso.l;
-
 import java.util.logging.FileHandler;
-import java.util.logging.SimpleFormatter;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 import java.text.SimpleDateFormat;
-import com.google.protobuf.Timestamp;
 import java.util.Date;
+
 public class LoginServer {
     private static final Logger logger = Logger.getLogger(LoginServer.class.getName());
     private Server clientServer;
     private Server dbServer;
-    private static ServerStudent student;
     private static DataBaseGrpc.DataBaseBlockingStub blockingStub;
     private void start() throws IOException{
-   
         int clientPort = 50051;
         setLogger();
-        //인증이 없는 서버
-        clientServer = Grpc.newServerBuilderForPort(clientPort, InsecureServerCredentials.create())
-                .addService(new LoginImpl())
-                .build()
-                .start();
-        
+        clientServer = Grpc.newServerBuilderForPort(clientPort, InsecureServerCredentials.create()).addService(new LoginImpl()).build().start();
         logger.info("Server started, listening on " + clientPort);
-
         int dbPort = 50052;
-        ManagedChannel dbChannel = ManagedChannelBuilder.forAddress("localhost", dbPort)
-        .usePlaintext()
-        .build();
+        ManagedChannel dbChannel = ManagedChannelBuilder.forAddress("localhost", dbPort).usePlaintext().build();
         blockingStub = DataBaseGrpc.newBlockingStub(dbChannel);
-
-        //JVM이 종료될때 서버를 안전하게 종료하기 위해 사용
         Runtime.getRuntime().addShutdownHook(new Thread(){
             @Override
             public void run(){
@@ -67,8 +53,8 @@ public class LoginServer {
     private void setLogger() {
         try {
             // FileHandler 설정
-            FileHandler fileHandler = new FileHandler("src/main/Log/server.log", true); // true는 파일에 덧붙이기
-            fileHandler.setFormatter(new CustomFormatter()); // 기본 포맷 사용
+            FileHandler fileHandler = new FileHandler("src/main/Log/server.log", true);
+            fileHandler.setFormatter(new CustomFormatter());
             logger.addHandler(fileHandler);
         } catch (IOException e) {
             e.printStackTrace();
@@ -90,7 +76,6 @@ public class LoginServer {
             server.shutdown().awaitTermination(30, TimeUnit.SECONDS);
         }
     }
-    // 서버가 종료될때 메인 스레드가 종료되면서 데몬 스레드도 종료되기 때문에 서버가 종료될때까지 기다리기 위해 사용
     private void blockUntilShutdown(Server server) throws InterruptedException {
         if (server != null) {
             server.awaitTermination();
@@ -105,208 +90,150 @@ public class LoginServer {
     static class LoginImpl extends LoginGrpc.LoginImplBase {
         @Override
         public void login(LoginRequest request, StreamObserver<LoginResponse> responseObserver) {
-            GetLoginRequest request2 = GetLoginRequest.newBuilder().setStudentId(request.getStudentId()).setPassword(request.getPassword()).build();
-            if(request2.getStudentId() == -1){
+            DataStudent dataStudent = getStudent(request.getStudentId());
+            if(dataStudent != null&&!dataStudent.getPassword().equals(request.getPassword())){
+                LoginResponse response = LoginResponse.newBuilder().setStudent(ServerStudent.newBuilder().setStudentId(dataStudent.getStudentId()).setPassword(dataStudent.getPassword()).setName(dataStudent.getName()).setMajor(dataStudent.getMajor()).addAllCourseId(dataStudent.getCourseIdList())).build();
+                finishedresponse(responseObserver, response);
+                logger.info(request.getStudentId() + " login");
             }
-            else{
-                GetLoginResponse response2 = blockingStub.getLogin(request2);
-                student = ServerStudent.newBuilder().setStudentId(response2.getStudent().getStudentId()).setName(response2.getStudent().getName()).setMajor(response2.getStudent().getMajor()).addAllCourseId(response2.getStudent().getCourseIdList()).build();
-            }
-            
-            LoginResponse response = LoginResponse.newBuilder()
-                .setStudent(student)
-                .build();
-            // 클라이언트에 응답 전송
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
-            logger.info(request.getStudentId() + " login");
+            LoginResponse response = LoginResponse.newBuilder().build();
+            finishedresponse(responseObserver, response);
         }
         @Override
         public void join(JoinRequest request, StreamObserver<JoinResponse> responseObserver) {
-            DataStudent dataStudent = DataStudent.newBuilder()
-            .setStudentId(request.getStudent().getStudentId())
-            .setPassword(request.getStudent().getPassword())
-            .setName(request.getStudent().getName())
-            .setMajor(request.getStudent().getMajor())
-            .build();
-            
-            GetJoinRequest request2 = GetJoinRequest.newBuilder().setStudent(dataStudent).build();
-            GetJoinResponse response2 = blockingStub.getJoin(request2);
-            JoinResponse response = JoinResponse.newBuilder()
-                .setResult(response2.getResult())
-                .build();
-            // 클라이언트에 응답 전송
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
-            logger.info(request.getStudent().getStudentId() + " join");
+            DataStudent dataStudent = getStudent(request.getStudent().getStudentId());
+            JoinResponse response;
+            if(dataStudent != null){
+                response = JoinResponse.newBuilder().setResult("Already Joined").build();
+            }
+            else{
+                dataStudent = DataStudent.newBuilder().setStudentId(request.getStudent().getStudentId()).setPassword(request.getStudent().getPassword()).setName(request.getStudent().getName()).setMajor(request.getStudent().getMajor()).build();
+                GetJoinRequest request2 = GetJoinRequest.newBuilder().setStudent(dataStudent).build();
+                GetJoinResponse response2 = blockingStub.getJoin(request2);
+                if(response2.getCheck()){
+                    response = JoinResponse.newBuilder().setResult("Join Success").build();
+                    logger.info(request.getStudent().getStudentId() + " join");
+                }
+                else{
+                    response = JoinResponse.newBuilder().setResult("Join Fail").build();
+                }
+            }
+            finishedresponse(responseObserver, response);
         }
-
         @Override
         public void showStudentList(ShowStudentListRequest request, StreamObserver<ShowStudentListResponse> responseObserver) {
             GetStudentListRequest request2 = GetStudentListRequest.newBuilder().build();
             GetStudentListResponse response2 = blockingStub.getStudentList(request2);
-            ShowStudentListResponse response = ShowStudentListResponse.newBuilder()
-                .setResult(response2.getResult())
-                .build();
+            List<DataStudent> studentList = response2.getStudentList();
+            String result = "*** Student List ***\n";
+            for(DataStudent student : studentList){
+                result += "Student ID: " + student.getStudentId() + " Password: " + student.getPassword() + " Name: " + student.getName() + " Major: " + student.getMajor() + " Course ID: ";
+                for(int courseId : student.getCourseIdList()){
+                    result += courseId+"";
+                }
+                result += "\n";
+            }
+            ShowStudentListResponse response = ShowStudentListResponse.newBuilder().setResult(result).build();
             
-            // 클라이언트에 응답 전송
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
+            finishedresponse(responseObserver, response);
         }
         @Override
         public void showCourseList(ShowCourseListRequest request, StreamObserver<ShowCourseListResponse> responseObserver) {
             GetCourseListRequest request2 = GetCourseListRequest.newBuilder().build();
             GetCourseListResponse response2 = blockingStub.getCourseList(request2);
-            ShowCourseListResponse response = ShowCourseListResponse.newBuilder()
-                .setResult(response2.getResult())
-                .build();
-            
-            // 클라이언트에 응답 전송
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
-        }
-        @Override
-        public void showStudentCourseList(ShowStudentCourseListRequest request, StreamObserver<ShowStudentCourseListResponse> responseObserver) {
-            ShowStudentCourseListResponse response = ShowStudentCourseListResponse.newBuilder()
-                .setResult("Student Course List Data")
-                .build();
-            
-            // 클라이언트에 응답 전송
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
-        }
-        @Override
-        public void showCourseStudentList(ShowCourseStudentListRequest request, StreamObserver<ShowCourseStudentListResponse> responseObserver) {
-            ShowCourseStudentListResponse response = ShowCourseStudentListResponse.newBuilder()
-                .setResult("Course Student List Data")
-                .build();
-            
-            // 클라이언트에 응답 전송
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
-        }
-        @Override
-        public void showCompleteList(ShowCompleteListRequest request, StreamObserver<ShowCompleteListResponse> responseObserver) {
-            ShowCompleteListResponse response = ShowCompleteListResponse.newBuilder()
-                .setResult("Complete List Data")
-                .build();
-            
-            // 클라이언트에 응답 전송
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
-        }
-        @Override
-        public void showCourseApply(ShowCourseApplyRequest request, StreamObserver<ShowCourseApplyResponse> responseObserver) {
-            ShowCourseApplyResponse response = ShowCourseApplyResponse.newBuilder()
-                .setResult("Course Apply Data")
-                .build();
-            
-            // 클라이언트에 응답 전송
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
+            List<DataCourse> courseList = response2.getCourseList();
+            String result = "*** Course List ***\n";
+            for(DataCourse course : courseList){
+                result += "Course ID: " + course.getCourseId() + " Course Name: " + course.getCourseName() + " Course Professor: " + course.getCourseProfessor() + " Course Limited: ";
+                for(int courseLimited : course.getCourseLimitedList()){
+                    result += courseLimited;
+                }
+                result += "\n";
+            }
+            ShowCourseListResponse response = ShowCourseListResponse.newBuilder().setResult(result).build();
+            finishedresponse(responseObserver, response);
         }
         @Override
         public void serverDeleteStudent(ServerDeleteStudentRequest request, StreamObserver<ServerDeleteStudentResponse> responseObserver) {
             DataDeleteStudentRequest request2 = DataDeleteStudentRequest.newBuilder().setStudentId(request.getStudentId()).build();
             DataDeleteStudentResponse response2 = blockingStub.dataDeleteStudent(request2);
-            ServerDeleteStudentResponse response = ServerDeleteStudentResponse.newBuilder()
-                .setResult(response2.getResult())
-                .build();
-            // 클라이언트에 응답 전송
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
-            logger.info(request.getStudentId() + " delete");
+            ServerDeleteStudentResponse response = ServerDeleteStudentResponse.newBuilder().setResult(response2.getResult()).build();
+            finishedresponse(responseObserver, response);
+            logger.info(request.getStudentId() + " deleteStudent");
         }
         @Override
         public void serverEnrollCourse(ServerEnrollCourseRequest request, StreamObserver<ServerEnrollCourseResponse> responseObserver) {
-            GetStudentRequest request3 = GetStudentRequest.newBuilder().setStudentId(request.getStudentId()).build();
-            GetStudentResponse getStudent = blockingStub.getStudent(request3);
-            if(!getStudent.hasStudent()){
-                ServerEnrollCourseResponse response = ServerEnrollCourseResponse.newBuilder()
-                .setResult("Student Not Found")
-                .build();
-                responseObserver.onNext(response);
-                responseObserver.onCompleted();
+            DataStudent student = getStudent(request.getStudentId());
+            DataCourse course = getCourse(request.getCourseId());
+            if(student == null){
+                ServerEnrollCourseResponse response = ServerEnrollCourseResponse.newBuilder().setResult("Student Not Found").build();
+                finishedresponse(responseObserver, response);
                 return;
             }
-            GetCourseRequest request4 = GetCourseRequest.newBuilder().setCourseId(request.getCourseId()).build();
-            GetCourseResponse getCourse = blockingStub.getCourse(request4);
-            if(!getCourse.hasCourse()){
-                ServerEnrollCourseResponse response = ServerEnrollCourseResponse.newBuilder()
-                .setResult("Course Not Found")
-                .build();
-                responseObserver.onNext(response);
-                responseObserver.onCompleted();
+            if(course==null){
+                ServerEnrollCourseResponse response = ServerEnrollCourseResponse.newBuilder().setResult("Course Not Found").build();
+                finishedresponse(responseObserver, response);
+                return;
             }
             LinkedList<Integer> courseLimitedList = new LinkedList<Integer>();
-            courseLimitedList.addAll(getCourse.getCourse().getCourseLimitedList());
+            courseLimitedList.addAll(course.getCourseLimitedList());
             LinkedList<Integer> studentCompleteCoures = new LinkedList<Integer>();
-            studentCompleteCoures.addAll(getStudent.getStudent().getCourseIdList());
+            studentCompleteCoures.addAll(student.getCourseIdList());
             if(studentCompleteCoures.contains(request.getCourseId())){
-                ServerEnrollCourseResponse response = ServerEnrollCourseResponse.newBuilder()
-                .setResult("Already Enrolled")
-                .build();
-                responseObserver.onNext(response);
-                responseObserver.onCompleted();
+                ServerEnrollCourseResponse response = ServerEnrollCourseResponse.newBuilder().setResult("Already Enrolled").build();
+                finishedresponse(responseObserver, response);
             }
             if(studentCompleteCoures.containsAll(courseLimitedList)){
                 DataEnrollCourseRequest request2 = DataEnrollCourseRequest.newBuilder().setCourseId(request.getCourseId()).setStudentId(request.getStudentId()).build();
                 DataEnrollCourseResponse response2 = blockingStub.dataEnrollCourse(request2);
-                ServerEnrollCourseResponse response = ServerEnrollCourseResponse.newBuilder()
-                    .setResult(response2.getResult())
-                    .build();
-                responseObserver.onNext(response);
-                responseObserver.onCompleted();
+                ServerEnrollCourseResponse response = ServerEnrollCourseResponse.newBuilder().setResult(response2.getResult()).build();
+                finishedresponse(responseObserver, response);
             }
             else{
-                ServerEnrollCourseResponse response = ServerEnrollCourseResponse.newBuilder()
-                .setResult("Course Limited")
-                .build();
-                responseObserver.onNext(response);
-                responseObserver.onCompleted();
+                ServerEnrollCourseResponse response = ServerEnrollCourseResponse.newBuilder().setResult("Course Limited").build();
+                finishedresponse(responseObserver, response);
             }
             logger.info(request.getStudentId() + " enroll " + request.getCourseId());
-            
-            
         }
         @Override
         public void serverDropCourse(ServerDropCourseRequest request, StreamObserver<ServerDropCourseResponse> responseObserver) {
             DataDropCourseRequest request2 = DataDropCourseRequest.newBuilder().setCourseId(request.getCourseId()).setStudentId(request.getStudentId()).build();
             DataDropCourseResponse response2 = blockingStub.dataDropCourse(request2);
-            ServerDropCourseResponse response = ServerDropCourseResponse.newBuilder()
-                .setResult(response2.getResult())
-                .build();
-            
-            // 클라이언트에 응답 전송
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
+            ServerDropCourseResponse response = ServerDropCourseResponse.newBuilder().setResult(response2.getResult()).build();
+            finishedresponse(responseObserver, response);
             logger.info(request.getStudentId() + " drop " + request.getCourseId());
         }
         @Override
         public void serverAddCourse(ServerAddCourseRequest request, StreamObserver<ServerAddCourseResponse> responseObserver) {
             DataAddCourseRequest request2 = DataAddCourseRequest.newBuilder().setCourseId(request.getCourseId()).setCourseName(request.getCourseName()).setCourseProfessor(request.getCourseProfessor()).addAllCourseLimited(request.getCourseLimitedList()).build();
             DataAddCourseResponse response2 = blockingStub.dataAddCourse(request2);
-            ServerAddCourseResponse response = ServerAddCourseResponse.newBuilder()
-                .setResult(response2.getResult())
-                .build();
-            
-            // 클라이언트에 응답 전송
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
-            logger.info(request.getCourseId() + " add");
+            ServerAddCourseResponse response = ServerAddCourseResponse.newBuilder().setResult(response2.getResult()).build();
+            finishedresponse(responseObserver, response);
+            logger.info(request.getCourseId() + " addCourse");
         }
         @Override
         public void serverDeleteCourse(ServerDeleteCourseRequest request, StreamObserver<ServerDeleteCourseResponse> responseObserver) {
             DataDeleteCourseRequest request2 = DataDeleteCourseRequest.newBuilder().setCourseId(request.getCourseId()).build();
             DataDeleteCourseResponse response2 = blockingStub.dataDeleteCourse(request2);
-            ServerDeleteCourseResponse response = ServerDeleteCourseResponse.newBuilder()
-                .setResult(response2.getResult())
-                .build();
-            
-            // 클라이언트에 응답 전송
+            ServerDeleteCourseResponse response = ServerDeleteCourseResponse.newBuilder().setResult(response2.getResult()).build();
+            finishedresponse(responseObserver, response);
+            logger.info(request.getCourseId() + " deleteCourse");
+        }
+        private <T> void finishedresponse(StreamObserver<T> responseObserver, T response){
             responseObserver.onNext(response);
             responseObserver.onCompleted();
-            logger.info(request.getCourseId() + " delete");
+        }
+        private <T> DataStudent getStudent(int studentId){
+            GetStudentRequest request = GetStudentRequest.newBuilder().setStudentId(studentId).build();
+            GetStudentResponse getStudent = blockingStub.getStudent(request);
+            if(!getStudent.hasStudent()) return null;
+            return getStudent.getStudent();
+        }
+        private <T> DataCourse getCourse(int courseId){
+            GetCourseRequest request = GetCourseRequest.newBuilder().setCourseId(courseId).build();
+            GetCourseResponse getCourse = blockingStub.getCourse(request);
+            if(!getCourse.hasCourse()) return null;
+            return getCourse.getCourse();
         }
     }
 }

@@ -17,7 +17,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private GetStudentListResponse() {
-    result_ = "";
+    student_ = java.util.Collections.emptyList();
   }
 
   @java.lang.Override
@@ -40,43 +40,45 @@ private static final long serialVersionUID = 0L;
             io.grpc.database.GetStudentListResponse.class, io.grpc.database.GetStudentListResponse.Builder.class);
   }
 
-  public static final int RESULT_FIELD_NUMBER = 1;
+  public static final int STUDENT_FIELD_NUMBER = 1;
   @SuppressWarnings("serial")
-  private volatile java.lang.Object result_ = "";
+  private java.util.List<io.grpc.database.DataStudent> student_;
   /**
-   * <code>string result = 1;</code>
-   * @return The result.
+   * <code>repeated .database.DataStudent student = 1;</code>
    */
   @java.lang.Override
-  public java.lang.String getResult() {
-    java.lang.Object ref = result_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      result_ = s;
-      return s;
-    }
+  public java.util.List<io.grpc.database.DataStudent> getStudentList() {
+    return student_;
   }
   /**
-   * <code>string result = 1;</code>
-   * @return The bytes for result.
+   * <code>repeated .database.DataStudent student = 1;</code>
    */
   @java.lang.Override
-  public com.google.protobuf.ByteString
-      getResultBytes() {
-    java.lang.Object ref = result_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      result_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public java.util.List<? extends io.grpc.database.DataStudentOrBuilder> 
+      getStudentOrBuilderList() {
+    return student_;
+  }
+  /**
+   * <code>repeated .database.DataStudent student = 1;</code>
+   */
+  @java.lang.Override
+  public int getStudentCount() {
+    return student_.size();
+  }
+  /**
+   * <code>repeated .database.DataStudent student = 1;</code>
+   */
+  @java.lang.Override
+  public io.grpc.database.DataStudent getStudent(int index) {
+    return student_.get(index);
+  }
+  /**
+   * <code>repeated .database.DataStudent student = 1;</code>
+   */
+  @java.lang.Override
+  public io.grpc.database.DataStudentOrBuilder getStudentOrBuilder(
+      int index) {
+    return student_.get(index);
   }
 
   private byte memoizedIsInitialized = -1;
@@ -93,8 +95,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(result_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, result_);
+    for (int i = 0; i < student_.size(); i++) {
+      output.writeMessage(1, student_.get(i));
     }
     getUnknownFields().writeTo(output);
   }
@@ -105,8 +107,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(result_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, result_);
+    for (int i = 0; i < student_.size(); i++) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(1, student_.get(i));
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -123,8 +126,8 @@ private static final long serialVersionUID = 0L;
     }
     io.grpc.database.GetStudentListResponse other = (io.grpc.database.GetStudentListResponse) obj;
 
-    if (!getResult()
-        .equals(other.getResult())) return false;
+    if (!getStudentList()
+        .equals(other.getStudentList())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -136,8 +139,10 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + RESULT_FIELD_NUMBER;
-    hash = (53 * hash) + getResult().hashCode();
+    if (getStudentCount() > 0) {
+      hash = (37 * hash) + STUDENT_FIELD_NUMBER;
+      hash = (53 * hash) + getStudentList().hashCode();
+    }
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -269,7 +274,13 @@ private static final long serialVersionUID = 0L;
     public Builder clear() {
       super.clear();
       bitField0_ = 0;
-      result_ = "";
+      if (studentBuilder_ == null) {
+        student_ = java.util.Collections.emptyList();
+      } else {
+        student_ = null;
+        studentBuilder_.clear();
+      }
+      bitField0_ = (bitField0_ & ~0x00000001);
       return this;
     }
 
@@ -296,16 +307,26 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public io.grpc.database.GetStudentListResponse buildPartial() {
       io.grpc.database.GetStudentListResponse result = new io.grpc.database.GetStudentListResponse(this);
+      buildPartialRepeatedFields(result);
       if (bitField0_ != 0) { buildPartial0(result); }
       onBuilt();
       return result;
     }
 
+    private void buildPartialRepeatedFields(io.grpc.database.GetStudentListResponse result) {
+      if (studentBuilder_ == null) {
+        if (((bitField0_ & 0x00000001) != 0)) {
+          student_ = java.util.Collections.unmodifiableList(student_);
+          bitField0_ = (bitField0_ & ~0x00000001);
+        }
+        result.student_ = student_;
+      } else {
+        result.student_ = studentBuilder_.build();
+      }
+    }
+
     private void buildPartial0(io.grpc.database.GetStudentListResponse result) {
       int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.result_ = result_;
-      }
     }
 
     @java.lang.Override
@@ -352,10 +373,31 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(io.grpc.database.GetStudentListResponse other) {
       if (other == io.grpc.database.GetStudentListResponse.getDefaultInstance()) return this;
-      if (!other.getResult().isEmpty()) {
-        result_ = other.result_;
-        bitField0_ |= 0x00000001;
-        onChanged();
+      if (studentBuilder_ == null) {
+        if (!other.student_.isEmpty()) {
+          if (student_.isEmpty()) {
+            student_ = other.student_;
+            bitField0_ = (bitField0_ & ~0x00000001);
+          } else {
+            ensureStudentIsMutable();
+            student_.addAll(other.student_);
+          }
+          onChanged();
+        }
+      } else {
+        if (!other.student_.isEmpty()) {
+          if (studentBuilder_.isEmpty()) {
+            studentBuilder_.dispose();
+            studentBuilder_ = null;
+            student_ = other.student_;
+            bitField0_ = (bitField0_ & ~0x00000001);
+            studentBuilder_ = 
+              com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                 getStudentFieldBuilder() : null;
+          } else {
+            studentBuilder_.addAllMessages(other.student_);
+          }
+        }
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -384,8 +426,16 @@ private static final long serialVersionUID = 0L;
               done = true;
               break;
             case 10: {
-              result_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000001;
+              io.grpc.database.DataStudent m =
+                  input.readMessage(
+                      io.grpc.database.DataStudent.parser(),
+                      extensionRegistry);
+              if (studentBuilder_ == null) {
+                ensureStudentIsMutable();
+                student_.add(m);
+              } else {
+                studentBuilder_.addMessage(m);
+              }
               break;
             } // case 10
             default: {
@@ -405,76 +455,244 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.lang.Object result_ = "";
+    private java.util.List<io.grpc.database.DataStudent> student_ =
+      java.util.Collections.emptyList();
+    private void ensureStudentIsMutable() {
+      if (!((bitField0_ & 0x00000001) != 0)) {
+        student_ = new java.util.ArrayList<io.grpc.database.DataStudent>(student_);
+        bitField0_ |= 0x00000001;
+       }
+    }
+
+    private com.google.protobuf.RepeatedFieldBuilderV3<
+        io.grpc.database.DataStudent, io.grpc.database.DataStudent.Builder, io.grpc.database.DataStudentOrBuilder> studentBuilder_;
+
     /**
-     * <code>string result = 1;</code>
-     * @return The result.
+     * <code>repeated .database.DataStudent student = 1;</code>
      */
-    public java.lang.String getResult() {
-      java.lang.Object ref = result_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        result_ = s;
-        return s;
+    public java.util.List<io.grpc.database.DataStudent> getStudentList() {
+      if (studentBuilder_ == null) {
+        return java.util.Collections.unmodifiableList(student_);
       } else {
-        return (java.lang.String) ref;
+        return studentBuilder_.getMessageList();
       }
     }
     /**
-     * <code>string result = 1;</code>
-     * @return The bytes for result.
+     * <code>repeated .database.DataStudent student = 1;</code>
      */
-    public com.google.protobuf.ByteString
-        getResultBytes() {
-      java.lang.Object ref = result_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        result_ = b;
-        return b;
+    public int getStudentCount() {
+      if (studentBuilder_ == null) {
+        return student_.size();
       } else {
-        return (com.google.protobuf.ByteString) ref;
+        return studentBuilder_.getCount();
       }
     }
     /**
-     * <code>string result = 1;</code>
-     * @param value The result to set.
-     * @return This builder for chaining.
+     * <code>repeated .database.DataStudent student = 1;</code>
      */
-    public Builder setResult(
-        java.lang.String value) {
-      if (value == null) { throw new NullPointerException(); }
-      result_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+    public io.grpc.database.DataStudent getStudent(int index) {
+      if (studentBuilder_ == null) {
+        return student_.get(index);
+      } else {
+        return studentBuilder_.getMessage(index);
+      }
+    }
+    /**
+     * <code>repeated .database.DataStudent student = 1;</code>
+     */
+    public Builder setStudent(
+        int index, io.grpc.database.DataStudent value) {
+      if (studentBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureStudentIsMutable();
+        student_.set(index, value);
+        onChanged();
+      } else {
+        studentBuilder_.setMessage(index, value);
+      }
       return this;
     }
     /**
-     * <code>string result = 1;</code>
-     * @return This builder for chaining.
+     * <code>repeated .database.DataStudent student = 1;</code>
      */
-    public Builder clearResult() {
-      result_ = getDefaultInstance().getResult();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+    public Builder setStudent(
+        int index, io.grpc.database.DataStudent.Builder builderForValue) {
+      if (studentBuilder_ == null) {
+        ensureStudentIsMutable();
+        student_.set(index, builderForValue.build());
+        onChanged();
+      } else {
+        studentBuilder_.setMessage(index, builderForValue.build());
+      }
       return this;
     }
     /**
-     * <code>string result = 1;</code>
-     * @param value The bytes for result to set.
-     * @return This builder for chaining.
+     * <code>repeated .database.DataStudent student = 1;</code>
      */
-    public Builder setResultBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) { throw new NullPointerException(); }
-      checkByteStringIsUtf8(value);
-      result_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+    public Builder addStudent(io.grpc.database.DataStudent value) {
+      if (studentBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureStudentIsMutable();
+        student_.add(value);
+        onChanged();
+      } else {
+        studentBuilder_.addMessage(value);
+      }
       return this;
+    }
+    /**
+     * <code>repeated .database.DataStudent student = 1;</code>
+     */
+    public Builder addStudent(
+        int index, io.grpc.database.DataStudent value) {
+      if (studentBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureStudentIsMutable();
+        student_.add(index, value);
+        onChanged();
+      } else {
+        studentBuilder_.addMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .database.DataStudent student = 1;</code>
+     */
+    public Builder addStudent(
+        io.grpc.database.DataStudent.Builder builderForValue) {
+      if (studentBuilder_ == null) {
+        ensureStudentIsMutable();
+        student_.add(builderForValue.build());
+        onChanged();
+      } else {
+        studentBuilder_.addMessage(builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .database.DataStudent student = 1;</code>
+     */
+    public Builder addStudent(
+        int index, io.grpc.database.DataStudent.Builder builderForValue) {
+      if (studentBuilder_ == null) {
+        ensureStudentIsMutable();
+        student_.add(index, builderForValue.build());
+        onChanged();
+      } else {
+        studentBuilder_.addMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .database.DataStudent student = 1;</code>
+     */
+    public Builder addAllStudent(
+        java.lang.Iterable<? extends io.grpc.database.DataStudent> values) {
+      if (studentBuilder_ == null) {
+        ensureStudentIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, student_);
+        onChanged();
+      } else {
+        studentBuilder_.addAllMessages(values);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .database.DataStudent student = 1;</code>
+     */
+    public Builder clearStudent() {
+      if (studentBuilder_ == null) {
+        student_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        onChanged();
+      } else {
+        studentBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .database.DataStudent student = 1;</code>
+     */
+    public Builder removeStudent(int index) {
+      if (studentBuilder_ == null) {
+        ensureStudentIsMutable();
+        student_.remove(index);
+        onChanged();
+      } else {
+        studentBuilder_.remove(index);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .database.DataStudent student = 1;</code>
+     */
+    public io.grpc.database.DataStudent.Builder getStudentBuilder(
+        int index) {
+      return getStudentFieldBuilder().getBuilder(index);
+    }
+    /**
+     * <code>repeated .database.DataStudent student = 1;</code>
+     */
+    public io.grpc.database.DataStudentOrBuilder getStudentOrBuilder(
+        int index) {
+      if (studentBuilder_ == null) {
+        return student_.get(index);  } else {
+        return studentBuilder_.getMessageOrBuilder(index);
+      }
+    }
+    /**
+     * <code>repeated .database.DataStudent student = 1;</code>
+     */
+    public java.util.List<? extends io.grpc.database.DataStudentOrBuilder> 
+         getStudentOrBuilderList() {
+      if (studentBuilder_ != null) {
+        return studentBuilder_.getMessageOrBuilderList();
+      } else {
+        return java.util.Collections.unmodifiableList(student_);
+      }
+    }
+    /**
+     * <code>repeated .database.DataStudent student = 1;</code>
+     */
+    public io.grpc.database.DataStudent.Builder addStudentBuilder() {
+      return getStudentFieldBuilder().addBuilder(
+          io.grpc.database.DataStudent.getDefaultInstance());
+    }
+    /**
+     * <code>repeated .database.DataStudent student = 1;</code>
+     */
+    public io.grpc.database.DataStudent.Builder addStudentBuilder(
+        int index) {
+      return getStudentFieldBuilder().addBuilder(
+          index, io.grpc.database.DataStudent.getDefaultInstance());
+    }
+    /**
+     * <code>repeated .database.DataStudent student = 1;</code>
+     */
+    public java.util.List<io.grpc.database.DataStudent.Builder> 
+         getStudentBuilderList() {
+      return getStudentFieldBuilder().getBuilderList();
+    }
+    private com.google.protobuf.RepeatedFieldBuilderV3<
+        io.grpc.database.DataStudent, io.grpc.database.DataStudent.Builder, io.grpc.database.DataStudentOrBuilder> 
+        getStudentFieldBuilder() {
+      if (studentBuilder_ == null) {
+        studentBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+            io.grpc.database.DataStudent, io.grpc.database.DataStudent.Builder, io.grpc.database.DataStudentOrBuilder>(
+                student_,
+                ((bitField0_ & 0x00000001) != 0),
+                getParentForChildren(),
+                isClean());
+        student_ = null;
+      }
+      return studentBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(
