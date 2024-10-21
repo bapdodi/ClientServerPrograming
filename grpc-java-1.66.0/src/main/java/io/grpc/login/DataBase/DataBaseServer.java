@@ -135,7 +135,8 @@ public class DataBaseServer {
             finishedresponse(responseObserver, response);
         }
         private <T> void finishedresponse(StreamObserver<T> responseObserver, T response){
-            finishedresponse(responseObserver, response);
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
         }
     }
 }

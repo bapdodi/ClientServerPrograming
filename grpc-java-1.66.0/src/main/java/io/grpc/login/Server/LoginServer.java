@@ -88,7 +88,7 @@ public class LoginServer {
         @Override
         public void login(LoginRequest request, StreamObserver<LoginResponse> responseObserver) {
             DataStudent dataStudent = getStudent(request.getStudentId());
-            if(dataStudent != null&&!dataStudent.getPassword().equals(request.getPassword())){
+            if(dataStudent != null&&dataStudent.getPassword().equals(request.getPassword())){
                 LoginResponse response = LoginResponse.newBuilder().setStudent(ServerStudent.newBuilder().setStudentId(dataStudent.getStudentId()).setPassword(dataStudent.getPassword()).setName(dataStudent.getName()).setMajor(dataStudent.getMajor()).addAllCourseId(dataStudent.getCourseIdList())).build();
                 finishedresponse(responseObserver, response);
                 logger.info(request.getStudentId() + " login");
