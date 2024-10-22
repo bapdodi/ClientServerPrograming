@@ -1,35 +1,41 @@
 package io.grpc.login.Client;
 import java.util.Scanner;
 import java.util.logging.Logger;
+
+import org.checkerframework.checker.units.qual.g;
+
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.Metadata;
 import io.grpc.login.*;
 import io.grpc.login.Part1.Student;
-/**
-  * A simple client that requests a greeting from the {@link LoginServer}.
-  */
+import io.grpc.stub.MetadataUtils;
+import oracle.net.aso.c;
+
 public class LoginClient {
-    //로거: 로그메세지를 저장하고 추적할 수 있게 해주는 객체
     private static final Logger logger = Logger.getLogger(LoginClient.class.getName());
-    //블로킹 객체: 서버와 통신할 때 사용하는 객체, 동기적 방식으로 호출을 수행할때 사용됨
-    //동기적 방식은 서버 응답을 기다리는동안 lock됨
-    //stub이란 클라이언트가 서버의 메서드를 호출할 때 사용되는 객체
-    private final LoginGrpc.LoginBlockingStub blockingStub;
+    private LoginGrpc.LoginBlockingStub blockingStub;
     private static Scanner scanner;
-    private final CMethod cMethod;
+    private CMethod cMethod;
+    private Metadata metadata;
 
     public LoginClient(io.grpc.Channel channel) {
-        //채널은 받아오기 때문에 여기서 채널을 종료안시켜도 됨
-        //채널을 받아오면 채널을 재사용시키기 편하다
         blockingStub = LoginGrpc.newBlockingStub(channel);
         cMethod = new CMethod(blockingStub, logger);
         scanner = new Scanner(System.in);
+    }
+    private void getTokenKey(String token) {
+        metadata = new Metadata();
+        Metadata.Key<String> tokenKey = Metadata.Key.of("Authorization", Metadata.ASCII_STRING_MARSHALLER);
+        metadata.put(tokenKey, "Bearer "+token);
+        blockingStub = blockingStub.withInterceptors(MetadataUtils.newAttachHeadersInterceptor(metadata));
+        cMethod = new CMethod(blockingStub, logger);
     }
     public void startMenu(){
         printMenu();
         String inputMenu = scanner.nextLine();
         switch(inputMenu){
-            case "1": showMenu(cMethod.login(), cMethod);
+            case "1": showMenu(cMethod.login());
                 break;
             case "2": cMethod.join();
                 break;
@@ -40,11 +46,12 @@ public class LoginClient {
         }
         startMenu();
     }
-    private void showMenu(Student student, CMethod cMethod) {
+    private void showMenu(Student student) {
         if(student == null){
             return;
         }
-        else if(student.getStudentId()==1){
+        getTokenKey(student.getToken());
+        if(student.getRole().equals("admin")){
             AdminClient adminClinet = new AdminClient(cMethod);
             adminClinet.start();
         }

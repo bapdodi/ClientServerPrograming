@@ -3,6 +3,7 @@ package io.grpc.login.Client;
 import io.grpc.StatusRuntimeException;
 
 import io.grpc.login.*;
+import io.grpc.login.LoginGrpc.LoginBlockingStub;
 import io.grpc.login.Part1.Course;
 import io.grpc.login.Part1.Student;
 import java.util.logging.Level;
@@ -11,7 +12,7 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class CMethod {
-    private final LoginGrpc.LoginBlockingStub blockingStub;
+    private LoginGrpc.LoginBlockingStub blockingStub;
     private final Logger logger;
     private Scanner scanner;
     public CMethod(LoginGrpc.LoginBlockingStub blockingStub, Logger logger) {
@@ -19,7 +20,6 @@ public class CMethod {
         this.logger = logger;
         this.scanner = new Scanner(System.in);
     }
-
     public Student login() {
         System.out.println("Input id: ");
         int id = Integer.parseInt(scanner.nextLine());
@@ -35,6 +35,8 @@ public class CMethod {
             else{
                 Student student = new Student(response.getStudent().getStudentId(), response.getStudent().getName(), response.getStudent().getMajor(), response.getStudent().getCourseIdList());
                 System.out.println("Login: " + response.getStudent().getName());
+                student.setToken(response.getToken());
+                student.setRole(response.getRole());
                 return student;
             }
         } catch (StatusRuntimeException e) {

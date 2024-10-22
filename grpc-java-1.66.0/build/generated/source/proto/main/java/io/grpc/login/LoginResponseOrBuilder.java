@@ -22,4 +22,28 @@ public interface LoginResponseOrBuilder extends
    * <code>optional .login.ServerStudent student = 1;</code>
    */
   io.grpc.login.ServerStudentOrBuilder getStudentOrBuilder();
+
+  /**
+   * <code>string token = 2;</code>
+   * @return The token.
+   */
+  java.lang.String getToken();
+  /**
+   * <code>string token = 2;</code>
+   * @return The bytes for token.
+   */
+  com.google.protobuf.ByteString
+      getTokenBytes();
+
+  /**
+   * <code>string role = 3;</code>
+   * @return The role.
+   */
+  java.lang.String getRole();
+  /**
+   * <code>string role = 3;</code>
+   * @return The bytes for role.
+   */
+  com.google.protobuf.ByteString
+      getRoleBytes();
 }

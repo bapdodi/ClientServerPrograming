@@ -36,6 +36,8 @@ message LoginRequest {
 }
 message LoginResponse {
     optional ServerStudent student = 1;
+    string token = 2;
+    string role = 3;
 }
 message JoinRequest {
     ServerStudent student = 1;

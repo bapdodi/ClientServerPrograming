@@ -8,6 +8,8 @@ public class Student implements Serializable{
     protected String name;
     protected String department;
     protected List<Integer> completedCoursesList;
+    protected String token;
+    protected String role;
 
     public Student(int studentId, String name, String department, List<Integer> completedCoursesList) {
         this.studentId = studentId;
@@ -17,6 +19,12 @@ public class Student implements Serializable{
     }
     public boolean match(int studentId) {
         return this.studentId == studentId;
+    }
+    public void setRole(String role) {
+        this.role = role;
+    }
+    public String getRole() {
+        return this.role;
     }
     public int getStudentId() {
         return this.studentId;
@@ -33,5 +41,11 @@ public class Student implements Serializable{
             stringReturn = stringReturn + " " + this.completedCoursesList.get(i);
         }
         return stringReturn;
+    }
+    public void setToken(String token) {
+        this.token = token;
+    }
+    public String getToken() {
+        return this.token;
     }
 }

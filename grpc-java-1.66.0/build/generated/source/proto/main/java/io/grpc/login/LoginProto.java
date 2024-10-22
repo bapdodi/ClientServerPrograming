@@ -123,48 +123,49 @@ public final class LoginProto {
       "\nstudent_id\030\001 \001(\005\022\020\n\010password\030\002 \001(\t\022\014\n\004n" +
       "ame\030\003 \001(\t\022\r\n\005major\030\004 \001(\t\022\021\n\tcourse_id\030\005 " +
       "\003(\005\"4\n\014LoginRequest\022\022\n\nstudent_id\030\001 \001(\005\022" +
-      "\020\n\010password\030\002 \001(\t\"G\n\rLoginResponse\022*\n\007st" +
-      "udent\030\001 \001(\0132\024.login.ServerStudentH\000\210\001\001B\n" +
-      "\n\010_student\"4\n\013JoinRequest\022%\n\007student\030\001 \001" +
-      "(\0132\024.login.ServerStudent\"\036\n\014JoinResponse" +
-      "\022\016\n\006result\030\001 \001(\t\"\030\n\026ShowStudentListReque" +
-      "st\")\n\027ShowStudentListResponse\022\016\n\006result\030" +
-      "\001 \001(\t\"\027\n\025ShowCourseListRequest\"(\n\026ShowCo" +
-      "urseListResponse\022\016\n\006result\030\001 \001(\t\"/\n\032Serv" +
-      "erDeleteStudentRequest\022\021\n\tstudentId\030\001 \001(" +
-      "\005\"-\n\033ServerDeleteStudentResponse\022\016\n\006resu" +
-      "lt\030\001 \001(\t\"@\n\031ServerEnrollCourseRequest\022\021\n" +
-      "\tstudentId\030\001 \001(\005\022\020\n\010courseId\030\002 \001(\005\",\n\032Se" +
-      "rverEnrollCourseResponse\022\016\n\006result\030\001 \001(\t" +
-      "\">\n\027ServerDropCourseRequest\022\021\n\tstudentId" +
-      "\030\001 \001(\005\022\020\n\010courseId\030\002 \001(\005\"*\n\030ServerDropCo" +
-      "urseResponse\022\016\n\006result\030\001 \001(\t\"n\n\026ServerAd" +
-      "dCourseRequest\022\020\n\010courseId\030\001 \001(\005\022\022\n\ncour" +
-      "seName\030\002 \001(\t\022\027\n\017courseProfessor\030\003 \001(\t\022\025\n" +
-      "\rcourseLimited\030\004 \003(\005\")\n\027ServerAddCourseR" +
-      "esponse\022\016\n\006result\030\001 \001(\t\"-\n\031ServerDeleteC" +
-      "ourseRequest\022\020\n\010courseId\030\001 \001(\005\",\n\032Server" +
-      "DeleteCourseResponse\022\016\n\006result\030\001 \001(\t2\332\005\n" +
-      "\005Login\0224\n\005login\022\023.login.LoginRequest\032\024.l" +
-      "ogin.LoginResponse\"\000\0221\n\004join\022\022.login.Joi" +
-      "nRequest\032\023.login.JoinResponse\"\000\022R\n\017showS" +
-      "tudentList\022\035.login.ShowStudentListReques" +
-      "t\032\036.login.ShowStudentListResponse\"\000\022O\n\016s" +
-      "howCourseList\022\034.login.ShowCourseListRequ" +
-      "est\032\035.login.ShowCourseListResponse\"\000\022^\n\023" +
-      "serverDeleteStudent\022!.login.ServerDelete" +
-      "StudentRequest\032\".login.ServerDeleteStude" +
-      "ntResponse\"\000\022[\n\022serverEnrollCourse\022 .log" +
-      "in.ServerEnrollCourseRequest\032!.login.Ser" +
-      "verEnrollCourseResponse\"\000\022U\n\020serverDropC" +
-      "ourse\022\036.login.ServerDropCourseRequest\032\037." +
-      "login.ServerDropCourseResponse\"\000\022R\n\017serv" +
-      "erAddCourse\022\035.login.ServerAddCourseReque" +
-      "st\032\036.login.ServerAddCourseResponse\"\000\022[\n\022" +
-      "serverDeleteCourse\022 .login.ServerDeleteC" +
-      "ourseRequest\032!.login.ServerDeleteCourseR" +
-      "esponse\"\000B#\n\rio.grpc.loginB\nLoginProtoP\001" +
-      "\242\002\003HLWb\006proto3"
+      "\020\n\010password\030\002 \001(\t\"d\n\rLoginResponse\022*\n\007st" +
+      "udent\030\001 \001(\0132\024.login.ServerStudentH\000\210\001\001\022\r" +
+      "\n\005token\030\002 \001(\t\022\014\n\004role\030\003 \001(\tB\n\n\010_student\"" +
+      "4\n\013JoinRequest\022%\n\007student\030\001 \001(\0132\024.login." +
+      "ServerStudent\"\036\n\014JoinResponse\022\016\n\006result\030" +
+      "\001 \001(\t\"\030\n\026ShowStudentListRequest\")\n\027ShowS" +
+      "tudentListResponse\022\016\n\006result\030\001 \001(\t\"\027\n\025Sh" +
+      "owCourseListRequest\"(\n\026ShowCourseListRes" +
+      "ponse\022\016\n\006result\030\001 \001(\t\"/\n\032ServerDeleteStu" +
+      "dentRequest\022\021\n\tstudentId\030\001 \001(\005\"-\n\033Server" +
+      "DeleteStudentResponse\022\016\n\006result\030\001 \001(\t\"@\n" +
+      "\031ServerEnrollCourseRequest\022\021\n\tstudentId\030" +
+      "\001 \001(\005\022\020\n\010courseId\030\002 \001(\005\",\n\032ServerEnrollC" +
+      "ourseResponse\022\016\n\006result\030\001 \001(\t\">\n\027ServerD" +
+      "ropCourseRequest\022\021\n\tstudentId\030\001 \001(\005\022\020\n\010c" +
+      "ourseId\030\002 \001(\005\"*\n\030ServerDropCourseRespons" +
+      "e\022\016\n\006result\030\001 \001(\t\"n\n\026ServerAddCourseRequ" +
+      "est\022\020\n\010courseId\030\001 \001(\005\022\022\n\ncourseName\030\002 \001(" +
+      "\t\022\027\n\017courseProfessor\030\003 \001(\t\022\025\n\rcourseLimi" +
+      "ted\030\004 \003(\005\")\n\027ServerAddCourseResponse\022\016\n\006" +
+      "result\030\001 \001(\t\"-\n\031ServerDeleteCourseReques" +
+      "t\022\020\n\010courseId\030\001 \001(\005\",\n\032ServerDeleteCours" +
+      "eResponse\022\016\n\006result\030\001 \001(\t2\332\005\n\005Login\0224\n\005l" +
+      "ogin\022\023.login.LoginRequest\032\024.login.LoginR" +
+      "esponse\"\000\0221\n\004join\022\022.login.JoinRequest\032\023." +
+      "login.JoinResponse\"\000\022R\n\017showStudentList\022" +
+      "\035.login.ShowStudentListRequest\032\036.login.S" +
+      "howStudentListResponse\"\000\022O\n\016showCourseLi" +
+      "st\022\034.login.ShowCourseListRequest\032\035.login" +
+      ".ShowCourseListResponse\"\000\022^\n\023serverDelet" +
+      "eStudent\022!.login.ServerDeleteStudentRequ" +
+      "est\032\".login.ServerDeleteStudentResponse\"" +
+      "\000\022[\n\022serverEnrollCourse\022 .login.ServerEn" +
+      "rollCourseRequest\032!.login.ServerEnrollCo" +
+      "urseResponse\"\000\022U\n\020serverDropCourse\022\036.log" +
+      "in.ServerDropCourseRequest\032\037.login.Serve" +
+      "rDropCourseResponse\"\000\022R\n\017serverAddCourse" +
+      "\022\035.login.ServerAddCourseRequest\032\036.login." +
+      "ServerAddCourseResponse\"\000\022[\n\022serverDelet" +
+      "eCourse\022 .login.ServerDeleteCourseReques" +
+      "t\032!.login.ServerDeleteCourseResponse\"\000B#" +
+      "\n\rio.grpc.loginB\nLoginProtoP\001\242\002\003HLWb\006pro" +
+      "to3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -187,7 +188,7 @@ public final class LoginProto {
     internal_static_login_LoginResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_login_LoginResponse_descriptor,
-        new java.lang.String[] { "Student", });
+        new java.lang.String[] { "Student", "Token", "Role", });
     internal_static_login_JoinRequest_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_login_JoinRequest_fieldAccessorTable = new

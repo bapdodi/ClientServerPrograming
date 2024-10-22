@@ -10,6 +10,7 @@ import io.grpc.Grpc;
 import io.grpc.InsecureServerCredentials;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.Metadata;
 import io.grpc.Server;
 import io.grpc.database.*;
 import io.grpc.login.*;
@@ -19,16 +20,22 @@ import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import java.security.Key;
+import javax.crypto.spec.SecretKeySpec;
+import io.grpc.Context;
 
 public class LoginServer {
     private static final Logger logger = Logger.getLogger(LoginServer.class.getName());
     private Server clientServer;
     private Server dbServer;
     private static DataBaseGrpc.DataBaseBlockingStub blockingStub;
+    private static final String SECRET_KEY = "purplenavybeigefdffsfsdafSFSAFSADAGSEDvsdF";
     private void start() throws IOException{
         int clientPort = 50051;
         setLogger();
-        clientServer = Grpc.newServerBuilderForPort(clientPort, InsecureServerCredentials.create()).addService(new LoginImpl()).build().start();
+        clientServer = Grpc.newServerBuilderForPort(clientPort, InsecureServerCredentials.create()).addService(new LoginImpl()).intercept(new JwtAuthInterceptor()).build().start();
         logger.info("Server started, listening on " + clientPort);
         int dbPort = 50052;
         ManagedChannel dbChannel = ManagedChannelBuilder.forAddress("localhost", dbPort).usePlaintext().build();
@@ -89,12 +96,19 @@ public class LoginServer {
         public void login(LoginRequest request, StreamObserver<LoginResponse> responseObserver) {
             DataStudent dataStudent = getStudent(request.getStudentId());
             if(dataStudent != null&&dataStudent.getPassword().equals(request.getPassword())){
-                LoginResponse response = LoginResponse.newBuilder().setStudent(ServerStudent.newBuilder().setStudentId(dataStudent.getStudentId()).setPassword(dataStudent.getPassword()).setName(dataStudent.getName()).setMajor(dataStudent.getMajor()).addAllCourseId(dataStudent.getCourseIdList())).build();
+                String role = "";
+                if(dataStudent.getStudentId()==1){role = "admin";}
+                else{role = "user";}
+                Key key = new SecretKeySpec(SECRET_KEY.getBytes(), SignatureAlgorithm.HS256.getJcaName());
+                String token = Jwts.builder().setSubject(dataStudent.getStudentId()+"").claim("role", role).setExpiration(new Date(System.currentTimeMillis() + 3600000)).signWith(key, SignatureAlgorithm.HS256).compact();
+                LoginResponse response = LoginResponse.newBuilder().setRole(role).setStudent(ServerStudent.newBuilder().setStudentId(dataStudent.getStudentId()).setPassword(dataStudent.getPassword()).setName(dataStudent.getName()).setMajor(dataStudent.getMajor()).addAllCourseId(dataStudent.getCourseIdList())).setToken(token).build();
                 finishedresponse(responseObserver, response);
                 logger.info(request.getStudentId() + " login");
             }
-            LoginResponse response = LoginResponse.newBuilder().build();
-            finishedresponse(responseObserver, response);
+            else{
+                LoginResponse response = LoginResponse.newBuilder().build();
+                finishedresponse(responseObserver, response);
+            }
         }
         @Override
         public void join(JoinRequest request, StreamObserver<JoinResponse> responseObserver) {
@@ -134,6 +148,7 @@ public class LoginServer {
             ShowStudentListResponse response = ShowStudentListResponse.newBuilder().setResult(result).build();
             finishedresponse(responseObserver, response);
         }
+        
         @Override
         public void showCourseList(ShowCourseListRequest request, StreamObserver<ShowCourseListResponse> responseObserver) {
             GetCourseListRequest request2 = GetCourseListRequest.newBuilder().build();
