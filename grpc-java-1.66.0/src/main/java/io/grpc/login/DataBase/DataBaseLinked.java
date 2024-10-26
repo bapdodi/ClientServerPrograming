@@ -61,10 +61,10 @@ public class DataBaseLinked {
                 throw new SQLException("Connection is not established or is closed");
             }      
             preparedStatement = connection.prepareStatement(insertQuery);
-            preparedStatement.setInt(1, dataStudent.getStudentId()); // id 값
-            preparedStatement.setString(2, dataStudent.getPassword()); //  password값
-            preparedStatement.setString(3, dataStudent.getName()); // name 값
-            preparedStatement.setString(4, dataStudent.getMajor()); // course 값
+            preparedStatement.setInt(1, dataStudent.getStudentId()); 
+            preparedStatement.setString(2, dataStudent.getPassword()); 
+            preparedStatement.setString(3, dataStudent.getName()); 
+            preparedStatement.setString(4, dataStudent.getMajor()); 
             preparedStatement.executeUpdate();
             logger.info("Join Success "+ dataStudent.getStudentId());
             return true;
@@ -74,7 +74,6 @@ public class DataBaseLinked {
             logger.warning("Join NullPointerException Error");
         }
         return false;
-        
     }
     
     public boolean deleteStudent(int studentId) {
@@ -188,9 +187,9 @@ public class DataBaseLinked {
                 throw new SQLException("Connection is not established or is closed");
             }
             preparedStatement = connection.prepareStatement(selectQuery);
-            preparedStatement.setInt(1, id); // id 값
+            preparedStatement.setInt(1, id); 
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) { // 결과가 있는 경우
+            if (resultSet.next()) { 
                 List<Integer> courseIdList = getStudentCourseIdList(id);
                 DataStudent dataStudent = DataStudent.newBuilder().setStudentId(id).setPassword(resultSet.getString("password")).setName(resultSet.getString("name")).setMajor(resultSet.getString("major")).addAllCourseId(courseIdList).build(); 
                 return dataStudent;

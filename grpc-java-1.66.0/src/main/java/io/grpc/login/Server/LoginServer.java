@@ -141,7 +141,7 @@ public class LoginServer {
             for(DataStudent student : studentList){
                 result += "Student ID: " + student.getStudentId() + " Password: " + student.getPassword() + " Name: " + student.getName() + " Major: " + student.getMajor() + " Course ID: ";
                 for(int courseId : student.getCourseIdList()){
-                    result += courseId+"";
+                    result += courseId+" ";
                 }
                 result += "\n";
             }
@@ -158,7 +158,7 @@ public class LoginServer {
             for(DataCourse course : courseList){
                 result += "Course ID: " + course.getCourseId() + " Course Name: " + course.getCourseName() + " Course Professor: " + course.getCourseProfessor() + " Course Limited: ";
                 for(int courseLimited : course.getCourseLimitedList()){
-                    result += courseLimited;
+                    result += courseLimited+" ";
                 }
                 result += "\n";
             }
@@ -167,13 +167,13 @@ public class LoginServer {
         }
         @Override
         public void serverDeleteStudent(ServerDeleteStudentRequest request, StreamObserver<ServerDeleteStudentResponse> responseObserver) {
-            DataDeleteStudentRequest request2 = DataDeleteStudentRequest.newBuilder().setStudentId(request.getStudentId()).build();
-            DataDeleteStudentResponse response2 = blockingStub.dataDeleteStudent(request2);
             String result = "";
             if(getStudent(request.getStudentId())==null){
                 result = "Student Not Found";
             }
-            else if(response2.getCheck()){
+            DataDeleteStudentRequest request2 = DataDeleteStudentRequest.newBuilder().setStudentId(request.getStudentId()).build();
+            DataDeleteStudentResponse response2 = blockingStub.dataDeleteStudent(request2);
+            if(response2.getCheck()){
                 result = "Delete Success";
                 logger.info(request.getStudentId() + " deleteStudent");
             }

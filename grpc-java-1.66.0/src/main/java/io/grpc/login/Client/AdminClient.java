@@ -23,11 +23,9 @@ public class AdminClient {
                 break;
             case "5":cMethod.showCourseList();
                 break;
-            case "6":cMethod.deleteStudent();;
+            case "6":cMethod.addCourse();
                 break;
-            case "7":cMethod.addCourse();
-                break;
-            case "8":cMethod.deleteCourse();
+            case "7":cMethod.deleteCourse();
                 break;
             case "x":
                 return;
@@ -43,9 +41,8 @@ public class AdminClient {
         System.out.println("3. 수강과목 취소");
         System.out.println("4. 학생리스트");
         System.out.println("5. 수강과목리스트");
-        System.out.println("6. 학생 삭제");
-        System.out.println("7. 수강과목 추가");
-        System.out.println("8. 수강과목 삭제");
+        System.out.println("6. 수강과목 추가");
+        System.out.println("7. 수강과목 삭제");
         System.out.println("x. 메인 화면으로 가기");
     }
     private void showErrorMenuMessage() {

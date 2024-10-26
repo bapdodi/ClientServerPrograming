@@ -132,3 +132,33 @@ INFO: Server started, listening on 50051dddd
 2024-10-22 10:41:36 INFO: 1 login
 2024-10-22 10:43:18 INFO: Server started, listening on 50051
 2024-10-22 10:43:56 INFO: 1 login
+2024-10-25 13:29:10 INFO: Server started, listening on 50051
+2024-10-25 13:29:37 INFO: 6 join
+2024-10-25 13:53:05 INFO: 1 login
+2024-10-25 13:54:34 INFO: 6 login
+2024-10-25 14:10:40 INFO: 1 login
+2024-10-25 14:20:07 INFO: 6 join
+2024-10-25 14:20:10 INFO: 6 login
+2024-10-25 14:20:14 INFO: 1 login
+2024-10-25 14:20:39 INFO: Server started, listening on 50051
+2024-10-25 14:22:14 INFO: 1 login
+2024-10-25 14:22:21 INFO: 6 join
+2024-10-25 14:22:23 INFO: 1 login
+2024-10-25 14:23:16 INFO: Server started, listening on 50051
+2024-10-25 14:23:32 INFO: 6 join
+2024-10-25 14:23:35 INFO: 1 login
+2024-10-25 14:23:37 INFO: 6 deleteStudent
+2024-10-25 14:31:24 INFO: 3 join
+2024-10-25 14:31:26 INFO: 1 login
+2024-10-25 14:32:18 INFO: 3 enroll 12345
+2024-10-25 14:55:38 INFO: 3 drop 17652
+2024-10-25 15:03:38 INFO: Server started, listening on 50051
+2024-10-25 15:04:00 INFO: Server started, listening on 50051
+2024-10-25 15:08:57 INFO: 6 addCourse
+2024-10-25 15:09:17 INFO: 7 addCourse
+2024-10-25 15:20:55 INFO: 1 login
+2024-10-25 15:21:44 INFO: 1 login
+2024-10-25 15:22:20 INFO: 1 login
+2024-10-25 15:23:01 INFO: 7 deleteCourse
+2024-10-25 15:24:25 INFO: 3 login
+2024-10-25 15:26:28 INFO: 3 drop 12345

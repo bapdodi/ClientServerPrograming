@@ -8,6 +8,9 @@ import io.grpc.login.Part1.Course;
 import io.grpc.login.Part1.Student;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.checkerframework.checker.units.qual.t;
+
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -22,9 +25,16 @@ public class CMethod {
     }
     public Student login() {
         System.out.println("Input id: ");
+        if(!IsNumber()){
+            return this.login();
+        }
         int id = Integer.parseInt(scanner.nextLine());
         System.out.println("Input password: ");
         String password = scanner.nextLine();
+        if(id == 0 || password.equals("")){
+            System.out.println("Input all information");
+            return this.login();
+        }
         LoginRequest request = LoginRequest.newBuilder().setStudentId(id).setPassword(password).build();
         try {
             LoginResponse response = blockingStub.login(request);
@@ -46,6 +56,10 @@ public class CMethod {
     }
     public void join() {
         System.out.println("Input id: ");
+        if(!IsNumber()){
+            this.join();
+            return;
+        }
         int id = Integer.parseInt(scanner.nextLine());
         System.out.println("Input password: ");
         String password = scanner.nextLine();
@@ -53,6 +67,11 @@ public class CMethod {
         String name = scanner.nextLine();
         System.out.println("Input major: ");
         String major = scanner.nextLine();
+        if(id == 0 || password.equals("") || name.equals("") || major.equals("")){
+            System.out.println("Input all information");
+            this.join();
+            return;
+        }
         ServerStudent student = ServerStudent.newBuilder().setStudentId(id).setPassword(password).setName(name).setMajor(major).build();
         JoinRequest request = JoinRequest.newBuilder().setStudent(student).build();
         JoinResponse response;
@@ -88,6 +107,10 @@ public class CMethod {
     }
     public void deleteStudent() {
         System.out.println("Input id: ");
+        if(!IsNumber()){
+            this.deleteStudent();
+            return;
+        }
         int id = Integer.parseInt(scanner.nextLine());
         ServerDeleteStudentRequest request = ServerDeleteStudentRequest.newBuilder().setStudentId(id).build();
         ServerDeleteStudentResponse response;
@@ -101,8 +124,16 @@ public class CMethod {
     }
     public void enrollCourse() {
         System.out.println("Input studentId: ");
+        if(!IsNumber()){
+            this.enrollCourse();
+            return;
+        }
         int studentId = Integer.parseInt(scanner.nextLine());
         System.out.println("Input courseId: ");
+        if(!IsNumber()){
+            this.enrollCourse();
+            return;
+        }
         int courseId = Integer.parseInt(scanner.nextLine());
         ServerEnrollCourseRequest request = ServerEnrollCourseRequest.newBuilder().setStudentId(studentId).setCourseId(courseId).build();
         ServerEnrollCourseResponse response;
@@ -116,8 +147,16 @@ public class CMethod {
     }
     public void dropCourse() {
         System.out.println("Input studentId: ");
+        if(!IsNumber()){
+            this.dropCourse();
+            return;
+        }
         int studentId = Integer.parseInt(scanner.nextLine());
         System.out.println("Input courseId: ");
+        if(!IsNumber()){
+            this.dropCourse();
+            return;
+        }
         int courseId = Integer.parseInt(scanner.nextLine());
         ServerDropCourseRequest request = ServerDropCourseRequest.newBuilder().setStudentId(studentId).setCourseId(courseId).build();
         ServerDropCourseResponse response;
@@ -132,6 +171,10 @@ public class CMethod {
     public void enrollCourse(Student student) {
         int studentId = student.getStudentId();
         System.out.println("Input courseId: ");
+        if(!IsNumber()){
+            this.enrollCourse(student);
+            return;
+        }
         int courseId = Integer.parseInt(scanner.nextLine());
         ServerEnrollCourseRequest request = ServerEnrollCourseRequest.newBuilder().setStudentId(studentId).setCourseId(courseId).build();
         ServerEnrollCourseResponse response;
@@ -146,6 +189,10 @@ public class CMethod {
     public void dropCourse(Student student) {
         int studentId = student.getStudentId();
         System.out.println("Input courseId: ");
+        if(!IsNumber()){
+            this.dropCourse(student);
+            return;
+        }
         int courseId = Integer.parseInt(scanner.nextLine());
         ServerDropCourseRequest request = ServerDropCourseRequest.newBuilder().setStudentId(studentId).setCourseId(courseId).build();
         ServerDropCourseResponse response;
@@ -160,6 +207,10 @@ public class CMethod {
     public void addCourse() {
         Course course = new Course();
         System.out.println("Input courseId: ");
+        if(!IsNumber()){
+            this.addCourse();
+            return;
+        }
         course.setCourseId(Integer.parseInt(scanner.nextLine()));
         System.out.println("Input courseName: ");
         course.setCourseName(scanner.nextLine());
@@ -182,6 +233,10 @@ public class CMethod {
     }
     public void deleteCourse() {
         System.out.println("Input courseId: ");
+        if(!IsNumber()){
+            this.deleteCourse();
+            return;
+        }
         int courseId = Integer.parseInt(scanner.nextLine());
         ServerDeleteCourseRequest request = ServerDeleteCourseRequest.newBuilder().setCourseId(courseId).build();
         ServerDeleteCourseResponse response;
@@ -192,5 +247,13 @@ public class CMethod {
             return;
         }
         System.out.println(response.getResult());
+    }
+    private boolean IsNumber() {
+        if(!scanner.hasNextInt()){
+            System.out.println("Input number");
+            scanner.nextLine();
+            return false;
+        }
+        return true;
     }
 }

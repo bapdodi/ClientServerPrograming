@@ -17,24 +17,18 @@ public class JwtAuthInterceptor implements ServerInterceptor {
                                                                 Metadata headers, ServerCallHandler<ReqT, RespT> next) {
         String methodName = call.getMethodDescriptor().getFullMethodName();
         if (methodName.equals("login.Login/login")) {
-            // 로그인 요청이므로 토큰 검증 없이 요청 처리
             return next.startCall(call, headers);
         }
         else if (methodName.equals("login.Login/join")) {
-            // 회원가입 요청이므로 토큰 검증 없이 요청 처리
             return next.startCall(call, headers);
         }
         Metadata.Key<String> tokenKey = Metadata.Key.of("Authorization", Metadata.ASCII_STRING_MARSHALLER);
         String token = headers.get(tokenKey);
-
         if (token == null || !token.startsWith("Bearer ")) {
-            // 토큰이 없거나 잘못된 형식이면 인증 실패 처리
             call.close(Status.UNAUTHENTICATED.withDescription("No token provided or invalid token format"), headers);
             return new ServerCall.Listener<ReqT>() {};
         }
-
         try {
-            // 'Bearer ' 이후의 실제 JWT 토큰 부분 추출
             String jwtToken = token.substring(7);
             Key key = new SecretKeySpec(SECRET_KEY.getBytes(), SignatureAlgorithm.HS256.getJcaName());
             // JWT 토큰 검증
@@ -46,7 +40,6 @@ public class JwtAuthInterceptor implements ServerInterceptor {
             return next.startCall(call, headers);
 
         } catch (JwtException e) {
-            // 토큰 검증 실패 시 인증 오류 처리
             call.close(Status.UNAUTHENTICATED.withDescription("Invalid token signature"), headers);
             return new ServerCall.Listener<ReqT>() {};
         }
